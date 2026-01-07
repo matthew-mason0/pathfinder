@@ -7,6 +7,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
-        <exec.mainClass>uk.ac.bham.cs.git.mxm1599.Project</exec.mainClass>
+        <exec.mainClass>agentnavigation.Main</exec.mainClass>
     </properties>
 </project>
