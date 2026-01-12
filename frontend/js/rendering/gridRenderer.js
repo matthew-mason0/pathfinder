@@ -11,10 +11,10 @@ class Grid {
         this.rows = rows;
         this.columns = columns;
         this.cells = [];
-        for (let i = 0; i < this.rows; i++) {
-            this.cells[i] = [];
-            for (let j = 0; j < this.columns; j++) {
-                this.cells[i][j] = new Cell(i, j);
+        for (let y = 0; y < this.rows; y++) {
+            this.cells[y] = [];
+            for (let x = 0; x < this.columns; x++) {
+                this.cells[y][x] = new Cell(x, y);
             }
         }
     }
@@ -41,9 +41,9 @@ class GridRenderer {
     }
 
     draw(grid) {
-        for (let i = 0; i < grid.rows; i++) {
-            for (let j = 0; j < grid.columns; j++) {
-                this.drawCell(grid.getCell(i, j));
+        for (let row = 0; row < grid.rows; row++) {
+            for (let column = 0; column < grid.columns; column++) {
+                this.drawCell(grid.getCell(column, row));
             }
         }
     }
