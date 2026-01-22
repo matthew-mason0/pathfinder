@@ -8,9 +8,9 @@ import java.util.ArrayList;
 public class GridGraph implements Graph {
     private Map<Node, List<Node>> adjacencyList;
 
-    public GridGraph() {
+    public GridGraph(int rows, int columns) {
         adjacencyList = new HashMap<>();
-        buildNodes();
+        buildNodes(rows, columns);
     }
 
     @Override
@@ -18,16 +18,16 @@ public class GridGraph implements Graph {
         return adjacencyList.get(node);
     }
     
-    private void buildNodes() {
-        for (int row = 0; row < 10; row++) {
-            for (int column = 0; column < 10; column++) {
+    private void buildNodes(int rows, int columns) {
+        for (int row = 0; row < rows; row++) {
+            for (int column = 0; column < columns; column++) {
                 Node node = new Node(row, column);
                 adjacencyList.put(node, new ArrayList<>());
             }
         }
 
-        for (int row = 0; row < 10; row++) {
-            for (int column = 0; column < 10; column++) {
+        for (int row = 0; row < rows; row++) {
+            for (int column = 0; column < columns; column++) {
                 Node current = new Node(row, column);
                 List<Node> neighbours = adjacencyList.get(current);
                 
@@ -35,7 +35,7 @@ public class GridGraph implements Graph {
                     Node up = new Node(row - 1, column);
                     neighbours.add(up);
                 }
-                if (row < 9) {
+                if (row < rows-1) {
                     Node down = new Node(row + 1, column);
                     neighbours.add(down);
                 }
@@ -43,7 +43,7 @@ public class GridGraph implements Graph {
                     Node left = new Node(row, column - 1);
                     neighbours.add(left);
                 }
-                if (column < 9) {
+                if (column < columns-1) {
                     Node right = new Node(row, column + 1);
                     neighbours.add(right);
                 }
