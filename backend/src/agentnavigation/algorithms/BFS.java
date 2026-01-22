@@ -13,7 +13,7 @@ import agentnavigation.environment.Node;
 public class BFS implements SearchAlgorithm {
 
     @Override
-    public void search(Graph graph, Node start) {
+    public List<Node> search(Graph graph, Node start) {
         Queue<Node> queue = new ArrayDeque<>();
         Set<Node> visited = new HashSet<>();
 
@@ -32,5 +32,6 @@ public class BFS implements SearchAlgorithm {
                 }
             }
         }
+        return traversalList;
     }
 }

@@ -1,8 +1,10 @@
 package agentnavigation.algorithms;
 
+import java.util.List;
+
 import agentnavigation.environment.Node;
 import agentnavigation.environment.Graph;
 
 public interface SearchAlgorithm {
-    public void search(Graph graph, Node node);
+    public List<Node> search(Graph graph, Node node);
 }
