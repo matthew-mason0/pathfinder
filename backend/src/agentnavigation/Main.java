@@ -4,6 +4,8 @@ package agentnavigation;
  * Responsible for initialising configuration, selecting environments and algorithms and starting the WebSocket server
  */
 
+import java.util.List;
+
 import agentnavigation.algorithms.AlgorithmFactory;
 import agentnavigation.algorithms.SearchAlgorithm;
 import agentnavigation.environment.EnvironmentLoader;
@@ -17,6 +19,7 @@ public class Main {
         SearchAlgorithm algorithm = AlgorithmFactory.createBFS();
         Node start = new Node(0, 0);
 
-        algorithm.search(graph, start);
+        List<Node> traversalList = algorithm.search(graph, start);
+        System.out.println(traversalList);
     }
 }
