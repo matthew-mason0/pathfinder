@@ -1,6 +1,8 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "backend/lib/gson-2.13.2.jar"
+        "backend/lib/gson-2.13.2.jar",
+        "backend/lib/Java-WebSocket-1.6.0.jar",
+        "backend/lib/slf4j-api-2.0.17.jar"
     ]
 }
