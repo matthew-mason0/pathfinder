@@ -6,5 +6,5 @@ import agentnavigation.environment.Node;
 import agentnavigation.environment.Graph;
 
 public interface SearchAlgorithm {
-    public List<Node> search(Graph graph, Node node);
+    public List<Node> search(Graph graph, Node start, Node end);
 }

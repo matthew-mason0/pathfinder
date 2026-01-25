@@ -19,7 +19,7 @@ public class Main {
         Environment environment = EnvironmentLoader.createGridEnvironment(10, 10);
         SearchAlgorithm algorithm = AlgorithmFactory.createBFS(ConsoleStepListener.INSTANCE);
 
-        List<Node> traversalList = algorithm.search(environment.getGraph(), environment.getStart());
-        System.out.println(traversalList);
+        List<Node> traversalList = algorithm.search(environment.getGraph(), environment.getStart(), environment.getEnd());
+        // System.out.println(traversalList);
     }
 }
