@@ -20,7 +20,7 @@ public class GridNode extends Node {
 
     @Override
     public String toString() {
-        return "GridNode(" + this.row + ", " + this.column + ")";
+        return "(" + this.row + ", " + this.column + ")";
     }
     
 }
