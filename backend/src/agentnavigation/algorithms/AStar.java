@@ -6,7 +6,7 @@ import agentnavigation.environment.Graph;
 import agentnavigation.environment.Node;
 
 public class AStar implements SearchAlgorithm {
-    public List<Node> search(Graph graph, Node node) {
+    public List<Node> search(Graph graph, Node start, Node end) {
         // TODO implement AStar
         return null;
     }
