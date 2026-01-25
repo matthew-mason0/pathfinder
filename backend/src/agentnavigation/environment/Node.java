@@ -1,29 +1,31 @@
 package agentnavigation.environment;
 
 public class Node {
-    public int row;
-    public int column;
+    private final int id;
 
-    public Node(int row, int column) {
-        this.row = row;
-        this.column = column;
+    public Node(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
         if (this == obj) return true;
         if (!(obj instanceof Node)) return false;
         Node node = (Node) obj;
-        return (this.row == node.row && this.column == node.column);
+        return (this.id == node.id);
     }
 
     @Override
-    public int hashCode() {
-        return 31 * this.row + this.column;
+    public final int hashCode() {
+        return Integer.hashCode(id);
     }
 
     @Override
     public String toString() {
-        return "(" +this.row + ", " + this.column + ")";
+        return "Node(" + this.id + ")";
     }
 }
