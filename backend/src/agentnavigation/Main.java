@@ -11,12 +11,13 @@ import agentnavigation.algorithms.SearchAlgorithm;
 import agentnavigation.environment.Environment;
 import agentnavigation.environment.EnvironmentLoader;
 import agentnavigation.environment.Node;
+import agentnavigation.listeners.ConsoleStepListener;
 
 public class Main {
 
     public static void main(String[] args) {
         Environment environment = EnvironmentLoader.createGridEnvironment(10, 10);
-        SearchAlgorithm algorithm = AlgorithmFactory.createBFS();
+        SearchAlgorithm algorithm = AlgorithmFactory.createBFS(ConsoleStepListener.INSTANCE);
 
         List<Node> traversalList = algorithm.search(environment.getGraph(), environment.getStart());
         System.out.println(traversalList);
