@@ -6,7 +6,7 @@ class Cell {
     }
 }
 
-class Grid {
+export class Grid {
     constructor(rows, columns) {
         this.rows = rows;
         this.columns = columns;
@@ -24,7 +24,7 @@ class Grid {
     }
 }
 
-class GridRenderer {
+export class GridRenderer {
     constructor(cellSize) {
         this.cellSize = cellSize;
 
