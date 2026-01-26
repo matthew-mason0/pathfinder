@@ -18,8 +18,8 @@ public class WSClientTest extends WebSocketClient {
 
     @Override
     public void onOpen(ServerHandshake handshakedata) {
-        send("Hello from client");
-        System.out.println("New connection opened");
+        System.out.println("Connected to server");
+        send("HELLO");
     }
 
     @Override

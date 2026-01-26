@@ -11,8 +11,15 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class WSServer extends WebSocketServer {
+
+    private enum ServerState {
+        IDLE,
+        CONFIGURING,
+        RUNNING
+    }
     
     private final Set<WebSocket> clients = Collections.newSetFromMap(new ConcurrentHashMap<>());
+    private ServerState state = ServerState.IDLE;
 
     public WSServer(InetSocketAddress address) {
         super(address);
@@ -22,6 +29,9 @@ public class WSServer extends WebSocketServer {
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
         clients.add(conn);
         System.out.println("New connection to " + conn.getRemoteSocketAddress());
+
+        conn.send("HELLO");
+        state = ServerState.CONFIGURING;
     }
 
     @Override
@@ -32,9 +42,40 @@ public class WSServer extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, String message) {
+        handleMessage(conn, message);
+    }
+    private void handleMessage(WebSocket conn, String message) {
         System.out.println("Client " + conn.getRemoteSocketAddress() + ": " + message);
-        conn.send("echo: " + message);
-        // TODO handle client messages
+
+        switch (this.state) {
+            case CONFIGURING:
+                handleConfigMessage(conn, message);
+                break;
+            case RUNNING:
+                handleRunMessage(conn, message);
+                break;
+            default:
+                break;
+        }
+    }
+    private void handleConfigMessage(WebSocket conn, String message) {
+        if (message.equalsIgnoreCase("RUN")) {
+            state = ServerState.RUNNING;
+            conn.send("RUN_ACK");
+
+            simulateRun(conn);
+
+            return;
+        }
+
+        conn.send("CONFIG_OK");
+    }
+    private void handleRunMessage(WebSocket conn, String message) {
+        if (message.equalsIgnoreCase("STOP")) {
+            state = ServerState.CONFIGURING;
+            conn.send("STOP_ACK");
+            return;
+        }
     }
 
     @Override
@@ -67,5 +108,19 @@ public class WSServer extends WebSocketServer {
         } catch (InterruptedException e) {
             server.stop();
         }
+    }
+
+    private void simulateRun(WebSocket conn) {
+        Thread thread = new Thread(() -> {
+            try {
+                for (int i = 1; i < 5; i++) {
+                    conn.send("STEP " + i);
+                    Thread.sleep(500);
+                }
+            } catch (InterruptedException e) {
+                this.state = ServerState.CONFIGURING;
+            }
+        });
+        thread.start();
     }
 }
