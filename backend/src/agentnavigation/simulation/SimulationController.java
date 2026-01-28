@@ -11,14 +11,18 @@ public class SimulationController {
 
     public void onClientConnected(WebSocket conn) {
         System.out.println("Controller: new client connected: " + conn.getRemoteSocketAddress());
-        conn.send("HELLO_ACK");
-        if (this.state == SimulationState.IDLE) this.state = SimulationState.CONFIGURING;
+    }
+    public void onClientDisconnected(WebSocket conn, int code, String reason) {
+        System.out.println("Closed " + conn.getRemoteSocketAddress() + " with exit code " + code + ". " + reason);
     }
 
     public void handleClientMessage(WebSocket conn, String message) {
         System.out.println("Client " + conn.getRemoteSocketAddress() + ": " + message);
 
         switch (this.state) {
+            case IDLE:
+                handleHelloMessage(conn, message);
+                break;
             case CONFIGURING:
                 handleConfigMessage(conn, message);
                 break;
@@ -28,6 +32,14 @@ public class SimulationController {
             default:
                 break;
         }
+    }
+    private void handleHelloMessage(WebSocket conn, String message) {
+        if (message.equalsIgnoreCase("HELLO")) {
+            this.state = SimulationState.CONFIGURING;
+            conn.send("HELLO_ACK");
+            return;
+        }
+        conn.send("SYSTEM IDLE");
     }
     private void handleConfigMessage(WebSocket conn, String message) {
         if (message.equalsIgnoreCase("RUN")) {

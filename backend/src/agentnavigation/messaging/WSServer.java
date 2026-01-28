@@ -31,7 +31,7 @@ public class WSServer extends WebSocketServer {
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         clients.remove(conn);
-        System.out.println("Closed " + conn.getRemoteSocketAddress() + " with exit code " + code + ". " + reason);
+        controller.onClientDisconnected(conn, code, reason);
     }
 
     @Override
