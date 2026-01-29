@@ -5,16 +5,9 @@ package agentnavigation;
  */
 
 import java.net.InetSocketAddress;
-import java.util.List;
 
 import org.java_websocket.server.WebSocketServer;
 
-import agentnavigation.algorithms.AlgorithmFactory;
-import agentnavigation.algorithms.SearchAlgorithm;
-import agentnavigation.environment.Environment;
-import agentnavigation.environment.EnvironmentLoader;
-import agentnavigation.environment.Node;
-import agentnavigation.listeners.ConsoleStepListener;
 import agentnavigation.messaging.WSServer;
 import agentnavigation.simulation.SimulationController;
 
@@ -36,14 +29,5 @@ public class Main {
         } catch (InterruptedException e) {
             server.stop();
         }
-    }
-
-
-    public static void runAlgorithm() {
-        Environment environment = EnvironmentLoader.createGridEnvironment(10, 10);
-        SearchAlgorithm algorithm = AlgorithmFactory.createBFS(ConsoleStepListener.INSTANCE);
-
-        List<Node> traversalList = algorithm.search(environment.getGraph(), environment.getStart(), environment.getEnd());
-        // System.out.println(traversalList);
     }
 }
