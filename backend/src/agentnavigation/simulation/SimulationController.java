@@ -1,6 +1,14 @@
 package agentnavigation.simulation;
 
+
 import org.java_websocket.WebSocket;
+
+import agentnavigation.algorithms.AlgorithmFactory;
+import agentnavigation.algorithms.SearchAlgorithm;
+import agentnavigation.environment.Environment;
+import agentnavigation.environment.EnvironmentLoader;
+import agentnavigation.listeners.*;
+import agentnavigation.messaging.MessageSerialiser;
 
 public class SimulationController {
     private SimulationState state = SimulationState.IDLE;
@@ -45,7 +53,8 @@ public class SimulationController {
         if (message.equalsIgnoreCase("RUN")) {
             this.state = SimulationState.RUNNING;
             conn.send("RUN_ACK");
-            
+
+            runAlgorithm(conn);
             return;
         }
 
@@ -57,5 +66,13 @@ public class SimulationController {
             conn.send("STOP_ACK");
             return;
         }
+    }
+
+    private void runAlgorithm(WebSocket conn) {
+        SocketStepListener listener = new SocketStepListener(msg -> conn.send(MessageSerialiser.toJson(msg)));
+        Environment environment = EnvironmentLoader.createGridEnvironment(10, 10);
+        SearchAlgorithm algorithm = AlgorithmFactory.createBFS(listener);
+
+        algorithm.search(environment.getGraph(), environment.getStart(), environment.getEnd());
     }
 }
