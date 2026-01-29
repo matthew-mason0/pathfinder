@@ -3,14 +3,18 @@ package agentnavigation.listeners;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Consumer;
 
 import agentnavigation.environment.Node;
 import agentnavigation.messaging.Message;
 import agentnavigation.messaging.MessageType;
 
 public class SocketStepListener implements StepListener{
-    public static final StepListener INSTANCE = new SocketStepListener();
-    private SocketStepListener() {};
+    private final Consumer<Message> sender;
+
+    public SocketStepListener(Consumer<Message> sender) {
+        this.sender = sender;
+    }
     
     @Override
     public void onAlgorithmStart(Node start) {
@@ -21,6 +25,8 @@ public class SocketStepListener implements StepListener{
             null,
             null
         );
+
+        sender.accept(message);
     }
 
     @Override
@@ -32,6 +38,8 @@ public class SocketStepListener implements StepListener{
             null,
             null
         );
+
+        sender.accept(message);
     }
 
     @Override
@@ -43,6 +51,8 @@ public class SocketStepListener implements StepListener{
             null,
             null
         );
+
+        sender.accept(message);
     }
 
     @Override
@@ -53,6 +63,8 @@ public class SocketStepListener implements StepListener{
             nodeListFormatter(frontier),
             null
         );
+
+        sender.accept(message);
     }
 
     @Override
@@ -64,6 +76,8 @@ public class SocketStepListener implements StepListener{
             nodeListFormatter(path),
             null
         );
+
+        sender.accept(message);
     }   
 
     @Override
@@ -74,6 +88,8 @@ public class SocketStepListener implements StepListener{
             null,
             null
         );
+
+        sender.accept(message);
     }
 
     private List<String> nodeListFormatter(List<Node> nodeList) {
