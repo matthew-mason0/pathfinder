@@ -1,5 +1,15 @@
+const CellType = {
+    EMPTY: "EMPTY",
+    WALL: "WALL",
+    START: "START",
+    GOAL: "GOAL",
+    VISITED: "VISITED",
+    FRONTIER: "FRONTIER",
+    PATH: "PATH"
+};
+
 class Cell {
-    constructor(x, y, type = "EMPTY") {
+    constructor(x, y, type = CellType.EMPTY) {
         this.x = x;
         this.y = y;
         this.type = type; // EMPTY,WALL,START,END
@@ -29,14 +39,14 @@ export class GridRenderer {
         this.cellSize = cellSize;
 
         this.colours = {
-            EMPTY: [255],
-            WALL: [40],
-            START: [0, 200, 0],
-            GOAL: [200, 0, 0],
-            VISITED: [150, 150, 255],
-            FRONTIER: [0, 150, 255],
-            PATH: [255, 255, 0],
-            AGENT: [255, 165, 0]
+            [CellType.EMPTY]: [255],
+            [CellType.WALL]: [40],
+            [CellType.START]: [0, 200, 0],
+            [CellType.GOAL]: [200, 0, 0],
+            [CellType.VISITED]: [150, 150, 255],
+            [CellType.FRONTIER]: [0, 150, 255],
+            [CellType.PATH]: [255, 255, 0],
+            [CellType.AGENT]: [255, 165, 0]
         };
     }
 
@@ -50,7 +60,7 @@ export class GridRenderer {
 
     drawCell(cell) {
         let size = this.cellSize;
-        let colour = this.colours[cell.type] || [255]; // white if undefined
+        let colour = this.colours[cell.type] || [255]; // white default
         stroke(200);
         strokeWeight(1);
         fill(...colour);
