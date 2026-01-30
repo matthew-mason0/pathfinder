@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 
+import agentnavigation.environment.GridNode;
 import agentnavigation.environment.Node;
 import agentnavigation.messaging.Message;
 import agentnavigation.messaging.MessageType;
@@ -18,10 +19,11 @@ public class SocketStepListener implements StepListener{
     
     @Override
     public void onAlgorithmStart(Node start) {
-
         Message message = new Message(
             MessageType.ALGORITHM_START,
             nodeIdFormatter(start),
+            nodeRowFormatter(start),
+            nodeColumnFormatter(start),
             null,
             null
         );
@@ -35,6 +37,8 @@ public class SocketStepListener implements StepListener{
         Message message = new Message(
             MessageType.NODE_DISCOVERED,
             nodeIdFormatter(node),
+            nodeRowFormatter(node),
+            nodeColumnFormatter(node),
             null,
             null
         );
@@ -48,6 +52,8 @@ public class SocketStepListener implements StepListener{
         Message message = new Message(
             MessageType.NODE_EXPLORED,
             nodeIdFormatter(node),
+            nodeRowFormatter(node),
+            nodeColumnFormatter(node),
             null,
             null
         );
@@ -59,6 +65,8 @@ public class SocketStepListener implements StepListener{
     public void onFrontierUpdate(Collection<Node> frontier) {
         Message message = new Message(
             MessageType.FRONTIER_UPDATE,
+            null,
+            null,
             null,
             nodeListFormatter(frontier),
             null
@@ -73,6 +81,8 @@ public class SocketStepListener implements StepListener{
         Message message = new Message(
             MessageType.PATH_FOUND,
             null,
+            null,
+            null,
             nodeListFormatter(path),
             null
         );
@@ -84,6 +94,8 @@ public class SocketStepListener implements StepListener{
     public void onAlgorithmEnd() {
         Message message = new Message(
             MessageType.ALGORITHM_END,
+            null,
+            null,
             null,
             null,
             null
@@ -107,5 +119,17 @@ public class SocketStepListener implements StepListener{
     private String nodeIdFormatter(Node node) {
         Integer nodeId = node.getId();
         return nodeId.toString();
+    }
+    private String nodeRowFormatter(Node node) {
+        if (!(node instanceof GridNode)) return null;
+        GridNode gridNode = (GridNode) node; 
+        Integer row = gridNode.getRow();
+        return row.toString();
+    }
+    private String nodeColumnFormatter(Node node) {
+        if (!(node instanceof GridNode)) return null;
+        GridNode gridNode = (GridNode) node; 
+        Integer column = gridNode.getColumn();
+        return column.toString();
     }
 }
