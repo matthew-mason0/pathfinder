@@ -29,7 +29,7 @@ public class WSClientTest extends WebSocketClient {
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
-        System.out.println("Closed with exit code" + code + ". " + reason);
+        System.out.println("Closed with exit code " + code + ". " + reason);
     }
 
     @Override
