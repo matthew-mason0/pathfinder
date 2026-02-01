@@ -1,28 +1,31 @@
+import { MessageHandler } from "./MessageHandler.js";
+
 export class SocketClient {
-    constuctor(url) {
+    constructor(url = "ws://localhost:1234") {
         this.url = url;
         this.socket = null;
+        // this.messageHandler = null;
         this.messageHandler = new MessageHandler();
     }
 
     connect() {
-        this.socket = new WebSocket(SOCKET_URL);
+        this.socket = new WebSocket(this.url);
 
         this.socket.onopen = () => {
             console.log("WebSocket connected");
-            socket.send("HELLO");
+            this.socket.send("HELLO");
         };
 
         this.socket.onclose = () => {
             console.log("WebSocket closed");
         };
 
-        socket.onerror = (err) => {
+        this.socket.onerror = (err) => {
             console.error("WebSocket error: " + err);
         };
 
-        socket.onmessage = (event) => {
-            handleMessage(event.data);
+        this.socket.onmessage = (event) => {
+            this.handleMessage(event.data);
         };
     }
 
@@ -36,6 +39,8 @@ export class SocketClient {
     }
 
     handleMessage(raw) {
+        // console.log("Server: " + raw);
+
         try {
             msg = JSON.parse(raw);
             console.log("Server: " + msg);

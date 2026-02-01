@@ -22,6 +22,7 @@ public class SimulationController {
     }
     public void onClientDisconnected(WebSocket conn, int code, String reason) {
         System.out.println("Closed " + conn.getRemoteSocketAddress() + " with exit code " + code + ". " + reason);
+        this.state = SimulationState.IDLE;
     }
 
     public void handleClientMessage(WebSocket conn, String message) {
