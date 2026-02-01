@@ -30,6 +30,6 @@ export class GridRenderer {
         stroke(200);
         strokeWeight(1);
         fill(...colour);
-        rect(cell.x * size, cell.y * size, size, size);
+        rect(cell.row * size, cell.column * size, size, size);
     }
 }

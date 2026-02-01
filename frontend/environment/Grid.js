@@ -5,20 +5,20 @@ export class Grid {
         this.rows = rows;
         this.columns = columns;
         this.cells = [];
-        for (let y = 0; y < this.rows; y++) {
-            this.cells[y] = [];
-            for (let x = 0; x < this.columns; x++) {
-                this.cells[y][x] = new Cell(x, y);
+        for (let row = 0; row < this.rows; row++) {
+            this.cells[row] = [];
+            for (let column = 0; column < this.columns; column++) {
+                this.cells[row][column] = new Cell(row, column);
             }
         }
     }
 
-    getCell(x, y) {
-        return this.cells[y][x];
+    getCell(row, column) {
+        return this.cells[row][column];
     }
 
-    setCellType(x, y, type) {
-        const cell = this.getCell(x, y);
+    setCellType(row, column, type) {
+        const cell = this.getCell(row, column);
         if (!cell) return;
         cell.type = type;
     }

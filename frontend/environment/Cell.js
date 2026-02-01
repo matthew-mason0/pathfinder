@@ -1,9 +1,9 @@
 import { CellType } from "../constants/CellType.js";
 
 export class Cell {
-    constructor(x, y, type = CellType.EMPTY) {
-        this.x = x;
-        this.y = y;
+    constructor(row, column, type = CellType.EMPTY) {
+        this.row = row;
+        this.column = column;
         //TODO validate type;
         this.type = type;
     }

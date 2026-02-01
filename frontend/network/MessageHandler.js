@@ -18,14 +18,14 @@ export class MessageHandler {
             case "FRONTIER_UPDATE":
                 for (const node of msg.nodeList) {
                     const coordinates = this.parseNodeFromString(node);
-                    this.environment.setCellType(coordinates.x, coordinates.y, CellType.FRONTIER);
+                    this.environment.setCellType(coordinates.row, coordinates.column, CellType.FRONTIER);
                 }
                 break;
 
             case "PATH_FOUND":
                 for (const node of msg.nodeList) {
                     const coordinates = this.parseNodeFromString(node);
-                    this.environment.setCellType(coordinates.x, coordinates.y, CellType.PATH);
+                    this.environment.setCellType(coordinates.row, coordinates.column, CellType.PATH);
                 }
                 break;
             
@@ -38,6 +38,6 @@ export class MessageHandler {
         const str = node;
         const cleaned = str.replace(/[()]/g, '');
         const coordinates = cleaned.split(", ");
-        return { x : Number(coordinates[0]), y : Number(coordinates[1]) };
+        return { row : Number(coordinates[0]), column : Number(coordinates[1]) };
     }
 }

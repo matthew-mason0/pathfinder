@@ -43,10 +43,9 @@ export class SocketClient {
 
     handleMessage(raw) {
         try {
-            msg = JSON.parse(raw);
+            const msg = JSON.parse(raw);
             console.log("Server: " + msg);
             if (this.messageHandler) this.messageHandler.processJson(msg);
-
         } catch (e) {
             console.log("Server: " + raw);
         }
