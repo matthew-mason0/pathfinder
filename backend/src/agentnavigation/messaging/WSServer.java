@@ -1,9 +1,8 @@
 package agentnavigation.messaging;
 
-import org.java_websocket.server.WebSocketServer;
-
 import agentnavigation.simulation.SimulationController;
 
+import org.java_websocket.server.WebSocketServer;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 
