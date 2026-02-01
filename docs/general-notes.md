@@ -33,3 +33,19 @@ The `EnvironmentLoader` factory class contains a static `createGridEnvironment` 
 ### Algorithm Classes
 At this time only the `BFS` class has been developed to direct focus to larger scale design. In the spirit of abstraction, the `BFS` class implements a `SearchAlgorithm` interface, and is instantiated with an `AlgorithmFactory` factory class.  
 The `BFS` class takes a given graph and start node and implements a queue and hashset to travese. A traversal list is produced by taking nodes from the queue and adding their neighbours to it. The hashset keeps record of which nodes have already been visited.
+
+## 01/02/26 - backend WebSockets
+WebSockets documentation: [WebSocket - Web APIs | MDN](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
+
+Listener and Message classes were created to sense for algorithm steps and prepare messages to hand to a WebSocket. WebSocket server and client classes were created to provide a platfrom with which to send messages and test how they would be recieved on the frontend. A `SimulationController` class was built to communicate with the server and maintain system states upon commands received from clients.  
+
+### Message Classes
+The `Message` class formats any algorithm step into a set of attributes: type, nodeId, nodeRow, nodeColumn, nodeList, info. Fields which were not applicable to a given message were to be filled with `null`. A `MessageType` enum was implemented to provide a discrete and finite set of cases to handle later on. A `MessageSerialiser` class was created to convert the message objects into JSON to be sent over the WebSocket.  
+
+### Listener Classes
+A series of listener classes were made, implemnting a `StepListener` interface to track algorithm start/end, node discovery and exploration, whole frontier updates, and found paths. Singleton instances of listeners were passed into the BFS algorithm as an attribute. At the key points in the algorithm code, respective methods were called on the listener passing any relevant info to be used in the message creation. `SilentStepListener` and `ConsoleStepListener` classes were created to do nothing and to print human-readable step logic to the console for testing. A `SocketStepListener` class was created to build messages and pass them up with a `Consumer` object. The `Consumer` is a lambda function designed to serialise and send the message.  
+
+### Simulation Controller and WebSocket Classes
+The `WSSocket` class inherits an external `WebSocketServer` library to override open, close, message, error and start methods. It passes control to a `SimulationController` class.  
+The `SimulationController` handles incoming and outgoing messages, and initialises and configures the environment and algorithim to offload main method responsibility.  
+The `WSClientTest` class inherits an extranal `WebSocketClient` library, overriding similar methods to provide a client to view and debug the server's connection and message handling.
