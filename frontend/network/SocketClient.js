@@ -4,8 +4,11 @@ export class SocketClient {
     constructor(url = "ws://localhost:1234") {
         this.url = url;
         this.socket = null;
-        // this.messageHandler = null;
-        this.messageHandler = new MessageHandler();
+        this.messageHandler = null;
+    }
+
+    setHandler(handler) {
+        this.messageHandler = handler;
     }
 
     connect() {
@@ -39,8 +42,6 @@ export class SocketClient {
     }
 
     handleMessage(raw) {
-        // console.log("Server: " + raw);
-
         try {
             msg = JSON.parse(raw);
             console.log("Server: " + msg);
