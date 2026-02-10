@@ -1,10 +1,9 @@
-import { MessageHandler } from "./MessageHandler.js";
-
 export class SocketClient {
-    constructor(url = "ws://localhost:1234") {
+    constructor(url = "ws://localhost:1234", queue, controller) {
         this.url = url;
         this.socket = null;
-        this.messageHandler = null;
+        this.messageQueue = queue;
+        this.controller = controller;
     }
 
     setHandler(handler) {
@@ -45,7 +44,8 @@ export class SocketClient {
         try {
             const msg = JSON.parse(raw);
             console.log("Server: " + msg);
-            if (this.messageHandler) this.messageHandler.processJson(msg);
+            this.messageQueue.enqueue(msg);
+            if (msg.type === "ALGORITHM_END") this.controller.run();
         } catch (e) {
             console.log("Server: " + raw);
         }

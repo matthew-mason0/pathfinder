@@ -1,8 +1,13 @@
 import { CellType } from "../constants/CellType.js";
 
 export class GridRenderer {
-    constructor(cellSize) {
-        this.cellSize = cellSize;
+    constructor(grid, x, y, w, h) {
+        this.grid = grid;
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.cellSize = min(this.w, this.h) / max(this.grid.rows, this.grid.columns);
 
         this.colours = {
             [CellType.EMPTY]: [255],
@@ -16,12 +21,19 @@ export class GridRenderer {
         };
     }
 
-    draw(grid) {
-        for (let row = 0; row < grid.rows; row++) {
-            for (let column = 0; column < grid.columns; column++) {
-                this.drawCell(grid.getCell(row, column));
+    draw() {
+        push();
+        for (let row = 0; row < this.grid.rows; row++) {
+            for (let column = 0; column < this.grid.columns; column++) {
+                this.drawCell(this.grid.getCell(row, column));
             }
         }
+        
+        noFill();
+        stroke(0);
+        strokeWeight(2);
+        rect(this.x, this.y, this.w, this.h);
+        pop();
     }
 
     drawCell(cell) {
@@ -30,6 +42,6 @@ export class GridRenderer {
         stroke(200);
         strokeWeight(1);
         fill(...colour);
-        rect(cell.row * size, cell.column * size, size, size);
+        rect(this.x + cell.row * size, this.y + cell.column * size, size, size);
     }
 }
