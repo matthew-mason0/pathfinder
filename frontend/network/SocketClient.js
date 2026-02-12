@@ -45,9 +45,9 @@ export class SocketClient {
             const msg = JSON.parse(raw);
             console.log("Server: " + msg);
             this.messageQueue.enqueue(msg);
-            if (msg.type === "ALGORITHM_END") this.controller.run();
+            if (msg.type === "ALGORITHM_END") this.controller.play();
         } catch (e) {
-            console.log("Server: " + raw);
+            console.log("Server(failed to parse): " + raw);
         }
     }
 }

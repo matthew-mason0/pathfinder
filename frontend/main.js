@@ -15,15 +15,21 @@ let controller;
 
 window.setup = function () {
 	createCanvas(windowWidth, windowHeight);
-	grid = new Grid(10, 10);
-	renderer = new GridRenderer(grid, 100, 100, 400, 400);
-	toolbar = new Toolbar();
-	window.stepQueue = new StepQueue();
-	inputHandler = new InputHandler();
-	controller = new Controller(window.stepQueue, new MessageHandler(grid));
 
-	window.socket = new SocketClient("ws://localhost:1234", window.stepQueue);
+	window.stepQueue = new StepQueue();
+
+	grid = new Grid(10, 10);
+	
+	renderer = new GridRenderer(grid, 100, 100, 400, 400);
+	
+	controller = new Controller(window.stepQueue, new MessageHandler(grid));
+	window.socket = new SocketClient("ws://localhost:1234", window.stepQueue, controller);
 	window.socket.connect();
+	controller.socket = window.socket;
+
+	toolbar = new Toolbar(controller);
+	
+	inputHandler = new InputHandler(toolbar);
 };
 
 window.draw = function () {

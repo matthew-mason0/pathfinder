@@ -5,4 +5,8 @@ export class RunIcon extends Icon {
         super(toolbar, position);
         this.controller = controller;
     }
+
+    onClick() {
+        this.controller.run();
+    }
 }
