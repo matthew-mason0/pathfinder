@@ -33,10 +33,12 @@ export class Controller {
     }
 
     step() {
+
         console.log("step function running");
+
         if (this.stepQueue.isEmpty()) {
-            clearInterval(this.intervalID);
             this.state = "IDLE";
+            clearInterval(this.intervalID);
             return;
         }
 
@@ -45,8 +47,10 @@ export class Controller {
     }
 
     reset() {
-        if (this.state === "RUNNING") return;
         this.socket.send("STOP");
+        this.state = "IDLE";
+        if (this.intervalID) clearInterval(this.intervalID);
+        this.stepQueue.clear();
         // TODO handle reset for non-grid graphs
         const msg = {"type":"CLEAR"};
         this.messageHandler.processJson(msg);

@@ -1,4 +1,5 @@
 import { RunIcon } from "./RunIcon.js";
+import { ResetIcon } from "./ResetIcon.js";
 
 export class Toolbar {
     constructor(controller) {
@@ -12,7 +13,8 @@ export class Toolbar {
         
         let position = 0;
         this.runIcon = new RunIcon(this, position++, this.controller);
-        this.icons = [this.runIcon];
+        this.resetIcon = new ResetIcon(this, position++, this.controller);
+        this.icons = [this.runIcon, this.resetIcon];
     }
 
     draw() {
@@ -35,6 +37,9 @@ export class Toolbar {
     mousePressed(mX, mY) {
         if (this.runIcon.mouseOver) {
             this.runIcon.onClick();
+        }
+        if (this.resetIcon.mouseOver) {
+            this.resetIcon.onClick();
         }
     }
 }

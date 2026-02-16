@@ -1,13 +1,13 @@
 import { Icon } from "./Icon.js";
 
-export class RunIcon extends Icon {
+export class ResetIcon extends Icon {
     constructor(toolbar, position, controller) {
         super(toolbar, position);
-        this.text = "▶";
+        this.text = "↺";
         this.controller = controller;
     }
 
     onClick() {
-        this.controller.run();
+        this.controller.reset();
     }
 }

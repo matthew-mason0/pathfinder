@@ -8,7 +8,7 @@ export class Icon {
         this.y = this.padding / 2;
         this.w = this.iconSize;
         this.h = this.iconSize;
-        this.text = "▶";
+        this.text = "X";
 
         this.colour = [200];
     }
