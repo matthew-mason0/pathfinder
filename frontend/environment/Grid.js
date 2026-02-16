@@ -22,4 +22,8 @@ export class Grid {
         if (!cell) return;
         cell.type = type;
     }
+
+    getAll() {
+        return this.cells;
+    }
 }

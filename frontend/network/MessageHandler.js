@@ -28,6 +28,14 @@ export class MessageHandler {
                     this.environment.setCellType(coordinates.row, coordinates.column, CellType.PATH);
                 }
                 break;
+            case "CLEAR":
+                const nodes = this.environment.getAll();
+                for (let row = 0; row < this.environment.rows; row++) {
+                    for (let column = 0; column < this.environment.columns; column++) {
+                        this.environment.setCellType(row, column, CellType.EMPTY);
+                    }
+                }
+                break;
             
             default:
                 break;

@@ -43,4 +43,12 @@ export class Controller {
         const msg = this.stepQueue.dequeue();
         this.messageHandler.processJson(msg);
     }
+
+    reset() {
+        if (this.state === "RUNNING") return;
+        this.socket.send("STOP");
+        // TODO handle reset for non-grid graphs
+        const msg = {"type":"CLEAR"};
+        this.messageHandler.processJson(msg);
+    }
 }
