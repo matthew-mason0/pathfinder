@@ -69,10 +69,11 @@ public class SimulationController {
         }
     }
 
-    private void runAlgorithm(WebSocket conn) {
+    private void runAlgorithm(WebSocket conn) {#
+        // TODO FIX
         SocketStepListener listener = new SocketStepListener(msg -> conn.send(MessageSerialiser.toJson(msg)));
         Environment environment = EnvironmentLoader.createGridEnvironment(10, 10);
-        SearchAlgorithm algorithm = AlgorithmFactory.createBFS(listener);
+        SearchAlgorithm algorithm = AlgorithmFactory.createDFS(listener);
 
         algorithm.search(environment.getGraph(), environment.getStart(), environment.getEnd());
     }

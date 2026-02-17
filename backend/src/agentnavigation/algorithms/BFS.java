@@ -37,7 +37,7 @@ public class BFS implements SearchAlgorithm {
         visited.add(start);
         queue.add(start);
         listener.onNodeDiscovered(start);
-        listener.onFrontierUpdate(traversalList);
+        listener.onFrontierUpdate(queue);
 
         while (!queue.isEmpty()) {
             Node current = queue.remove();
@@ -52,14 +52,13 @@ public class BFS implements SearchAlgorithm {
                 return traversalList;
             }
             for (Node neighbour : graph.getNeighbours(current)) {
-                if (!visited.contains(neighbour)) {
-                    visited.add(neighbour);
-                    queue.add(neighbour);
-                    predecessors.put(neighbour, current);
+                if (visited.contains(neighbour)) continue;
+                visited.add(neighbour);
+                queue.add(neighbour);
+                predecessors.put(neighbour, current);
 
-                    listener.onNodeDiscovered(neighbour);
-                    listener.onFrontierUpdate(queue);
-                }
+                listener.onNodeDiscovered(neighbour);
+                listener.onFrontierUpdate(queue);
             }
         }
         listener.onAlgorithmEnd();
@@ -67,6 +66,7 @@ public class BFS implements SearchAlgorithm {
     }
 
     private List<Node> buildPath(Node start, Node end, Map<Node, Node> predecessors) {
+        // TODO Refactor for all algorithmns
         List<Node> path = new ArrayList<>();
         Node current = end;
         while (current != null) {
