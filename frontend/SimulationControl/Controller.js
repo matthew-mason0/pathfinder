@@ -51,8 +51,10 @@ export class Controller {
         window.stepping = false;
         this.socket.send("STOP");
         this.state = "IDLE";
+
         if (this.intervalID) clearInterval(this.intervalID);
         this.stepQueue.clear();
+        
         // TODO handle reset for non-grid graphs
         const msg = {"type":"CLEAR"};
         this.messageHandler.processJson(msg);

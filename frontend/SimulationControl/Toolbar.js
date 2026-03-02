@@ -1,7 +1,7 @@
-import { RunIcon } from "./RunIcon.js";
-import { ResetIcon } from "./ResetIcon.js";
-import { SelectStartIcon } from "./SelectStartIcon.js";
-import { SelectEndIcon } from "./SelectEndIcon.js";
+import { RunIcon } from "./Icons/RunIcon.js";
+import { ResetIcon } from "./Icons/ResetIcon.js";
+import { SelectStartIcon } from "./Icons/SelectStartIcon.js";
+import { SelectEndIcon } from "./Icons/SelectEndIcon.js";
 
 export class Toolbar {
     constructor(controller) {
