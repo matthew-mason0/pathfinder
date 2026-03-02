@@ -15,6 +15,7 @@ let controller;
 
 window.setup = function () {
 	createCanvas(windowWidth, windowHeight);
+	window.stepping = false;
 
 	window.stepQueue = new StepQueue();
 
@@ -36,6 +37,11 @@ window.draw = function () {
   	background(50);
 	renderer.draw();
 	toolbar.draw();
+
+	if (window.stepping) {
+		controller.step();
+	}
+
 };
 
 window.mousePressed = function () {

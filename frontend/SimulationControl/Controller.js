@@ -22,7 +22,7 @@ export class Controller {
     
     play() {
         console.log(this.stepQueue);
-        this.intervalID = setInterval(() => this.step(), 5);
+        window.stepping = true;
 
         // let msg;
 
@@ -38,7 +38,7 @@ export class Controller {
 
         if (this.stepQueue.isEmpty()) {
             this.state = "IDLE";
-            clearInterval(this.intervalID);
+            window.stepping = false;
             return;
         }
 
@@ -47,6 +47,7 @@ export class Controller {
     }
 
     reset() {
+        window.stepping = false;
         this.socket.send("STOP");
         this.state = "IDLE";
         if (this.intervalID) clearInterval(this.intervalID);
