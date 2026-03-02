@@ -1,11 +1,15 @@
+import { CellType } from "../constants/CellType.js";
 export class Controller {
-    constructor(stepQueue, messageHandler) {
+    constructor(stepQueue, messageHandler, environment, renderer) {
+        this.environment = environment;
+        this.renderer = renderer;
+
         this.state = "IDLE";
         this.stepQueue = stepQueue;
         this.messageHandler = messageHandler;
         this.socket = window.socket;
         this.intervalID = null;
-        this.selectingNode = false;
+        this.selectingNode = null;
     }
 
     load() {
@@ -54,20 +58,58 @@ export class Controller {
 
         if (this.intervalID) clearInterval(this.intervalID);
         this.stepQueue.clear();
-        
+
         // TODO handle reset for non-grid graphs
+        // TODO handle clear internally
         const msg = {"type":"CLEAR"};
         this.messageHandler.processJson(msg);
     }
 
     selectStart() {
-        if (this.state != "IDLE") return;
-        this.selectingNode = true;
-        console.log("Selecting start node");
+        this.selectingNode = "START";
+        this.promptNodeSelect();
     }
     selectEnd() {
+        this.selectingNode = "END";
+        this.promptNodeSelect();
+    }
+
+    promptNodeSelect() {
         if (this.state != "IDLE") return;
+        console.log("Selecting node");
+        const nodes = this.environment.getAll();
+        for (let row = 0; row < this.environment.rows; row++) {
+            for (let column = 0; column < this.environment.columns; column++) {
+                this.environment.setCellType(row, column, CellType.SELECTING);
+            }
+        }
+    }
+
+    unpromptNodeSelect(row, column) {
+        this.clearGrid();
+        if (!this.selectingNode) return;
+        // TODO: Fix Start/End
+        this.environment.setCellType(row, column, (this.selectingNode === "END") ? CellType.END : CellType.START);
+    }
+
+    clearGrid() {
         this.selectingNode = true;
-        console.log("Selecting end node");
+        const nodes = this.environment.getAll();
+        for (let row = 0; row < this.environment.rows; row++) {
+            for (let column = 0; column < this.environment.columns; column++) {
+                this.environment.setCellType(row, column, CellType.EMPTY);
+            }
+        }
+    }
+
+    mouseOverEnvironment(mX, mY) {
+        return this.renderer.mouseOver(mX, mY);
+    }
+    mousePressedEnvironment(mX, my) {
+        let selectedNode = this.renderer.getNodeFromMouse(mX, my);
+        const row = selectedNode.x
+        const column = selectedNode.y;
+        console.log(selectedNode);
+        this.unpromptNodeSelect(row, column);
     }
 }

@@ -4,7 +4,7 @@
 The frontend `gridRenderer.js` file was created to handle the display logic necessary to put graphics on `index.html`. It is comprised of Cell, Grid and Grid Renderer classes. At this stage it is simple, to provide a placeholder interface for the backend to be implemented to. Upon development of the backend, this file may be refined to more precisely convey the inner-workings of algorithms.
 
 ### Cell class
-The Cell class holds minimal data - it's coordinate relative to the grid it is contained in, and a terrain type (`EMPTY/WALL/START/GOAL/...`) to reflect its algorithmic use. It contains no methods; it is simply for data grouping.
+The Cell class holds minimal data - it's coordinate relative to the grid it is contained in, and a terrain type (`EMPTY/WALL/START/END/...`) to reflect its algorithmic use. It contains no methods; it is simply for data grouping.
 
 ### Grid class
 The Grid class provides a context for the cells. It contains a 2-dimensional array attribute for the cells - the constructor instantiates a new cell into each element. It also contains a `getCell()` method to provide a reference to each cell by its coordinate on the grid. Further methods such as `getNeighbours(Cell)` and `isWalkable(Cell)` are anticipated once the backend been integrated.

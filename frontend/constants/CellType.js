@@ -2,8 +2,9 @@ export const CellType = {
     EMPTY: "EMPTY",
     WALL: "WALL",
     START: "START",
-    GOAL: "GOAL",
+    END: "END",
     VISITED: "VISITED",
     FRONTIER: "FRONTIER",
-    PATH: "PATH"
+    PATH: "PATH",
+    SELECTING: "SELECTING"
 };

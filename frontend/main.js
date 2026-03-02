@@ -23,14 +23,14 @@ window.setup = function () {
 	
 	renderer = new GridRenderer(grid, 100, 100, 400, 400);
 	
-	controller = new Controller(window.stepQueue, new MessageHandler(grid));
+	controller = new Controller(window.stepQueue, new MessageHandler(grid), grid, renderer);
 	window.socket = new SocketClient("ws://localhost:1234", window.stepQueue, controller);
 	window.socket.connect();
 	controller.socket = window.socket;
 
 	toolbar = new Toolbar(controller);
 	
-	inputHandler = new InputHandler(toolbar);
+	inputHandler = new InputHandler(toolbar, controller);
 };
 
 window.draw = function () {
