@@ -1,5 +1,7 @@
 import { RunIcon } from "./RunIcon.js";
 import { ResetIcon } from "./ResetIcon.js";
+import { SelectStartIcon } from "./SelectStartIcon.js";
+import { SelectEndIcon } from "./SelectEndIcon.js";
 
 export class Toolbar {
     constructor(controller) {
@@ -14,7 +16,9 @@ export class Toolbar {
         let position = 0;
         this.runIcon = new RunIcon(this, position++, this.controller);
         this.resetIcon = new ResetIcon(this, position++, this.controller);
-        this.icons = [this.runIcon, this.resetIcon];
+        this.selectStartIcon = new SelectStartIcon(this, position++, this.controller);
+        this.selectEndIcon = new SelectEndIcon(this, position++, this.controller);
+        this.icons = [this.runIcon, this.resetIcon, this.selectStartIcon, this.selectEndIcon];
     }
 
     draw() {
@@ -35,11 +39,17 @@ export class Toolbar {
     }
 
     mousePressed(mX, mY) {
-        if (this.runIcon.mouseOver) {
+        if (this.runIcon.mouseOver(mX, mY)) {
             this.runIcon.onClick();
         }
-        if (this.resetIcon.mouseOver) {
+        if (this.resetIcon.mouseOver(mX, mY)) {
             this.resetIcon.onClick();
+        }
+        if (this.selectStartIcon.mouseOver(mX, mY)) {
+            this.selectStartIcon.onClick();
+        }
+        if (this.selectEndIcon.mouseOver(mX, mY)) {
+            this.selectEndIcon.onClick();
         }
     }
 }

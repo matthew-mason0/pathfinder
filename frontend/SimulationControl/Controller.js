@@ -5,6 +5,7 @@ export class Controller {
         this.messageHandler = messageHandler;
         this.socket = window.socket;
         this.intervalID = null;
+        this.selectingNode = false;
     }
 
     load() {
@@ -24,8 +25,8 @@ export class Controller {
         console.log(this.stepQueue);
         window.stepping = true;
 
+        // non-async:
         // let msg;
-
         // while (!this.stepQueue.isEmpty()) {
         //     msg = this.stepQueue.dequeue();
         //     this.messageHandler.processJson(msg);
@@ -55,5 +56,16 @@ export class Controller {
         // TODO handle reset for non-grid graphs
         const msg = {"type":"CLEAR"};
         this.messageHandler.processJson(msg);
+    }
+
+    selectStart() {
+        if (this.state != "IDLE") return;
+        this.selectingNode = true;
+        console.log("Selecting start node");
+    }
+    selectEnd() {
+        if (this.state != "IDLE") return;
+        this.selectingNode = true;
+        console.log("Selecting end node");
     }
 }
