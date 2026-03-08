@@ -14,10 +14,13 @@ export class ConfigPage {
         this.backgroundR = this.backgroundMargin * 2;
 
         // close button
-        this.closeButton = new Button("X", windowWidth * 4/5, windowHeight / 30, min(windowWidth, windowHeight) / 15, min(windowWidth, windowHeight) / 15);
+        this.closeButton = new Button("X", windowWidth * 5/6, windowHeight / 30, min(windowWidth, windowHeight) / 15, min(windowWidth, windowHeight) / 15);
         this.closeButton.setR(min(windowWidth, windowHeight) / 40);
+        this.closeButton.setFillColour([0, 0]);
+        this.closeButton.setStrokeColour([255]);
+        this.closeButton.setTextColour([255]);
         this.closeButton.setOnClickAction(() => {
-            window.closeConfigPage();
+            window.closePage();
         });
     }
 
@@ -32,7 +35,6 @@ export class ConfigPage {
         noStroke();
 
         rect(this.backgroundX, this.backgroundY, this.backgroundW, this.backgroundH, this.backgroundR);
-        translate(this.backgroundX, this.backgroundY);
 
         // title
         fill(...this.textColour);

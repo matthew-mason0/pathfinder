@@ -48,6 +48,9 @@ export class Button {
     setStrokeColour(strokeColour) {
         this.strokeColour = strokeColour;
     }
+    setTextColour(textColour) {
+        this.textColour = textColour;
+    }
     setR(r) {
         this.r = r;
     }

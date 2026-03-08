@@ -3,7 +3,7 @@ import { Button } from "../Button.js";
 
 export class LandingPage {
     constructor() {
-        this.background = 0;
+        this.background = [50];
 
         this.title = "PATHFINDER";
 
@@ -15,10 +15,10 @@ export class LandingPage {
         this.logo = new Logo(logoX, logoY, logoW);
         
         // instantiate buttons
-        this.demoButton = new Button("DEMO", 0, 0, 100, 50);
+        this.environmentButton = new Button("ENVIRONMENT", 0, 0, 100, 50);
         this.configButton = new Button("CONFIG", 0, 0, 100, 50);
         this.runButton = new Button("RUN", 0, 0, 100, 50);
-        this.buttons = [this.demoButton, this.configButton, this.runButton];
+        this.buttons = [this.environmentButton, this.configButton, this.runButton];
 
         // reposition
         this.buttonWidth = windowWidth / 4;
@@ -36,6 +36,9 @@ export class LandingPage {
         this.configButton.setOnClickAction(() => {
             window.openConfigPage();
         });
+        this.environmentButton.setOnClickAction(() => {
+            window.openEnvironmentPage();
+        });
     }
 
     mousePressed(mX, mY) {
@@ -46,6 +49,7 @@ export class LandingPage {
 
     draw() {
         push();
+        background(...this.background);
 
         // title
         textAlign(CENTER, CENTER);

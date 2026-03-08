@@ -9,15 +9,15 @@ export class Logo {
         rect(this.x, this.y, this.w);
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-                let x = this.x + i * this.w / 3;
-                let y = this.y + j * this.w / 3;
+                let x = this.x + j * this.w / 3;
+                let y = this.y + i * this.w / 3;
                 push();
-                const colour = [255];
-                fill(...colour);
+                fill(255);
+                if (i === 2 || j === 0) fill(255, 255, 0);
                 if (i === 0 && j === 0) fill(0, 200, 0);
-                if (i === 1 && j === 0 || i === 0 && j === 1) fill(0, 150, 255);
-                if (i === 1 && j === 1 || i === 2 && j === 0) fill(40);
                 if (i === 2 && j === 2) fill(200, 0, 0);
+                if (i === 0 && j === 1) fill(0, 150, 255);
+                if (i === 0 && j === 2 || i === 1 && j === 1) fill(40);
                 rect(x, y, this.w/3);
                 pop();
             }
