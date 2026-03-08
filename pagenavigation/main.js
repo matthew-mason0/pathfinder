@@ -1,20 +1,21 @@
 import { LandingPage } from "./LandingPage/LandingPage.js";
 import { ConfigPage } from "./ConfigPage/ConfigPage.js";
+import { EnvironmentPage } from "./EnvironmentPage/EnvironmentPage.js";
 
-let currentPage = "LANDING";
-currentPage = "CONFIG"; // remove after testing
+let currentPage = "ENVIRONMENT";
 
 let landingPage;
 let configPage;
+let environmentPage;
 
 window.setup = function () {
 	createCanvas(windowWidth, windowHeight);
 	landingPage = new LandingPage();
 	configPage = new ConfigPage();
+	environmentPage = new EnvironmentPage(10);
 };
 
 window.draw = function () {
-  	background(50);
 	switch (currentPage) {
 		case "LANDING":
 			landingPage.draw();
@@ -22,6 +23,11 @@ window.draw = function () {
 		case "CONFIG":
 			landingPage.draw();
 			configPage.draw();
+			break;
+		case "ENVIRONMENT":
+			landingPage.draw();
+			environmentPage.draw();
+			break;
 		default:
 			break;
 	}
@@ -35,6 +41,9 @@ window.mousePressed = function () {
 		case "CONFIG":
 			configPage.mousePressed(mouseX, mouseY);
 			break;
+		case "ENVIRONMENT":
+			environmentPage.mousePressed(mouseX, mouseY);
+			break;
 		default:
 			break;
 	}
@@ -43,6 +52,9 @@ window.mousePressed = function () {
 window.openConfigPage = function () {
 	currentPage = "CONFIG";
 }
-window.closeConfigPage = function () {
+window.openEnvironmentPage = function () {
+	currentPage = "ENVIRONMENT";
+}
+window.closePage = function () {
 	currentPage = "LANDING";
 }
