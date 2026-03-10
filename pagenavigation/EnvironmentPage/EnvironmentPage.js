@@ -1,10 +1,12 @@
 import { Button } from "../Button.js";
 import { SettingsList } from "../SettingsList.js";
 import { GridEnvironment } from "./GridEnvironment.js";
+import { Toolbar } from "./Toolbar.js";
 
 export class EnvironmentPage {
     constructor() {
         this.textColour = [0];
+        let cumulativeHeight = 0;
 
         // background
         this.backgroundColour = [200, 200];
@@ -16,7 +18,7 @@ export class EnvironmentPage {
         this.backgroundR = this.backgroundMargin * 2;
 
         // close button
-        this.closeButton = new Button("X", windowWidth * 5/6, windowHeight / 30, min(windowWidth, windowHeight) / 15, min(windowWidth, windowHeight) / 15);
+        this.closeButton = new Button("X", windowWidth * 5/6, windowHeight / 30, cumulativeHeight + min(windowWidth, windowHeight) / 15, min(windowWidth, windowHeight) / 15);
         this.closeButton.setR(min(windowWidth, windowHeight) / 40);
         this.closeButton.setFillColour([0, 0]);
         this.closeButton.setStrokeColour([0]);
@@ -24,20 +26,27 @@ export class EnvironmentPage {
         this.closeButton.setOnClickAction(() => {
             window.closePage();
         });
+        cumulativeHeight += this.closeButton.h;
 
-        // TODO: Fix positioning
         // settings list
         const settingsListW = windowWidth * 3/4;
         const settingsListH = windowHeight / 4;
-        this.settingsList = new SettingsList(this, windowWidth/2 - settingsListW/2, windowHeight/4 - settingsListH/2, settingsListW, settingsListH);
+        this.settingsList = new SettingsList(this, windowWidth/2 - settingsListW/2, cumulativeHeight + windowHeight/5 - settingsListH/2, settingsListW, settingsListH);
+        cumulativeHeight += this.settingsList.h;
+
+        // toolbar
+        this.toolbar = new Toolbar(this, windowWidth / 8, cumulativeHeight + windowHeight / 8, windowWidth * 6/8, windowHeight / 20);
+        cumulativeHeight += this.toolbar.x;
 
         // grid environment
         const gridEnvironmentW = windowWidth * 2/3;
-        this.gridEnvironment = new GridEnvironment(this, windowWidth/2 - gridEnvironmentW/2, windowHeight * 2/3 - gridEnvironmentW/2, gridEnvironmentW, gridEnvironmentW);
+        this.gridEnvironment = new GridEnvironment(this, windowWidth/2 - gridEnvironmentW/2, cumulativeHeight + windowHeight /3 - gridEnvironmentW/2, gridEnvironmentW, gridEnvironmentW);
+        cumulativeHeight += this.gridEnvironment.w;
     }
 
     mousePressed(mX, mY) {
         if (this.closeButton.mouseOver(mX, mY)) this.closeButton.onClick();
+        else if (this.gridEnvironment.mouseOver(mX, mY)) this.gridEnvironment.handleClick(mX, mY);
     }
 
     draw() {
@@ -60,8 +69,11 @@ export class EnvironmentPage {
         // close button
         this.closeButton.draw();
 
-        //settings list
+        // settings list
         this.settingsList.draw();
+
+        // toolbar
+        this.toolbar.draw();
 
         // grid environment
         this.gridEnvironment.draw();

@@ -13,6 +13,8 @@ export class SettingsList {
         noFill();
         stroke(...this.container.textColour);
         rect(this.x, this.y, this.w, this.h);
+
+        
         pop();
     }
 }

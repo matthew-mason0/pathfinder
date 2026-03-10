@@ -1,4 +1,5 @@
 import { Button } from "../Button.js";
+import { SettingsList } from "../SettingsList.js";
 
 export class ConfigPage {
     constructor() {
@@ -22,6 +23,11 @@ export class ConfigPage {
         this.closeButton.setOnClickAction(() => {
             window.closePage();
         });
+
+        // settings list
+        const settingsListW = windowWidth * 3/4;
+        const settingsListH = windowHeight / 4;
+        this.settingsList = new SettingsList(this, windowWidth/2 - settingsListW/2, windowHeight/4 - settingsListH/2, settingsListW, settingsListH);
     }
 
     mousePressed(mX, mY) {
@@ -47,6 +53,9 @@ export class ConfigPage {
         
         // close button
         this.closeButton.draw();
+
+        // settings list
+        this.settingsList.draw();
         pop();
     }
 }
