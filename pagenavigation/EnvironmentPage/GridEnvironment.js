@@ -1,8 +1,9 @@
 import { Node } from "./Node.js";
 
 export class GridEnvironment {
-    constructor(container, x, y, w, h) {
+    constructor(container, toolbar, x, y, w, h) {
         this.container = container;
+        this.toolbar = toolbar;
         this.x = x;            
         this.y = y;
         this.w = w;
@@ -15,12 +16,15 @@ export class GridEnvironment {
         let nodeW = this.w / this.columns;
         let nodeH = this.h / this.rows;
 
-        for (let i = 0; i < this.rows; i++) {
-            this.nodes[i] = [];
-            for (let j = 0; j < this.columns; j++) {
-                this.nodes[i][j] = new Node(this.x + j * nodeW, this.y + i * nodeH, nodeW, nodeH);
+        for (let row = 0; row < this.rows; row++) {
+            this.nodes[row] = [];
+            for (let column = 0; column < this.columns; column++) {
+                this.nodes[row][column] = new Node(this, row, column, this.x + column * nodeW, this.y + row * nodeH, nodeW, nodeH);
             }
         }
+
+        this.startNode = this.nodes[0][0];
+        this.endNode = this.nodes[this.rows - 1][this.columns - 1];
     }
 
     mouseOver(mX, mY) {
@@ -32,15 +36,25 @@ export class GridEnvironment {
     }
 
     handleClick(mX, mY) {
-        console.log("gridEnvironment clicked");
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.columns; j++) {
                 if (this.nodes[i][j].mouseOver(mX, mY)) {
-                    this.nodes[i][j].onClick();
+                    this.nodes[i][j].setType(this.toolbar.selectedOperation);
                     break;
                 }
             }
         }
+    }
+
+    updateStart(newStart) {
+        if (this.startNode === newStart) return;
+        this.startNode.setType("EMPTY");
+        this.startNode = newStart;
+    }
+    updateEnd(newEnd) {
+        if (this.endNode === newEnd) return;
+        this.endNode.setType("EMPTY");
+        this.endNode = newEnd;
     }
 
     draw() {

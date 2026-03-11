@@ -9,14 +9,41 @@ export class Toolbar {
         this.h = h;
 
         this.icons = [];
-        let iconMargin = this.h / 10;
-        let iconW = this.h - iconMargin * 2;
-        let position = 0;
+        this.iconMargin = this.h/4;
+        this.iconW = this.h - this.iconMargin;
+        this.iconPosition = 0;
         // TODO: fix positioning
-        const wallIcon = new Icon(this, "WALL", this.x + iconMargin/2, this.y + iconMargin/2, iconW, iconW);
-        this.icons.push(wallIcon);
+
+        this.addIcon("WALL");
+        this.addIcon("START");
+        this.addIcon("END");
 
         this.selectedOperation = "START";
+    }
+
+    addIcon(operation) {
+        const x = this.x + (this.iconPosition+1) * this.iconMargin/2 + this.iconPosition * this.iconW;
+        const y = this.y + this.iconMargin/2;
+        const newIcon = new Icon(this, operation, x, y, this.iconW, this.iconW);
+        this.icons.push(newIcon);
+        this.iconPosition++;
+    }
+
+    mouseOver(mX, mY) {
+        if (mX < this.x) return false;
+        if (mX > this.x + this.w) return false;
+        if (mY < this.y) return false;
+        if (mY > this.y + this.h) return false;
+        return true;
+    }
+
+    handleClick(mX, mY) {
+        for (let icon of this.icons) {
+            if (icon.mouseOver(mX, mY)) {
+                icon.onClick();
+                break;
+            }
+        }
     }
 
     draw() {

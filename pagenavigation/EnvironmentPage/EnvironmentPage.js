@@ -36,16 +36,17 @@ export class EnvironmentPage {
 
         // toolbar
         this.toolbar = new Toolbar(this, windowWidth / 8, cumulativeHeight + windowHeight / 8, windowWidth * 6/8, windowHeight / 20);
-        cumulativeHeight += this.toolbar.x;
+        cumulativeHeight += this.toolbar.h;
 
         // grid environment
-        const gridEnvironmentW = windowWidth * 2/3;
-        this.gridEnvironment = new GridEnvironment(this, windowWidth/2 - gridEnvironmentW/2, cumulativeHeight + windowHeight /3 - gridEnvironmentW/2, gridEnvironmentW, gridEnvironmentW);
-        cumulativeHeight += this.gridEnvironment.w;
+        const gridEnvironmentW = windowWidth / 3;
+        this.gridEnvironment = new GridEnvironment(this, this.toolbar, windowWidth/3, cumulativeHeight + windowHeight/4, windowWidth/3, windowWidth/3);
+        cumulativeHeight += this.gridEnvironment.h;
     }
 
     mousePressed(mX, mY) {
         if (this.closeButton.mouseOver(mX, mY)) this.closeButton.onClick();
+        else if (this.toolbar.mouseOver(mX, mY)) this.toolbar.handleClick(mX, mY);
         else if (this.gridEnvironment.mouseOver(mX, mY)) this.gridEnvironment.handleClick(mX, mY);
     }
 
