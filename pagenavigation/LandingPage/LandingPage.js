@@ -1,5 +1,5 @@
 import { Logo } from "./Logo.js";
-import { Button } from "../Button.js";
+import { Button } from "../PageElements/Button.js";
 
 export class LandingPage {
     constructor() {

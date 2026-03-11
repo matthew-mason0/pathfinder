@@ -50,9 +50,11 @@ window.mousePressed = function () {
 }
 
 window.openConfigPage = function () {
+	configPage.settingsList.showDOMs();
 	currentPage = "CONFIG";
 }
 window.openEnvironmentPage = function () {
+	environmentPage.settingsList.showDOMs();
 	currentPage = "ENVIRONMENT";
 }
 window.closePage = function () {

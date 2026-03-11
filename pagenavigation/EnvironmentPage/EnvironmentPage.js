@@ -1,7 +1,7 @@
-import { Button } from "../Button.js";
-import { SettingsList } from "../SettingsList.js";
-import { GridEnvironment } from "./GridEnvironment.js";
-import { Toolbar } from "./Toolbar.js";
+import { Button } from "../PageElements/Button.js";
+import { SettingsList } from "../PageElements/SettingsList.js";
+import { GridEnvironment } from "./GridEnvironment/GridEnvironment.js";
+import { Toolbar } from "./Toolbar/Toolbar.js";
 
 export class EnvironmentPage {
     constructor() {
@@ -23,9 +23,6 @@ export class EnvironmentPage {
         this.closeButton.setFillColour([0, 0]);
         this.closeButton.setStrokeColour([0]);
         this.closeButton.setTextColour([0]);
-        this.closeButton.setOnClickAction(() => {
-            window.closePage();
-        });
         cumulativeHeight += this.closeButton.h;
 
         // settings list
@@ -33,6 +30,10 @@ export class EnvironmentPage {
         const settingsListH = windowHeight / 4;
         this.settingsList = new SettingsList(this, windowWidth/2 - settingsListW/2, cumulativeHeight + windowHeight/5 - settingsListH/2, settingsListW, settingsListH);
         cumulativeHeight += this.settingsList.h;
+
+        // settings
+        this.settingsList.addSetting("Rows: ", "NUMBER");
+        this.settingsList.addSetting("Columns: ", "NUMBER");
 
         // toolbar
         this.toolbar = new Toolbar(this, windowWidth / 8, cumulativeHeight + windowHeight / 8, windowWidth * 6/8, windowHeight / 20);
@@ -42,6 +43,11 @@ export class EnvironmentPage {
         const gridEnvironmentW = windowWidth / 3;
         this.gridEnvironment = new GridEnvironment(this, this.toolbar, windowWidth/3, cumulativeHeight + windowHeight/4, windowWidth/3, windowWidth/3);
         cumulativeHeight += this.gridEnvironment.h;
+
+        this.closeButton.setOnClickAction(() => {
+            this.settingsList.hideDOMs();
+            window.closePage();
+        });
     }
 
     mousePressed(mX, mY) {

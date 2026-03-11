@@ -1,5 +1,5 @@
-import { Button } from "../Button.js";
-import { SettingsList } from "../SettingsList.js";
+import { Button } from "../PageElements/Button.js";
+import { SettingsList } from "../PageElements/SettingsList.js";
 
 export class ConfigPage {
     constructor() {
@@ -20,14 +20,16 @@ export class ConfigPage {
         this.closeButton.setFillColour([0, 0]);
         this.closeButton.setStrokeColour([255]);
         this.closeButton.setTextColour([255]);
-        this.closeButton.setOnClickAction(() => {
-            window.closePage();
-        });
 
         // settings list
         const settingsListW = windowWidth * 3/4;
         const settingsListH = windowHeight / 4;
         this.settingsList = new SettingsList(this, windowWidth/2 - settingsListW/2, windowHeight/4 - settingsListH/2, settingsListW, settingsListH);
+
+        this.closeButton.setOnClickAction(() => {
+            this.settingsList.hideDOMs();
+            window.closePage();
+        });
     }
 
     mousePressed(mX, mY) {
