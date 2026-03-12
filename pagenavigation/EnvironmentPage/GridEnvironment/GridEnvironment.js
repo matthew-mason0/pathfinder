@@ -1,7 +1,7 @@
 import { Node } from "./Node.js";
 
 export class GridEnvironment {
-    constructor(container, toolbar, x, y, w, h) {
+    constructor(container, toolbar, rows, columns, x, y, w, h) {
         this.container = container;
         this.toolbar = toolbar;
         this.x = x;            
@@ -9,8 +9,8 @@ export class GridEnvironment {
         this.w = w;
         this.h = h;
 
-        this.rows = 10;
-        this.columns = 10;
+        this.rows = rows;
+        this.columns = columns;
 
         this.nodes = [];
         let nodeW = this.w / this.columns;
@@ -55,6 +55,10 @@ export class GridEnvironment {
         if (this.endNode === newEnd) return;
         this.endNode.setType("EMPTY");
         this.endNode = newEnd;
+    }
+
+    createResize(rows, columns) {
+        return new GridEnvironment(this.container, this.toolbar, rows, columns, this.x, this.y, this.w, this.h);
     }
 
     draw() {

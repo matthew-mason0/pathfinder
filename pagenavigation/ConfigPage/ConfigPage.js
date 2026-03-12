@@ -26,9 +26,25 @@ export class ConfigPage {
         const settingsListH = windowHeight / 4;
         this.settingsList = new SettingsList(this, windowWidth/2 - settingsListW/2, windowHeight/4 - settingsListH/2, settingsListW, settingsListH);
 
+        // settings
+        this.algorithmSetting = this.settingsList.addSetting("Algorithm", "DROPDOWN");
+        this.algorithmSetting.addDropdown("BFS");
+        this.algorithmSetting.addDropdown("DFS");
+        this.algorithmSetting.addDropdown("Dijkstra");
+        this.algorithmSetting.addDropdown("A*");
+
+        this.heuristicSetting = this.settingsList.addSetting("Heuristic", "DROPDOWN");
+        this.heuristicSetting.addDropdown("Manhattan");
+        this.heuristicSetting.addDropdown("Euclidean");
+
+        this.timerSetting = this.settingsList.addSetting("Timer", "CHECK");
+
+        this.stepCount = this.settingsList.addSetting("StepCounter", "CHECK");
+
+
         this.closeButton.setOnClickAction(() => {
             this.settingsList.hideDOMs();
-            window.closePage();
+            window.closeConfigPage();
         });
     }
 

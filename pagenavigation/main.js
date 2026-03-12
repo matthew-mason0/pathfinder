@@ -2,7 +2,7 @@ import { LandingPage } from "./LandingPage/LandingPage.js";
 import { ConfigPage } from "./ConfigPage/ConfigPage.js";
 import { EnvironmentPage } from "./EnvironmentPage/EnvironmentPage.js";
 
-let currentPage = "ENVIRONMENT";
+let currentPage;
 
 let landingPage;
 let configPage;
@@ -12,7 +12,13 @@ window.setup = function () {
 	createCanvas(windowWidth, windowHeight);
 	landingPage = new LandingPage();
 	configPage = new ConfigPage();
-	environmentPage = new EnvironmentPage(10);
+	environmentPage = new EnvironmentPage();
+
+	// create DOMs to fix canvas size error
+	environmentPage.draw();
+	window.closeEnvironmentPage();
+	configPage.draw();
+	window.closeConfigPage();
 };
 
 window.draw = function () {
@@ -34,15 +40,25 @@ window.draw = function () {
 };
 
 window.mousePressed = function () {
+	window.handleClick(mouseX, mouseY);
+}
+window.touchStarted = function (e) {
+	if (e.target.tagName !== "INPUT") {
+		window.handleClick(mouseX, mouseY);
+		return false;
+	}
+}
+
+window.handleClick = function (mX, mY) {
 	switch (currentPage) {
 		case "LANDING":
-			landingPage.mousePressed(mouseX, mouseY);
+			landingPage.mousePressed(mX, mY);
 			break;
 		case "CONFIG":
-			configPage.mousePressed(mouseX, mouseY);
+			configPage.mousePressed(mX, mY);
 			break;
 		case "ENVIRONMENT":
-			environmentPage.mousePressed(mouseX, mouseY);
+			environmentPage.mousePressed(mX, mY);
 			break;
 		default:
 			break;
@@ -57,6 +73,11 @@ window.openEnvironmentPage = function () {
 	environmentPage.settingsList.showDOMs();
 	currentPage = "ENVIRONMENT";
 }
-window.closePage = function () {
+window.closeConfigPage = function () {
+	configPage.settingsList.hideDOMs();
+	currentPage = "LANDING";
+}
+window.closeEnvironmentPage = function () {
+	environmentPage.settingsList.hideDOMs();
 	currentPage = "LANDING";
 }

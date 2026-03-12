@@ -14,13 +14,35 @@ export class Setting {
         this.selection = null;
 
         this.input = null;
-        if (this.type === "NUMBER") {
-            this.input = createInput();
-            this.input.attribute("type", "number");
-            this.input.style("box-sizing", "border-box");
-            this.input.style("text-align", "center");
-            this.input.style("appearance", "textfield");
+        switch (this.type) {
+            case "NUMBER":
+                this.input = createInput();
+                this.input.attribute("type", "number");
+                this.input.style("position", "absolute");
+                this.input.style("box-sizing", "border-box");
+                this.input.style("text-align", "center");
+                this.input.style("appearance", "textfield");
+                break;
+            case "DROPDOWN":
+                this.input = createSelect();
+                break;
+            case "CHECK":
+                this.input = createCheckbox();
+                break;
+            case "SUBMIT":
+                this.input = createButton("Submit");
+                this.input.mousePressed(() => {
+                    this.container.handleSubmit();
+                });
+                break;
+            default:
+                break;
         }
+    }
+
+    addDropdown(option) {
+        if (this.type !== "DROPDOWN") return;
+        this.input.option(option);
     }
 
     draw() {
@@ -29,10 +51,10 @@ export class Setting {
         fill(...this.container.container.textColour);
         noStroke();
         textAlign(LEFT, CENTER);
-        text(this.label, this.x, this.y, this.w, this.h);
+        text(this.label + ": ", this.x, this.y, this.w, this.h);
 
-        // input box
-        this.updatePosition();
+        // input boxes
+        this.positionInputs();
         
         // boundary
         stroke(255, 0, 0);
@@ -41,16 +63,60 @@ export class Setting {
         pop();
     }
 
-    updatePosition() {
+    positionNumberSetting() {
         const inputW = this.w / 5;
-        const inputH = this.h / 3;
-
+        const inputH = this.h / 2;
         const inputX = this.x + this.w - inputW;
         const inputY = this.y + (this.h - inputH) / 2;
+        if (!this.input) return;
+        this.input.position(inputX, inputY);
+        this.input.size(inputW, inputH);
+    }
+    positionDropdownSetting() {
+        const inputW = this.w / 3;
+        const inputH = this.h / 2;
+        const inputX = this.x + this.w - inputW;
+        const inputY = this.y + (this.h - inputH) / 2;
+        if (!this.input) return;
+        this.input.position(inputX, inputY);
+        this.input.size(inputW, inputH);
+    }
+    positionCheckSetting() {
+        const inputW = this.w / 3;
+        const inputH = this.h / 2;
+        const inputX = this.x + this.w - inputW;
+        const inputY = this.y + (this.h - inputH) / 2;
+        if (!this.input) return;
+        this.input.position(inputX, inputY);
+        this.input.size(inputW, inputH);
+    }
+    positionSubmitSetting() {
+        const inputW = this.w / 3;
+        const inputH = this.h / 2;
+        const inputX = this.x + this.w - inputW;
+        const inputY = this.y + (this.h - inputH) / 2;
+        if (!this.input) return;
+        this.input.position(inputX, inputY);
+        this.input.size(inputW, inputH);
+    }
 
-        if (this.input) {
-            this.input.position(inputX, inputY);
-            this.input.size(inputW, inputH);
+    positionInputs() {
+        switch (this.type) {
+            case "NUMBER":
+                this.positionNumberSetting();
+                break;
+            case "DROPDOWN":
+                this.positionDropdownSetting();
+                break;
+            case "CHECK":
+                this.positionCheckSetting();
+                break;
+            case "SUBMIT":
+                this.positionSubmitSetting();
+                break;
+            default:
+                this.positionNumberSetting();
+                break;
         }
     }
 }

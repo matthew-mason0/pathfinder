@@ -32,8 +32,12 @@ export class EnvironmentPage {
         cumulativeHeight += this.settingsList.h;
 
         // settings
-        this.settingsList.addSetting("Rows: ", "NUMBER");
-        this.settingsList.addSetting("Columns: ", "NUMBER");
+        this.rowsSetting = this.settingsList.addSetting("Rows", "NUMBER");
+        this.columnsSetting = this.settingsList.addSetting("Columns", "NUMBER");
+        this.rowsSetting.input.value(10);
+        this.columnsSetting.input.value(10);
+
+        this.submitSetting = this.settingsList.addSetting("Load", "SUBMIT");
 
         // toolbar
         this.toolbar = new Toolbar(this, windowWidth / 8, cumulativeHeight + windowHeight / 8, windowWidth * 6/8, windowHeight / 20);
@@ -41,12 +45,11 @@ export class EnvironmentPage {
 
         // grid environment
         const gridEnvironmentW = windowWidth / 3;
-        this.gridEnvironment = new GridEnvironment(this, this.toolbar, windowWidth/3, cumulativeHeight + windowHeight/4, windowWidth/3, windowWidth/3);
+        this.gridEnvironment = new GridEnvironment(this, this.toolbar, 10, 10, windowWidth/3, cumulativeHeight + windowHeight/4, windowWidth/3, windowWidth/3);
         cumulativeHeight += this.gridEnvironment.h;
 
         this.closeButton.setOnClickAction(() => {
-            this.settingsList.hideDOMs();
-            window.closePage();
+            window.closeEnvironmentPage();
         });
     }
 
@@ -85,5 +88,12 @@ export class EnvironmentPage {
         // grid environment
         this.gridEnvironment.draw();
         pop();
+    }
+
+    parseSettings(settings) {
+        if (settings["Rows"] && settings["Columns"]) {
+            let newGrid = this.gridEnvironment.createResize(settings["Rows"], settings["Columns"]);
+            this.gridEnvironment = newGrid;
+        }
     }
 }

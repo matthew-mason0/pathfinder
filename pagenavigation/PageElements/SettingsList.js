@@ -11,7 +11,9 @@ export class SettingsList {
     }
 
     addSetting(label, type) {
-        this.settingsList.push(new Setting(this, label, type, this.x, this.y, this.w, this.h));
+        const setting = new Setting(this, label, type, this.x, this.y, this.w, this.h);
+        this.settingsList.push(setting);
+        return setting;
     }
 
     draw() {
@@ -34,14 +36,14 @@ export class SettingsList {
         let segments = this.settingsList.length;
 
         let marginW = this.w / 10;
+        let segmentLength = this.h / segments;
+        let marginH = segmentLength / 10;
 
         for (let i = 0; i < this.settingsList.length; i++) {
             let setting = this.settingsList[i];
             setting.w = this.w - 2 * marginW;
             setting.x = this.x + marginW;
 
-            let segmentLength = this.h / segments;
-            let marginH = segmentLength / 10;
             setting.h = segmentLength - 2 * marginH;
             setting.y = this.y + segmentLength * i + marginH;
         }
@@ -50,13 +52,28 @@ export class SettingsList {
     hideDOMs() {
         for (let i = 0; i < this.settingsList.length; i++) {
             let setting = this.settingsList[i];
-            if (setting.input) setting.input.hide();
+            if (!setting.input) return;
+            setting.input.hide();
         }
     }
     showDOMs() {
         for (let i = 0; i < this.settingsList.length; i++) {
             let setting = this.settingsList[i];
-            if (setting.input) setting.input.show();
+            if (!setting.input) return;
+            setting.input.show();
         }
+    }
+    handleSubmit() {
+        let values = {};
+        for (let i = 0; i < this.settingsList.length; i++) {
+            let setting = this.settingsList[i];
+            if (!setting.input) return;
+            if (setting.type === "SUMBIT") continue;
+            let label = setting.label;
+            let value = setting.input.value();
+
+            values[label] = value;
+        }
+        this.container.parseSettings(values);
     }
 }
