@@ -42,6 +42,9 @@ export class EnvironmentPage {
         // toolbar
         this.toolbar = new Toolbar(this, windowWidth / 8, cumulativeHeight + windowHeight / 8, windowWidth * 6/8, windowHeight / 20);
         cumulativeHeight += this.toolbar.h;
+        this.addIcon("WALL");
+        this.addIcon("START");
+        this.addIcon("END");
 
         // grid environment
         const gridEnvironmentW = windowWidth / 3;

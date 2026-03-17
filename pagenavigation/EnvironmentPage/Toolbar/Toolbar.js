@@ -14,10 +14,6 @@ export class Toolbar {
         this.iconPosition = 0;
         // TODO: fix positioning
 
-        this.addIcon("WALL");
-        this.addIcon("START");
-        this.addIcon("END");
-
         this.selectedOperation = "START";
     }
 
