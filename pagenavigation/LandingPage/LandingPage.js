@@ -39,6 +39,9 @@ export class LandingPage {
         this.environmentButton.setOnClickAction(() => {
             window.openEnvironmentPage();
         });
+        this.runButton.setOnClickAction(() => {
+            window.openRunPage();
+        });
     }
 
     mousePressed(mX, mY) {

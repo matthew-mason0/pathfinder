@@ -1,18 +1,21 @@
 import { LandingPage } from "./LandingPage/LandingPage.js";
 import { ConfigPage } from "./ConfigPage/ConfigPage.js";
 import { EnvironmentPage } from "./EnvironmentPage/EnvironmentPage.js";
+import { RunPage } from "./RunPage/RunPage.js";
 
 let currentPage;
 
 let landingPage;
 let configPage;
 let environmentPage;
+let runPage;
 
 window.setup = function () {
 	createCanvas(windowWidth, windowHeight);
 	landingPage = new LandingPage();
 	configPage = new ConfigPage();
 	environmentPage = new EnvironmentPage();
+	runPage = new RunPage();
 
 	// create DOMs to fix canvas size error
 	environmentPage.draw();
@@ -33,6 +36,9 @@ window.draw = function () {
 		case "ENVIRONMENT":
 			landingPage.draw();
 			environmentPage.draw();
+			break;
+		case "RUN":
+			runPage.draw();
 			break;
 		default:
 			break;
@@ -60,6 +66,9 @@ window.handleClick = function (mX, mY) {
 		case "ENVIRONMENT":
 			environmentPage.mousePressed(mX, mY);
 			break;
+		case "RUN":
+			runPage.mousePressed(mX, mY);
+			break;
 		default:
 			break;
 	}
@@ -80,4 +89,8 @@ window.closeConfigPage = function () {
 window.closeEnvironmentPage = function () {
 	environmentPage.settingsList.hideDOMs();
 	currentPage = "LANDING";
+}
+window.openRunPage = function () {
+	// TODO get setting state
+	currentPage = "RUN";
 }
