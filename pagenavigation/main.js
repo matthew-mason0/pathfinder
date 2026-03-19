@@ -1,7 +1,8 @@
-import { LandingPage } from "./LandingPage/LandingPage.js";
-import { ConfigPage } from "./ConfigPage/ConfigPage.js";
-import { EnvironmentPage } from "./EnvironmentPage/EnvironmentPage.js";
-import { RunPage } from "./RunPage/RunPage.js";
+window.debug = {};
+import { LandingPage } from "./Pages/LandingPage.js";
+import { ConfigPage } from "./Pages/ConfigPage.js";
+import { EnvironmentPage } from "./Pages/EnvironmentPage.js";
+import { RunPage } from "./Pages/RunPage.js";
 
 let currentPage;
 
@@ -13,6 +14,7 @@ let runPage;
 window.setup = function () {
 	createCanvas(windowWidth, windowHeight);
 	landingPage = new LandingPage();
+	debug.landingPage = landingPage;
 	configPage = new ConfigPage();
 	environmentPage = new EnvironmentPage();
 	runPage = new RunPage();
@@ -22,6 +24,8 @@ window.setup = function () {
 	window.closeEnvironmentPage();
 	configPage.draw();
 	window.closeConfigPage();
+
+	console.log(debug);
 };
 
 window.draw = function () {

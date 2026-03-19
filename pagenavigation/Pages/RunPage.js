@@ -1,4 +1,5 @@
-import { GridEnvironment } from "../EnvironmentPage/GridEnvironment/GridEnvironment";
+import { GridEnvironment } from "../Environment/GridEnvironment/GridEnvironment.js";
+import { Toolbar } from "../Environment/Toolbar/Toolbar.js";
 
 export class RunPage {
     constructor() {
@@ -38,10 +39,15 @@ export class RunPage {
     }
 
     mousePressed(mX, mY) {
-
+        if (this.toolbar.mouseOver(mX, mY)) {
+            this.toolbar.handleClick(mX, mY);
+            return;
+        }
     }
 
     draw() {
-        background(200);
+        background(100);
+        this.toolbar.draw();
+        this.gridEnvironment.draw();
     }
 }

@@ -1,7 +1,7 @@
 import { Button } from "../PageElements/Button.js";
 import { SettingsList } from "../PageElements/SettingsList.js";
-import { GridEnvironment } from "./GridEnvironment/GridEnvironment.js";
-import { Toolbar } from "./Toolbar/Toolbar.js";
+import { GridEnvironment } from "../Environment/GridEnvironment/GridEnvironment.js";
+import { Toolbar } from "../Environment/Toolbar/Toolbar.js";
 
 export class EnvironmentPage {
     constructor() {
@@ -42,9 +42,9 @@ export class EnvironmentPage {
         // toolbar
         this.toolbar = new Toolbar(this, windowWidth / 8, cumulativeHeight + windowHeight / 8, windowWidth * 6/8, windowHeight / 20);
         cumulativeHeight += this.toolbar.h;
-        this.addIcon("WALL");
-        this.addIcon("START");
-        this.addIcon("END");
+        this.toolbar.addIcon("WALL");
+        this.toolbar.addIcon("START");
+        this.toolbar.addIcon("END");
 
         // grid environment
         const gridEnvironmentW = windowWidth / 3;
