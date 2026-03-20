@@ -1,5 +1,5 @@
 import { GridEnvironment } from "../Environment/GridEnvironment/GridEnvironment.js";
-import { Toolbar } from "../Environment/Toolbar/Toolbar.js";
+import { Runbar } from "../Control/Runbar.js";
 
 export class RunPage {
     constructor() {
@@ -13,25 +13,18 @@ export class RunPage {
         this.gridColumns = 10;
         // this.walls;
 
-        // simulation controller
-        // TODO create new controller class
-        // this.controller = new Controller();
-
         // toolbar
         let toolbarThickness = windowHeight / 20;
-        this.toolbar = new Toolbar(this, 0, cumulativeHeight, windowWidth, toolbarThickness);
-        cumulativeHeight += this.toolbar.h;
+        this.runbar = new Runbar(this, 0, cumulativeHeight, windowWidth, toolbarThickness);
+        cumulativeHeight += this.runbar.h;
 
         // grid environment
-        let gridMarginX = windowWidth/8;
+        let gridMarginX = windowWidth / 8;
         let gridMarginY = windowHeight / 20;
         // TODO re-calculate width
         let gridWidth = windowWidth - 2*gridMarginX;
         this.gridEnvironment = new GridEnvironment(this, this.toolbar, this.gridRows, this.gridColumns, gridMarginX, cumulativeHeight + gridMarginY, gridWidth, gridWidth * this.gridColumns / this.gridRows);
         cumulativeHeight += this.gridEnvironment.h + gridMarginY;
-
-        // this.socket;
-        // this.inputHandler ?
     }
 
     loadSettings(settingState) {
@@ -47,7 +40,11 @@ export class RunPage {
 
     draw() {
         background(100);
-        this.toolbar.draw();
+        this.runbar.draw();
         this.gridEnvironment.draw();
+    }
+
+    handleUpdate() {
+        // take step from controller and update grid environment
     }
 }
