@@ -5,19 +5,16 @@ export class Controller {
     constructor(container) {
         this.container = container;
         this.stepQueue = new StepQueue();
-        this.socketClient = new SocketClient("ws://localhost:1234", this.stepQueue);
-        this.socketClient.connect();
+        this.socket = new SocketClient("ws://localhost:1234", this.stepQueue);
+        this.socket.connect();
     }
 
-    connectSocketClient() {
-
-    }
-
-    sendConfigRule(rule) {
-        // pass rule to socket to send to backend 
+    sendConfigRules() {
+        this.socket.send(JSON.stringify(window.settingState));
     }
 
     loadSteps() {
+        this.sendConfigRules();
         // take from socket and add to stepQueue
     }
 
