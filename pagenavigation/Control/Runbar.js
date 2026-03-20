@@ -24,7 +24,7 @@ export class Runbar {
         this.icons.push(this.loadIcon);
 
         this.runIcon = new RunbarIcon(this, 3 * iconMarginX + iconW, iconMarginY, iconW, iconH);
-        this.loadIcon.setLabel("RUN");
+        this.runIcon.setLabel("RUN");
         this.runIcon.setOnClick(() => {
             // TODO handle run button press
             return;

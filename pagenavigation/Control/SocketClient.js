@@ -5,10 +5,6 @@ export class SocketClient {
         this.stepQueue = stepQueue;
     }
 
-    setHandler(handler) {
-        this.messageHandler = handler;
-    }
-
     connect() {
         this.socket = new WebSocket(this.url);
 

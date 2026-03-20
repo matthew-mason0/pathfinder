@@ -1,5 +1,6 @@
 import { GridEnvironment } from "../Environment/GridEnvironment/GridEnvironment.js";
 import { Runbar } from "../Control/Runbar.js";
+import { Controller } from "../Control/Controller.js";
 
 export class RunPage {
     constructor() {
@@ -9,13 +10,13 @@ export class RunPage {
 
         // settings attributes - setting state object?
         // instantiate with or load state after?
-        this.gridRows = 10;
-        this.gridColumns = 10;
+        this.gridRows = window.settingState.rows;
+        this.gridColumns = window.settingState.columns;
         // this.walls;
 
-        // toolbar
-        let toolbarThickness = windowHeight / 20;
-        this.runbar = new Runbar(this, 0, cumulativeHeight, windowWidth, toolbarThickness);
+        // runbar
+        let runbarThickness = windowHeight / 20;
+        this.runbar = new Runbar(this, 0, cumulativeHeight, windowWidth, runbarThickness);
         cumulativeHeight += this.runbar.h;
 
         // grid environment
@@ -23,17 +24,15 @@ export class RunPage {
         let gridMarginY = windowHeight / 20;
         // TODO re-calculate width
         let gridWidth = windowWidth - 2*gridMarginX;
-        this.gridEnvironment = new GridEnvironment(this, this.toolbar, this.gridRows, this.gridColumns, gridMarginX, cumulativeHeight + gridMarginY, gridWidth, gridWidth * this.gridColumns / this.gridRows);
+        this.gridEnvironment = new GridEnvironment(this, this.runbar, this.gridRows, this.gridColumns, gridMarginX, cumulativeHeight + gridMarginY, gridWidth, gridWidth * this.gridColumns / this.gridRows);
         cumulativeHeight += this.gridEnvironment.h + gridMarginY;
-    }
 
-    loadSettings(settingState) {
-
+        this.controller = new Controller(this);
     }
 
     mousePressed(mX, mY) {
-        if (this.toolbar.mouseOver(mX, mY)) {
-            this.toolbar.handleClick(mX, mY);
+        if (this.runbar.mouseOver(mX, mY)) {
+            this.runbar.handleClick(mX, mY);
             return;
         }
     }

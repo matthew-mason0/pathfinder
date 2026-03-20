@@ -32,8 +32,8 @@ export class EnvironmentPage {
         cumulativeHeight += this.settingsList.h;
 
         // settings
-        this.rowsSetting = this.settingsList.addSetting("Rows", "NUMBER");
-        this.columnsSetting = this.settingsList.addSetting("Columns", "NUMBER");
+        this.rowsSetting = this.settingsList.addSetting("Rows", "NUMBER", "rows");
+        this.columnsSetting = this.settingsList.addSetting("Columns", "NUMBER", "columns");
         this.rowsSetting.input.value(10);
         this.columnsSetting.input.value(10);
 

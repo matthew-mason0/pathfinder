@@ -10,8 +10,8 @@ export class SettingsList {
         this.settingsList = [];
     }
 
-    addSetting(label, type) {
-        const setting = new Setting(this, label, type, this.x, this.y, this.w, this.h);
+    addSetting(label, type, attribute) {
+        const setting = new Setting(this, label, attribute, type, this.x, this.y, this.w, this.h);
         this.settingsList.push(setting);
         return setting;
     }

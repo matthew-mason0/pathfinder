@@ -10,15 +10,14 @@ let landingPage;
 let configPage;
 let environmentPage;
 let runPage;
-let settingState;
 
 window.setup = function () {
 	createCanvas(windowWidth, windowHeight);
+	window.settingState = new SettingState();
 	landingPage = new LandingPage();
 	configPage = new ConfigPage();
 	environmentPage = new EnvironmentPage();
 	runPage = new RunPage();
-	settingState = new SettingState();
 
 	// create DOMs to fix canvas size error
 	// TODO switch to initDOM() function
