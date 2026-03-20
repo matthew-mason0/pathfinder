@@ -1,5 +1,5 @@
 export class Setting {
-    constructor(container, label, type = "SELECT", x, y, w, h) {
+    constructor(container, label, attribute, type = "SELECT", x, y, w, h) {
         this.container = container;
         this.label = label;
 
@@ -9,9 +9,10 @@ export class Setting {
         this.h = h;
 
         this.type = type;
-        this.attribute = null;
         this.options = [];
         this.selection = null;
+
+        this.attribute = attribute;
 
         this.input = null;
         switch (this.type) {
@@ -38,11 +39,37 @@ export class Setting {
             default:
                 break;
         }
+
+        this.bindSettingState();
     }
 
     addDropdown(option) {
         if (this.type !== "DROPDOWN") return;
         this.input.option(option);
+    }
+
+    bindSettingState() {
+        this.input.changed(() => {
+            if (!this.attribute) {
+                console.log("No Attribute");
+                return;
+            }
+            switch (this.type) {
+                case "NUMBER":
+                    window.settingState[this.attribute] = this.input.value();
+                    break;
+                case "DROPDOWN":
+                    window.settingState[this.attribute] = this.input.value();
+                    break;
+                case "CHECK":
+                    window.settingState[this.attribute] = this.input.checked();
+                    break;
+                case "SUBMIT":
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 
     draw() {

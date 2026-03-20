@@ -1,4 +1,4 @@
-import { Button } from "../../../PageElements/Button.js";
+import { Button } from "../../PageElements/Button.js";
 
 export class Icon extends Button {
     constructor(container, operation, x, y, w, h) {

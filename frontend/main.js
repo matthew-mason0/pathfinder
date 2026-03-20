@@ -1,49 +1,99 @@
-import { Grid } from "./environment/Grid.js";
-import { GridRenderer } from "./renderer/GridRenderer.js";
-import { SocketClient } from "./network/SocketClient.js";
-import { MessageHandler } from "./network/MessageHandler.js";
-import { StepQueue } from "./network/StepQueue.js";
-import { Toolbar } from "./SimulationControl/Toolbar.js";
-import { InputHandler } from "./SimulationControl/InputHandler.js";
-import { Controller } from "./SimulationControl/Controller.js";
+import { LandingPage } from "./Pages/LandingPage.js";
+import { ConfigPage } from "./Pages/ConfigPage.js";
+import { EnvironmentPage } from "./Pages/EnvironmentPage.js";
+import { RunPage } from "./Pages/RunPage.js";
+import { SettingState } from "./Configuration/SettingState.js"
 
-let grid;
-let renderer;
-let toolbar;
-let inputHandler;
-let controller;
+let currentPage = "LANDING";
+
+let landingPage;
+let configPage;
+let environmentPage;
+let runPage;
 
 window.setup = function () {
 	createCanvas(windowWidth, windowHeight);
-	window.stepping = false;
+	window.settingState = new SettingState();
+	landingPage = new LandingPage();
+	configPage = new ConfigPage();
+	environmentPage = new EnvironmentPage();
+	runPage = new RunPage();
 
-	window.stepQueue = new StepQueue();
-
-	grid = new Grid(10, 10);
-	
-	renderer = new GridRenderer(grid, 100, 100, 400, 400);
-	
-	controller = new Controller(window.stepQueue, new MessageHandler(grid), grid, renderer);
-	window.socket = new SocketClient("ws://localhost:1234", window.stepQueue, controller);
-	window.socket.connect();
-	controller.socket = window.socket;
-
-	toolbar = new Toolbar(controller);
-	
-	inputHandler = new InputHandler(toolbar, controller);
+	// create DOMs to fix canvas size error
+	// TODO switch to initDOM() function
+	environmentPage.draw();
+	window.closeEnvironmentPage();
+	configPage.draw();
+	window.closeConfigPage();
 };
 
 window.draw = function () {
-  	background(50);
-	renderer.draw();
-	toolbar.draw();
-
-	if (window.stepping) {
-		controller.step();
+	switch (currentPage) {
+		case "LANDING":
+			landingPage.draw();
+			break;
+		case "CONFIG":
+			landingPage.draw();
+			configPage.draw();
+			break;
+		case "ENVIRONMENT":
+			landingPage.draw();
+			environmentPage.draw();
+			break;
+		case "RUN":
+			runPage.draw();
+			break;
+		default:
+			break;
 	}
-
 };
 
 window.mousePressed = function () {
-	inputHandler.mousePressed(mouseX, mouseY);
+	window.handleClick(mouseX, mouseY);
+}
+window.touchStarted = function (e) {
+	if (e.target.tagName !== "INPUT") {
+		window.handleClick(mouseX, mouseY);
+		return false;
+	}
+}
+
+window.handleClick = function (mX, mY) {
+	switch (currentPage) {
+		case "LANDING":
+			landingPage.mousePressed(mX, mY);
+			break;
+		case "CONFIG":
+			configPage.mousePressed(mX, mY);
+			break;
+		case "ENVIRONMENT":
+			environmentPage.mousePressed(mX, mY);
+			break;
+		case "RUN":
+			runPage.mousePressed(mX, mY);
+			break;
+		default:
+			break;
+	}
+}
+
+window.openConfigPage = function () {
+	configPage.settingsList.showDOMs();
+	currentPage = "CONFIG";
+}
+window.openEnvironmentPage = function () {
+	environmentPage.settingsList.showDOMs();
+	currentPage = "ENVIRONMENT";
+}
+window.closeConfigPage = function () {
+	configPage.settingsList.hideDOMs();
+	currentPage = "LANDING";
+}
+window.closeEnvironmentPage = function () {
+	environmentPage.settingsList.hideDOMs();
+	currentPage = "LANDING";
+}
+window.openRunPage = function () {
+	// TODO get setting state
+	currentPage = "RUN";
 }
