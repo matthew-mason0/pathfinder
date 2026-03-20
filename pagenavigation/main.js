@@ -1,31 +1,31 @@
-window.debug = {};
 import { LandingPage } from "./Pages/LandingPage.js";
 import { ConfigPage } from "./Pages/ConfigPage.js";
 import { EnvironmentPage } from "./Pages/EnvironmentPage.js";
 import { RunPage } from "./Pages/RunPage.js";
+import { SettingState } from "./Configuration/SettingState.js"
 
-let currentPage;
+let currentPage = "LANDING";
 
 let landingPage;
 let configPage;
 let environmentPage;
 let runPage;
+let settingState;
 
 window.setup = function () {
 	createCanvas(windowWidth, windowHeight);
 	landingPage = new LandingPage();
-	debug.landingPage = landingPage;
 	configPage = new ConfigPage();
 	environmentPage = new EnvironmentPage();
 	runPage = new RunPage();
+	settingState = new SettingState();
 
 	// create DOMs to fix canvas size error
+	// TODO switch to initDOM() function
 	environmentPage.draw();
 	window.closeEnvironmentPage();
 	configPage.draw();
 	window.closeConfigPage();
-
-	console.log(debug);
 };
 
 window.draw = function () {
