@@ -82,11 +82,6 @@ export class Setting {
 
         // input boxes
         this.positionInputs();
-        
-        // boundary
-        stroke(255, 0, 0);
-        noFill();
-        rect(this.x, this.y, this.w, this.h);
         pop();
     }
 
