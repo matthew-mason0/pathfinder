@@ -94,6 +94,8 @@ window.closeEnvironmentPage = function () {
 	currentPage = "LANDING";
 }
 window.openRunPage = function () {
-	// TODO get setting state
 	currentPage = "RUN";
+}
+window.closeRunPage = function () {
+	currentPage = "LANDING";
 }

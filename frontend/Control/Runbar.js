@@ -30,6 +30,14 @@ export class Runbar {
             return;
         });
         this.icons.push(this.runIcon);
+
+        this.closeIcon = new RunbarIcon(this, 5 * iconMarginX + 2 * iconW, iconMarginY, iconW, iconH);
+        this.closeIcon.setLabel("EXIT");
+        this.closeIcon.setOnClick(() => {
+            window.closeRunPage();
+            return;
+        });
+        this.icons.push(this.closeIcon);
     }
 
     mouseOver(mX, mY) {
