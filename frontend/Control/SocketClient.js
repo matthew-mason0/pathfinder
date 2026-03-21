@@ -1,8 +1,8 @@
 export class SocketClient {
-    constructor(url = "ws://localhost:1234", stepQueue) {
+    constructor(url = "ws://localhost:1234", controller) {
         this.url = url;
         this.socket = null;
-        this.stepQueue = stepQueue;
+        this.controller = controller;
     }
 
     connect() {
@@ -39,8 +39,8 @@ export class SocketClient {
         try {
             const msg = JSON.parse(raw);
             console.log("Server: " + msg);
-            this.stepQueue.enqueue(msg);
-            if (msg.type === "ALGORITHM_END") onLoadFinish();
+            this.controller.handleMessage(msg);
+            if (msg.type === "ALGORITHM_END") this.controller.finishLoad();
         } catch (e) {
             console.log("Server(failed to parse): " + raw);
         }

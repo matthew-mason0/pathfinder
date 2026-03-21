@@ -5,8 +5,10 @@ export class Controller {
     constructor(container) {
         this.container = container;
         this.stepQueue = new StepQueue();
-        this.socket = new SocketClient("ws://localhost:1234", this.stepQueue);
+        this.socket = new SocketClient("ws://localhost:1234", this);
         this.socket.connect();
+
+        this.stepsLoaded = false;
     }
 
     sendConfigRules() {
@@ -14,11 +16,32 @@ export class Controller {
     }
 
     loadSteps() {
-        this.sendConfigRules();
-        // take from socket and add to stepQueue
+        // this.socket.send(JSON.stringify(window.settingState));
+        this.socket.send("RUN");
+    }
+
+    handleMessage(msg) {
+        // TODO validate and add to stepQueue
+    }
+
+    finishLoad() {
+        // TODO display load finished
     }
 
     runSteps() {
-        // take from stepQueue and pass to page to handle
+        if (!this.stepsLoaded) {
+            // TODO display error
+            return;
+        }
+        // TODO take from stepQueue and pass to page to handle
+    }
+
+    reset() {
+        this.socket.close();
+
+        this.stepQueue = new StepQueue();
+        this.stepsLoaded = false;
+
+        this.socket = new SocketClient("ws://localhost:1234", this);
     }
 }

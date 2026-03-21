@@ -8,15 +8,18 @@ export class RunPage {
         this.textColour = [0];
         let cumulativeHeight = 0;
 
+        // controller
+        this.controller = new Controller(this);
+
         // settings attributes - setting state object?
         // instantiate with or load state after?
         this.gridRows = window.settingState.rows;
         this.gridColumns = window.settingState.columns;
         // this.walls;
-
+        
         // runbar
         let runbarThickness = windowHeight / 20;
-        this.runbar = new Runbar(this, 0, cumulativeHeight, windowWidth, runbarThickness);
+        this.runbar = new Runbar(this, this.controller, 0, cumulativeHeight, windowWidth, runbarThickness);
         cumulativeHeight += this.runbar.h;
 
         // grid environment
@@ -27,7 +30,6 @@ export class RunPage {
         this.gridEnvironment = new GridEnvironment(this, this.runbar, this.gridRows, this.gridColumns, gridMarginX, cumulativeHeight + gridMarginY, gridWidth, gridWidth * this.gridColumns / this.gridRows);
         cumulativeHeight += this.gridEnvironment.h + gridMarginY;
 
-        this.controller = new Controller(this);
     }
 
     mousePressed(mX, mY) {

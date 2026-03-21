@@ -1,8 +1,9 @@
 import { RunbarIcon } from "./RunbarIcon.js";
 
 export class Runbar {
-    constructor(container, x, y, w, h) {
+    constructor(container, controller, x, y, w, h) {
         this.container = container;
+        this.controller = controller;
         this.x = x;
         this.y = y;
         this.w = w;
@@ -18,7 +19,7 @@ export class Runbar {
         this.loadIcon = new RunbarIcon(this, iconMarginX, iconMarginY, iconW, iconH);
         this.loadIcon.setLabel("LOAD");
         this.loadIcon.setOnClick(() => {
-            // TODO handle load button press
+            this.controller.loadSteps();
             return;
         });
         this.icons.push(this.loadIcon);
@@ -26,7 +27,7 @@ export class Runbar {
         this.runIcon = new RunbarIcon(this, 3 * iconMarginX + iconW, iconMarginY, iconW, iconH);
         this.runIcon.setLabel("RUN");
         this.runIcon.setOnClick(() => {
-            // TODO handle run button press
+            this.controller.runSteps();
             return;
         });
         this.icons.push(this.runIcon);
