@@ -56,6 +56,14 @@ export class GridEnvironment {
         this.endNode.setType("EMPTY");
         this.endNode = newEnd;
     }
+    updateNode(type, row, column) {
+        console.log(this.nodes[row][column]);
+        try {
+            this.nodes[row][column].setType(type);
+        } catch (e) {
+            console.warn("Invalid index for node update");
+        }
+    }
 
     createResize(rows, columns) {
         return new GridEnvironment(this.container, this.toolbar, rows, columns, this.x, this.y, this.w, this.h);

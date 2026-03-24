@@ -45,7 +45,8 @@ export class RunPage {
         this.gridEnvironment.draw();
     }
 
-    handleUpdate() {
+    updateGrid(type, row, column) {
         // take step from controller and update grid environment
+        this.gridEnvironment.updateNode(type, row, column);
     }
 }

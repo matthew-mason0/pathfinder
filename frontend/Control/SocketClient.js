@@ -39,7 +39,7 @@ export class SocketClient {
         try {
             const msg = JSON.parse(raw);
             console.log("Server: " + msg);
-            this.controller.handleMessage(msg);
+            this.controller.loadMessage(msg);
             if (msg.type === "ALGORITHM_END") this.controller.finishLoad();
         } catch (e) {
             console.log("Server(failed to parse): " + raw);
