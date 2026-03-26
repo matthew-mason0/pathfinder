@@ -55,13 +55,16 @@ export class LandingPage {
         background(...this.background);
 
         // title
-        textAlign(CENTER, CENTER);
-        textSize(min(windowWidth, windowHeight) / 10);
-
         const titleX = windowWidth/2;
         const titleY = windowHeight/10;
-
+        const titleTextSize = min(windowWidth, windowHeight) / 10;
+        
+        textAlign(CENTER, CENTER);
+        textSize(titleTextSize);
+        
         text(this.title, titleX, titleY);
+
+        this.updatePositions();
 
         // logo
         this.logo.draw();
@@ -71,5 +74,30 @@ export class LandingPage {
             this.buttons[i].draw();
         }
         pop();
+    }
+
+    updatePositions() {
+        // logo
+        const logoW = min(windowWidth, windowHeight) / 8;
+        const logoX = windowWidth / 2 - logoW / 2;
+        const logoY = windowHeight / 3 - logoW / 2;
+
+        this.logo.x = logoX;
+        this.logo.y = logoY;
+        this.logo.w = logoW;
+        
+
+        // buttons
+        this.buttonWidth = windowWidth / 4;
+        this.buttonMargin = (windowWidth - this.buttons.length * this.buttonWidth ) / 4;
+        for (let i = 0; i < this.buttons.length; i++) {
+            let button = this.buttons[i];
+            button.x = this.buttonMargin + i * (this.buttonMargin + this.buttonWidth);
+            button.y = windowHeight * 4/5;
+            button.w = this.buttonWidth;
+            button.h = windowHeight / 15;
+            button.setR(min(windowWidth, windowHeight)/50);
+            button.textSize = button.calculateTextSize(button.text, button.w * 4/5, button.h * 4/5, 100);
+        }
     }
 }

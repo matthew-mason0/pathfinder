@@ -57,6 +57,9 @@ window.touchStarted = function (e) {
 		return false;
 	}
 }
+window.windowResized = function () {
+  	resizeCanvas(windowWidth, windowHeight);
+}
 
 window.handleClick = function (mX, mY) {
 	switch (currentPage) {
