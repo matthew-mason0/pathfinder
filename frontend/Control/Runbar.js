@@ -11,9 +11,9 @@ export class Runbar {
 
         this.icons = [];
 
-        let iconMarginX = this.w / 30;
+        let iconMarginX = this.w / 40;
         let iconMarginY = this.h / 10;
-        let iconW = min(this.w - 4 * iconMarginX, this.w / 5);
+        let iconW = min(this.w - 4 * iconMarginX, this.w / 10);
         let iconH = this.h - 2 * iconMarginY;
 
         this.loadIcon = new RunbarIcon(this, iconMarginX, iconMarginY, iconW, iconH);
@@ -27,12 +27,28 @@ export class Runbar {
         this.runIcon = new RunbarIcon(this, 3 * iconMarginX + iconW, iconMarginY, iconW, iconH);
         this.runIcon.setLabel("RUN");
         this.runIcon.setOnClick(() => {
-            this.controller.runSteps();
+            this.controller.runAllSteps();
             return;
         });
         this.icons.push(this.runIcon);
 
-        this.closeIcon = new RunbarIcon(this, 5 * iconMarginX + 2 * iconW, iconMarginY, iconW, iconH);
+        this.stepIcon = new RunbarIcon(this, 5 * iconMarginX + 2 * iconW, iconMarginY, iconW, iconH);
+        this.stepIcon.setLabel("STEP");
+        this.stepIcon.setOnClick(() => {
+            this.controller.runStep();
+            return;
+        });
+        this.icons.push(this.stepIcon);
+
+        this.pauseIcon = new RunbarIcon(this, 7 * iconMarginX + 3 * iconW, iconMarginY, iconW, iconH);
+        this.pauseIcon.setLabel("PAUSE");
+        this.pauseIcon.setOnClick(() => {
+            this.controller.pauseRun();
+            return;
+        });
+        this.icons.push(this.pauseIcon);
+
+        this.closeIcon = new RunbarIcon(this, 9 * iconMarginX + 4 * iconW, iconMarginY, iconW, iconH);
         this.closeIcon.setLabel("EXIT");
         this.closeIcon.setOnClick(() => {
             window.closeRunPage();

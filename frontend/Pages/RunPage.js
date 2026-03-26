@@ -49,4 +49,8 @@ export class RunPage {
         // take step from controller and update grid environment
         this.gridEnvironment.updateNode(type, row, column);
     }
+
+    clearGrid() {
+        this.gridEnvironment.createResize(this.gridRows, this.gridColumns);
+    }
 }
