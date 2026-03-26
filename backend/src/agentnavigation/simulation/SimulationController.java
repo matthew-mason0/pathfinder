@@ -12,6 +12,7 @@ import agentnavigation.messaging.MessageSerialiser;
 
 public class SimulationController {
     private SimulationState state = SimulationState.IDLE;
+    private SimulationConfig config = new SimulationConfig();
 
     public SimulationState getState() {
         return this.state;
@@ -71,9 +72,9 @@ public class SimulationController {
 
     private void runAlgorithm(WebSocket conn) {
         SocketStepListener listener = new SocketStepListener(msg -> conn.send(MessageSerialiser.toJson(msg)));
-        Environment environment = EnvironmentLoader.createGridEnvironment(10, 10);
-        SearchAlgorithm algorithm = AlgorithmFactory.createBFS(listener);
-
+        Environment environment = EnvironmentLoader.createGridEnvironment(this.config.getRows(), this.config.getColumns(), this.config.getStartNodeRow(), this.config.getStartNodeColumn(), this.config.getEndNodeRow(), this.config.getEndNodeColumn());
+        
+        SearchAlgorithm algorithm = AlgorithmFactory.createAlgorithm(this.config.getAlgorithm(), listener);
         algorithm.search(environment.getGraph(), environment.getStart(), environment.getEnd());
     }
 }
