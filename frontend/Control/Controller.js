@@ -110,6 +110,7 @@ export class Controller {
 
         this.stepQueue = new StepQueue();
         this.stepsLoaded = false;
+        this.container.clearGrid();
 
         this.loadSteps();
     }

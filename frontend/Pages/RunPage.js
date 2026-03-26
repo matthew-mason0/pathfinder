@@ -51,6 +51,7 @@ export class RunPage {
     }
 
     clearGrid() {
-        this.gridEnvironment.createResize(this.gridRows, this.gridColumns);
+        let newGrid = this.gridEnvironment.createResize(this.gridRows, this.gridColumns);
+        this.gridEnvironment = newGrid;
     }
 }

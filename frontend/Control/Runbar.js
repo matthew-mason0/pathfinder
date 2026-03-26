@@ -48,7 +48,15 @@ export class Runbar {
         });
         this.icons.push(this.pauseIcon);
 
-        this.closeIcon = new RunbarIcon(this, 9 * iconMarginX + 4 * iconW, iconMarginY, iconW, iconH);
+        this.resetIcon = new RunbarIcon(this, 9 * iconMarginX + 4 * iconW, iconMarginY, iconW, iconH);
+        this.resetIcon.setLabel("RESET");
+        this.resetIcon.setOnClick(() => {
+            this.controller.reset();
+            return;
+        });
+        this.icons.push(this.resetIcon);
+
+        this.closeIcon = new RunbarIcon(this, 11 * iconMarginX + 5 * iconW, iconMarginY, iconW, iconH);
         this.closeIcon.setLabel("EXIT");
         this.closeIcon.setOnClick(() => {
             window.closeRunPage();
