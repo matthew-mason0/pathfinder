@@ -40,6 +40,18 @@ export class GridEnvironment {
             for (let j = 0; j < this.columns; j++) {
                 if (this.nodes[i][j].mouseOver(mX, mY)) {
                     this.nodes[i][j].setType(this.toolbar.selectedOperation);
+
+                    // update settingState
+                    switch (this.toolbar.selectedOperation) {
+                        case "START":
+                            window.settingState.updateStart(i, j);
+                            break;
+                        case "END":
+                            window.settingState.updateEnd(i, j);
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 }
             }

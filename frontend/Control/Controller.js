@@ -58,7 +58,7 @@ export class Controller {
         let nodeList;
         
         
-        switch (step.type) {
+        switch (type) {
             case "ALGORITHM_START":
                 nodeRow = step.nodeRow;
                 nodeColumn = step.nodeColumn;

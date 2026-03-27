@@ -63,9 +63,10 @@ public class SimulationController {
 
         // update this.config
         this.config = MessageDeserialiser.fromJson(message, SimulationConfig.class);
-        System.out.println("StartNode: (" + this.config.getStartNodeRow() + ", " + this.config.getStartNodeColumn() + ")");
-        System.out.println("EndNode: (" + this.config.getEndNodeRow() + ", " + this.config.getEndNodeColumn() + ")");
-
+        System.out.println("Config Message: " + message);
+        this.config.printGridState();
+        System.out.println("StartNode at: (" + this.config.getStartNodeRow() + ", " + this.config.getStartNodeColumn() + ")");
+        System.out.println("EndNode at: (" + this.config.getEndNodeRow() + ", " + this.config.getEndNodeColumn() + ")");
         conn.send("CONFIG_OK");
     }
     private void handleRunMessage(WebSocket conn, String message) {
