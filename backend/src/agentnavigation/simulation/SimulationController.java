@@ -9,6 +9,7 @@ import agentnavigation.environment.Environment;
 import agentnavigation.environment.EnvironmentLoader;
 import agentnavigation.listeners.*;
 import agentnavigation.messaging.MessageSerialiser;
+import agentnavigation.messaging.MessageDeserialiser;
 
 public class SimulationController {
     private SimulationState state = SimulationState.IDLE;
@@ -59,6 +60,11 @@ public class SimulationController {
             runAlgorithm(conn);
             return;
         }
+
+        // update this.config
+        this.config = MessageDeserialiser.fromJson(message, SimulationConfig.class);
+        System.out.println("StartNode: (" + this.config.getStartNodeRow() + ", " + this.config.getStartNodeColumn() + ")");
+        System.out.println("EndNode: (" + this.config.getEndNodeRow() + ", " + this.config.getEndNodeColumn() + ")");
 
         conn.send("CONFIG_OK");
     }

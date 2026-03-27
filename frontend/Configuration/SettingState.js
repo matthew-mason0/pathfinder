@@ -4,8 +4,10 @@ export class SettingState {
     constructor() {
         this.rows = 10;
         this.columns = 10;
-        this.startNode = {x: 0, y: 0};
-        this.endNode = {x: this.rows-1, y: this.columns-1};
+        this.startNodeRow = 0;
+        this.startNodeColumn = 0;
+        this.endNodeRow = 8;
+        this.endNodeColumn = 8;
         this.gridState = new GridState(10, 10);
 
         this.algorithm = "BFS";
