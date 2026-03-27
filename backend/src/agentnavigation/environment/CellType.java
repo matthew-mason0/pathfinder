@@ -4,5 +4,5 @@ public enum CellType {
     EMPTY,
     WALL,
     START,
-    GOAL
+    END
 }

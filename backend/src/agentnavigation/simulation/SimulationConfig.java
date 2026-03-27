@@ -58,6 +58,7 @@ public class SimulationConfig {
         }
     }
 
+    // TODO Refactor to improve efficiency
     public int getStartNodeRow() {
         int startNodeRow = -1;
         for (int row = 0; row < this.rows; row++) {

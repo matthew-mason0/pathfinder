@@ -11,6 +11,10 @@ public class Node {
         return this.id;
     }
 
+    public boolean isWalkable() {
+        return true;
+    }
+
     @Override
     public final boolean equals(Object obj) {
         if (this == obj) return true;

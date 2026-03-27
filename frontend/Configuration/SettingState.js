@@ -38,4 +38,14 @@ export class SettingState {
         this.endNode.column = column;
         this.gridState[this.endNode.row][this.endNode.column] = "END";
     }
+    addWall(row, column) {
+        this.gridState[row][column] = "WALL";
+    }
+    removeWall(row, column) {
+        this.gridState[row][column] = "EMPTY";
+    }
+    updateWall(row, column) {
+        if (this.gridState[row][column] === "WALL") this.removeWall(row, column);
+        else this.addWall(row, column);
+    }
 }

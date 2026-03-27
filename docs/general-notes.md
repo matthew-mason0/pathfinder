@@ -49,6 +49,3 @@ A series of listener classes were made, implemnting a `StepListener` interface t
 The `WSSocket` class inherits an external `WebSocketServer` library to override open, close, message, error and start methods. It passes control to a `SimulationController` class.  
 The `SimulationController` handles incoming and outgoing messages, and initialises and configures the environment and algorithim to offload main method responsibility.  
 The `WSClientTest` class inherits an extranal `WebSocketClient` library, overriding similar methods to provide a client to view and debug the server's connection and message handling.
-
-
-// TODO Connect config pages to update global settingState appropriately. Use 2d array to pass cell types to backend.

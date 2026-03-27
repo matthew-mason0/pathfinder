@@ -49,6 +49,8 @@ export class GridEnvironment {
                         case "END":
                             window.settingState.updateEnd(i, j);
                             break;
+                        case "WALL":
+                            window.settingState.updateWall(i, j);
                         default:
                             break;
                     }

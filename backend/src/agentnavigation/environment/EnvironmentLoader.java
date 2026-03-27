@@ -14,4 +14,37 @@ public class EnvironmentLoader {
         Node end = graph.getNodeAt(endRow, endColumn);
         return new Environment(graph, start, end);
     }
+
+    public static Environment createGridEnvironment(String[][] gridState) {
+        int rows = gridState.length;
+        int columns = gridState[0].length;
+        GridGraph graph = new GridGraph(rows, columns);
+
+        Node start = null;
+        Node end = null;
+        for (int row = 0; row < rows; row++) {
+            for (int column = 0; column < columns; column++) {
+                GridNode node = graph.getNodeAt(row, column);
+                String cell = gridState[row][column];
+                switch (cell.toUpperCase()) {
+                    case "START":
+                        node.setType(CellType.START);
+                        start = node;
+                        break;
+                    case "END":
+                        node.setType(CellType.END);
+                        end = node;
+                        break;
+                    case "WALL":
+                        node.setType(CellType.WALL);
+                        break;
+                    default:
+                        node.setType(CellType.EMPTY);
+                        break;
+                }
+            }
+        }
+        return new Environment(graph, start, end);
+
+    }
 }
