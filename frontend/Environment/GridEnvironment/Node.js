@@ -34,14 +34,17 @@ export class Node {
         if (mode === "WALL") {
             if (this.type === "WALL") this.type = "EMPTY";
             else if (this.type === "EMPTY") this.type = "WALL";
+            window.settingState.updateWall(this.i, this.j);
             return;
         }
         this.type = mode;
         if (mode === "START") {
             this.environment.updateStart(this);
+            window.settingState.updateStart(this.i, this.j);
         }
         if (mode === "END") {
             this.environment.updateEnd(this);
+            window.settingState.updateEnd(this.i, this.j);
         }
     }
 

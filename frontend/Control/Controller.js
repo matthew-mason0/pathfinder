@@ -17,6 +17,7 @@ export class Controller {
 
     loadSteps() {
         this.socket.send(JSON.stringify(window.settingState));
+        this.container.loadConfig();
         this.socket.send("RUN");
     }
 

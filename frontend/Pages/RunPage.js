@@ -15,7 +15,9 @@ export class RunPage {
         // instantiate with or load state after?
         this.gridRows = window.settingState.rows;
         this.gridColumns = window.settingState.columns;
-        // this.walls;
+
+        // gridState
+        this.gridState = window.settingState.gridState;
         
         // runbar
         let runbarThickness = windowHeight / 20;
@@ -30,6 +32,21 @@ export class RunPage {
         this.gridEnvironment = new GridEnvironment(this, this.runbar, this.gridRows, this.gridColumns, gridMarginX, cumulativeHeight + gridMarginY, gridWidth, gridWidth * this.gridColumns / this.gridRows);
         cumulativeHeight += this.gridEnvironment.h + gridMarginY;
 
+    }
+
+    loadConfig() {
+        this.gridRows = window.settingState.rows;
+        this.gridColumns = window.settingState.columns;
+        this.gridState = window.settingState.gridState;
+
+        let newGrid = this.gridEnvironment.createResize(this.gridRows, this.gridColumns);
+        for (let row = 0; row < this.gridRows; row++) {
+            for (let column = 0; column < this.gridColumns; column++) {
+                newGrid.nodes[row][column].type = this.gridState[row][column];
+            }
+        }
+
+        this.gridEnvironment = newGrid;
     }
 
     mousePressed(mX, mY) {
