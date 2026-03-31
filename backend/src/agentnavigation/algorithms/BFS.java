@@ -27,7 +27,6 @@ public class BFS implements SearchAlgorithm {
     
     @Override
     public List<Node> search(Graph graph, Node start, Node end) {
-        // TODO: Change updates to per frontier instead of per node
         Queue<Node> queue = new ArrayDeque<>();
         Set<Node> visited = new HashSet<>();
         List<Node> traversalList = new ArrayList<>();

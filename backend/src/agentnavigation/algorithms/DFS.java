@@ -49,6 +49,7 @@ public class DFS implements SearchAlgorithm {
                 return traversalList;
             }
             for (Node neighbour : graph.getNeighbours(current)) {
+                if (!neighbour.isWalkable()) continue;
                 if (visited.contains(neighbour)) continue;
                 visited.add(neighbour);
                 stack.push(neighbour);
