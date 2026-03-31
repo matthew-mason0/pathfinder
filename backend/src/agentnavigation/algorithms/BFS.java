@@ -17,6 +17,7 @@ import agentnavigation.listeners.StepListener;
 public class BFS implements SearchAlgorithm {
 
     private final StepListener listener;
+    
     public BFS() {
         this.listener = SilentStepListener.INSTANCE;
     }

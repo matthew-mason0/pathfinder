@@ -17,6 +17,7 @@ import agentnavigation.listeners.StepListener;
 public class Dijkstra implements SearchAlgorithm {
 
     private final StepListener listener;
+
     public Dijkstra() {
         this.listener = SilentStepListener.INSTANCE;
     }
@@ -30,7 +31,9 @@ public class Dijkstra implements SearchAlgorithm {
         List<Node> traversalList = new ArrayList<>();
         Map<Node, Node> predecessors = new HashMap<>();
         Map<Node, Integer> distance = new HashMap<>();
-        PriorityQueue<Node> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(distance::get));
+        PriorityQueue<Node> priorityQueue = new PriorityQueue<>(
+            Comparator.comparingInt(distance::get)
+        );
 
         distance.put(start, 0);
         listener.onAlgorithmStart(start);
@@ -77,7 +80,7 @@ public class Dijkstra implements SearchAlgorithm {
     private List<Node> buildPath(Node start, Node end, Map<Node, Node> predecessors) {
         List<Node> path = new ArrayList<>();
         Node current = end;
-        while (current!= null) {
+        while (current != null) {
             path.add(0, current);
             current = predecessors.get(current);
         }
