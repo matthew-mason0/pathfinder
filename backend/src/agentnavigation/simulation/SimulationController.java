@@ -7,6 +7,7 @@ import agentnavigation.algorithms.AlgorithmFactory;
 import agentnavigation.algorithms.SearchAlgorithm;
 import agentnavigation.environment.Environment;
 import agentnavigation.environment.EnvironmentLoader;
+import agentnavigation.heuristics.Heuristic;
 import agentnavigation.listeners.*;
 import agentnavigation.messaging.MessageSerialiser;
 import agentnavigation.messaging.MessageDeserialiser;
@@ -65,8 +66,6 @@ public class SimulationController {
         this.config = MessageDeserialiser.fromJson(message, SimulationConfig.class);
         System.out.println("Config Message: " + message);
         this.config.printGridState();
-        System.out.println("StartNode at: (" + this.config.getStartNodeRow() + ", " + this.config.getStartNodeColumn() + ")");
-        System.out.println("EndNode at: (" + this.config.getEndNodeRow() + ", " + this.config.getEndNodeColumn() + ")");
         conn.send("CONFIG_OK");
     }
     private void handleRunMessage(WebSocket conn, String message) {
@@ -80,8 +79,9 @@ public class SimulationController {
     private void runAlgorithm(WebSocket conn) {
         SocketStepListener listener = new SocketStepListener(msg -> conn.send(MessageSerialiser.toJson(msg)));
         Environment environment = EnvironmentLoader.createGridEnvironment(this.config.getGridState());
-        
-        SearchAlgorithm algorithm = AlgorithmFactory.createAlgorithm(this.config.getAlgorithm(), listener);
+        SearchAlgorithm algorithm;
+        if (this.config.getAlgorithm().equalsIgnoreCase("AStar")) algorithm = AlgorithmFactory.createAStar(this.config.getHeuristic(), listener);
+        else algorithm = AlgorithmFactory.createAlgorithm(this.config.getAlgorithm(), listener);
         algorithm.search(environment.getGraph(), environment.getStart(), environment.getEnd());
     }
 }
