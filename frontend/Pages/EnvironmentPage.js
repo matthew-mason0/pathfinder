@@ -98,5 +98,6 @@ export class EnvironmentPage {
             let newGrid = this.gridEnvironment.createResize(settings["Rows"], settings["Columns"]);
             this.gridEnvironment = newGrid;
         }
+        // TODO load existing wall pattern
     }
 }
