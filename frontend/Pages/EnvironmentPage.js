@@ -93,6 +93,10 @@ export class EnvironmentPage {
         pop();
     }
 
+    recalculateLayout() {
+        
+    }
+
     parseSettings(settings) {
         if (settings["Rows"] && settings["Columns"]) {
             let newGrid = this.gridEnvironment.createResize(settings["Rows"], settings["Columns"]);
