@@ -40,6 +40,7 @@ export class GridEnvironment {
             for (let j = 0; j < this.columns; j++) {
                 if (this.nodes[i][j].mouseOver(mX, mY)) {
                     this.nodes[i][j].setType(this.toolbar.selectedOperation);
+                    // ensure only one node update per click
                     break;
                 }
             }
@@ -55,6 +56,14 @@ export class GridEnvironment {
         if (this.endNode === newEnd) return;
         this.endNode.setType("EMPTY");
         this.endNode = newEnd;
+    }
+    updateNode(type, row, column) {
+        console.log(this.nodes[row][column]);
+        try {
+            this.nodes[row][column].setType(type);
+        } catch (e) {
+            console.warn("Invalid index for node update");
+        }
     }
 
     createResize(rows, columns) {

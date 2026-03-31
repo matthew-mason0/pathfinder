@@ -26,7 +26,6 @@ export class Icon extends Button {
 
     draw() {
         push();
-        // console.log(this.operation);
         let colour = this.colours[this.operation];
         fill(...colour);
         stroke(...colour.map(c => 255 - c));

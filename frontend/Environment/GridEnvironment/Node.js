@@ -13,9 +13,12 @@ export class Node {
 
         this.colours = {
             EMPTY: [255],
+            DISCOVERED: [173, 216, 230],
+            EXPLORED: [0, 0, 128],
             WALL: [0, 0, 35],
             START: [0, 255, 0],
-            END: [255, 0, 0]
+            END: [255, 0, 0],
+            PATH: [255, 215, 0]
         };
     }
 
@@ -28,24 +31,20 @@ export class Node {
     }
 
     setType(mode) {
-        switch (mode) {
-            case "WALL":
-                if (this.type === "WALL") this.type = "EMPTY";
-                else if (this.type === "EMPTY") this.type = "WALL";
-                break;
-            case "START":
-                this.type = "START";
-                this.environment.updateStart(this);
-                break;
-            case "END":
-                this.type = "END";
-                this.environment.updateEnd(this);
-                break;
-            case "EMPTY":
-                this.type = "EMPTY";
-                break;
-            default:
-                break;
+        if (mode === "WALL") {
+            if (this.type === "WALL") this.type = "EMPTY";
+            else if (this.type === "EMPTY") this.type = "WALL";
+            window.settingState.updateWall(this.i, this.j);
+            return;
+        }
+        this.type = mode;
+        if (mode === "START") {
+            this.environment.updateStart(this);
+            window.settingState.updateStart(this.i, this.j);
+        }
+        if (mode === "END") {
+            this.environment.updateEnd(this);
+            window.settingState.updateEnd(this.i, this.j);
         }
     }
 

@@ -57,6 +57,9 @@ window.touchStarted = function (e) {
 		return false;
 	}
 }
+window.windowResized = function () {
+  	resizeCanvas(windowWidth, windowHeight);
+}
 
 window.handleClick = function (mX, mY) {
 	switch (currentPage) {
@@ -94,6 +97,8 @@ window.closeEnvironmentPage = function () {
 	currentPage = "LANDING";
 }
 window.openRunPage = function () {
-	// TODO get setting state
 	currentPage = "RUN";
+}
+window.closeRunPage = function () {
+	currentPage = "LANDING";
 }

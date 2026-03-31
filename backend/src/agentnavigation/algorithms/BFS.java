@@ -17,6 +17,7 @@ import agentnavigation.listeners.StepListener;
 public class BFS implements SearchAlgorithm {
 
     private final StepListener listener;
+    
     public BFS() {
         this.listener = SilentStepListener.INSTANCE;
     }
@@ -27,7 +28,6 @@ public class BFS implements SearchAlgorithm {
     
     @Override
     public List<Node> search(Graph graph, Node start, Node end) {
-        // TODO: Change updates to per frontier instead of per node
         Queue<Node> queue = new ArrayDeque<>();
         Set<Node> visited = new HashSet<>();
         List<Node> traversalList = new ArrayList<>();
@@ -43,7 +43,6 @@ public class BFS implements SearchAlgorithm {
         while (!queue.isEmpty()) {
             Node current = queue.remove();
             listener.onNodeExplored(current);
-            listener.onFrontierUpdate(queue);
             traversalList.add(current);
 
             if (end != null && current.equals(end)) {
@@ -53,14 +52,16 @@ public class BFS implements SearchAlgorithm {
                 return traversalList;
             }
             for (Node neighbour : graph.getNeighbours(current)) {
+                if (!neighbour.isWalkable()) continue;
                 if (visited.contains(neighbour)) continue;
+
                 visited.add(neighbour);
                 queue.add(neighbour);
                 predecessors.put(neighbour, current);
 
                 listener.onNodeDiscovered(neighbour);
-                listener.onFrontierUpdate(queue);
             }
+            listener.onFrontierUpdate(queue);
         }
         listener.onAlgorithmEnd();
         return traversalList;

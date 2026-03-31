@@ -31,11 +31,13 @@ export class ConfigPage {
         this.algorithmSetting.addDropdown("BFS");
         this.algorithmSetting.addDropdown("DFS");
         this.algorithmSetting.addDropdown("Dijkstra");
-        this.algorithmSetting.addDropdown("A*");
+        this.algorithmSetting.addDropdown("AStar");
 
         this.heuristicSetting = this.settingsList.addSetting("Heuristic", "DROPDOWN", "heuristic");
         this.heuristicSetting.addDropdown("Manhattan");
         this.heuristicSetting.addDropdown("Euclidean");
+        this.heuristicSetting.addDropdown("Chebyshev");
+        this.heuristicSetting.addDropdown("Zero");
 
         this.timerSetting = this.settingsList.addSetting("Timer", "CHECK", "timer");
 

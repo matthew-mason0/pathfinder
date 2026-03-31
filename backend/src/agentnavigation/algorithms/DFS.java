@@ -14,7 +14,9 @@ import agentnavigation.listeners.SilentStepListener;
 import agentnavigation.listeners.StepListener;
 
 public class DFS implements SearchAlgorithm {
+
     private final StepListener listener;
+    
     public DFS() {
         this.listener = SilentStepListener.INSTANCE;
     }
@@ -49,6 +51,7 @@ public class DFS implements SearchAlgorithm {
                 return traversalList;
             }
             for (Node neighbour : graph.getNeighbours(current)) {
+                if (!neighbour.isWalkable()) continue;
                 if (visited.contains(neighbour)) continue;
                 visited.add(neighbour);
                 stack.push(neighbour);
