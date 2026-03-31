@@ -7,7 +7,6 @@ import agentnavigation.algorithms.AlgorithmFactory;
 import agentnavigation.algorithms.SearchAlgorithm;
 import agentnavigation.environment.Environment;
 import agentnavigation.environment.EnvironmentLoader;
-import agentnavigation.heuristics.Heuristic;
 import agentnavigation.listeners.*;
 import agentnavigation.messaging.MessageSerialiser;
 import agentnavigation.messaging.MessageDeserialiser;
