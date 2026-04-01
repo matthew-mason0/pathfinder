@@ -151,19 +151,29 @@ export class EnvironmentPage {
         this.settingsListY = this.titleY + this.titleH + this.margin * 3/2;
         this.settingsList.setPosition(this.settingsListX, this.settingsListY, this.settingsListW, this.settingsListH);
 
-        // toolbar
-        this.toolbarW = this.backgroundW * 4/5;
-        this.toolbarH = this.backgroundH * 2/25;
-        this.toolbarX = this.backgroundX + (this.backgroundW - this.toolbarW) / 2;
-        this.toolbarY = this.settingsListY + this.settingsListH + this.margin * 3/2;
-        this.toolbar.setPosition(this.toolbarX, this.toolbarY, this.toolbarW, this.toolbarH);
+        // grid and toolbar
+        this.environmentW = this.backgroundW * 4 / 5;
+        this.environmentX = this.backgroundX + (this.backgroundW - this.environmentW) / 2;
+        this.environmentY = this.settingsListY + this.settingsListH + this.margin * 3/2;
+        this.environmentH = this.backgroundY + this.backgroundH - this.environmentY - this.margin * 2;
+
+        this.toolbarW = this.environmentW / 8;
+
+        let maxGridW = this.environmentW - this.toolbarW - this.margin;
+        let maxGridH = this.environmentH;
+        this.gridSize = min(maxGridW, maxGridH);
+        let totalW = this.toolbarW + this.gridSize;
+        this.toolbarX = this.environmentX + (this.environmentW - totalW) / 2;
+        this.gridX = this.toolbarX + this.toolbarW + this.margin;
+        this.gridY = this.environmentY + (this.environmentH - this.gridSize) / 2;
+        this.toolbarH = this.gridSize;
+        this.toolbarY = this.gridY;
 
         // gridEnvironment
-        this.gridSize = this.backgroundH * 0.45;
-        this.gridSize = min(this.gridSize, this.backgroundW * 0.6);
-        this.gridX = this.backgroundX + (this.backgroundW - this.gridSize) / 2;
-        this.gridY = this.toolbarY + this.toolbarH + this.margin * 3/2;
         this.gridEnvironment.setPosition(this.gridX, this.gridY, this.gridSize, this.gridSize);
+
+        // toolbar
+        this.toolbar.setPosition(this.toolbarX, this.toolbarY, this.toolbarW, this.toolbarH);
     }
 
     parseSettings(settings) {
