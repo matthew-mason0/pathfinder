@@ -6,30 +6,21 @@ import { Toolbar } from "../Environment/Toolbar/Toolbar.js";
 export class EnvironmentPage {
     constructor() {
         this.textColour = [0];
-        let cumulativeHeight = 0;
 
         // background
         this.backgroundColour = [200, 200];
-        this.backgroundMargin = max(windowWidth, windowHeight) / 50;
-        this.backgroundX = this.backgroundMargin;
-        this.backgroundY = this.backgroundMargin;
-        this.backgroundW = windowWidth - 2 * this.backgroundMargin;
-        this.backgroundH = windowHeight - 2 * this.backgroundMargin;
-        this.backgroundR = this.backgroundMargin * 2;
+        this.margin = 0;
+        this.backgroundX = 0;
+        this.backgroundY = 0;
+        this.backgroundW = 0;
+        this.backgroundH = 0;
+        this.backgroundR = 0;
 
         // close button
-        this.closeButton = new Button("X", windowWidth * 5/6, windowHeight / 30, cumulativeHeight + min(windowWidth, windowHeight) / 15, min(windowWidth, windowHeight) / 15);
-        this.closeButton.setR(min(windowWidth, windowHeight) / 40);
-        this.closeButton.setFillColour([0, 0]);
-        this.closeButton.setStrokeColour([0]);
-        this.closeButton.setTextColour([0]);
-        cumulativeHeight += this.closeButton.h;
+        this.closeButton = new Button("X", 0, 0, 0, 0);
 
         // settings list
-        const settingsListW = windowWidth * 3/4;
-        const settingsListH = windowHeight / 4;
-        this.settingsList = new SettingsList(this, windowWidth/2 - settingsListW/2, cumulativeHeight + windowHeight/5 - settingsListH/2, settingsListW, settingsListH);
-        cumulativeHeight += this.settingsList.h;
+        this.settingsList = new SettingsList(this, 0, 0, 0, 0);
 
         // settings
         this.rowsSetting = this.settingsList.addSetting("Rows", "NUMBER", "rows");
@@ -40,20 +31,19 @@ export class EnvironmentPage {
         this.submitSetting = this.settingsList.addSetting("Load", "SUBMIT");
 
         // toolbar
-        this.toolbar = new Toolbar(this, windowWidth / 8, cumulativeHeight + windowHeight / 8, windowWidth * 6/8, windowHeight / 20);
-        cumulativeHeight += this.toolbar.h;
+        this.toolbar = new Toolbar(this, 0, 0, 0, 0);
         this.toolbar.addIcon("WALL");
         this.toolbar.addIcon("START");
         this.toolbar.addIcon("END");
 
         // grid environment
-        const gridEnvironmentW = windowWidth / 3;
-        this.gridEnvironment = new GridEnvironment(this, this.toolbar, 10, 10, windowWidth/3, cumulativeHeight + windowHeight/4, windowWidth/3, windowWidth/3);
-        cumulativeHeight += this.gridEnvironment.h;
+        this.gridEnvironment = new GridEnvironment(this, this.toolbar, 10, 10, 0, 0, 0, 0);
 
         this.closeButton.setOnClickAction(() => {
             window.closeEnvironmentPage();
         });
+
+        this.recalculateLayout();
     }
 
     mousePressed(mX, mY) {
@@ -73,11 +63,13 @@ export class EnvironmentPage {
         // title
         fill(...this.textColour);
         textAlign(LEFT, CENTER);
-        textSize(min(windowWidth, windowHeight) / 20);
-        const titleX = this.backgroundMargin*3;
-        const titleY = this.backgroundMargin*3;
+        textSize(this.titleSize);
 
-        text("ENVIRONMENT PAGE", titleX, titleY);
+        try{
+            text("ENVIRONMENT PAGE", this.titleX, this.titleY);
+        } catch (e) {
+            text("ENVIRONMENT PAGE", this.backgroundMargin * 3, this.backgroundMargin * 3);
+        }
         
         // close button
         this.closeButton.draw();
@@ -93,8 +85,48 @@ export class EnvironmentPage {
         pop();
     }
 
+    reposition(object, x, y, w, h) {
+        object.setPosition(x, y, w, h);
+    }
+
     recalculateLayout() {
-        
+        this.margin = max(windowWidth, windowHeight) / 50;
+
+        this.backgroundX = this.margin;
+        this.backgroundY = this.margin;
+        this.backgroundW = windowWidth - 2 * this.margin;
+        this.backgroundH = windowHeight - 2 * this.margin;
+        this.backgroundR = this.margin / 2;
+
+        this.titleSize = min(windowWidth, windowHeight) / 20;
+        this.titleX = this.backgroundX + this.margin;
+        this.titleY = this.backgroundY + this.margin * 3/2;
+
+        this.closeButtonSize = min(windowWidth, windowHeight) / 15;
+        this.closeButtonX = this.backgroundX + this.backgroundW - this.closeButtonSize - this.margin / 2;
+        this.closeButtonY = this.titleY - this.closeButtonSize / 2;
+        this.closeButton.setPosition(this.closeButtonX, this.closeButtonY, this.closeButtonSize, this.closeButtonSize);
+        this.closeButton.setStrokeColour([0, 0]);
+        this.closeButton.setFillColour([0, 0]);
+        this.closeButton.setTextColour(this.textColour);
+
+        this.settingsListW = this.backgroundW * 3/4;
+        this.settingsListH = this.backgroundH / 5;
+        this.settingsListX = this.backgroundX + (this.backgroundW - this.settingsListW) / 2;
+        this.settingsListY = this.titleY + this.margin * 3/2;
+        this.settingsList.setPosition(this.settingsListX, this.settingsListY, this.settingsListW, this.settingsListH);
+
+        this.toolbarW = this.backgroundW * 4/5;
+        this.toolbarH = this.backgroundH * 2/25;
+        this.toolbarX = this.backgroundX + (this.backgroundW - this.toolbarW) / 2;
+        this.toolbarY = this.settingsListY + this.settingsListH + this.margin * 3/2;
+        this.toolbar.setPosition(this.toolbarX, this.toolbarY, this.toolbarW, this.toolbarH);
+
+        this.gridSize = this.backgroundH * 0.45;
+        this.gridSize = min(this.gridSize, this.backgroundW * 0.6);
+        this.gridX = this.backgroundX + (this.backgroundW - this.gridSize) / 2;
+        this.gridY = this.toolbarY + this.toolbarH + this.margin * 3/2;
+        this.gridEnvironment.setPosition(this.gridX, this.gridY, this.gridSize, this.gridSize);
     }
 
     parseSettings(settings) {
