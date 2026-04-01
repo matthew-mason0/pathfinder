@@ -7,7 +7,26 @@ export class EnvironmentPage {
     constructor() {
         this.textColour = [0];
 
+        // background
+        this.backgroundColour = 0;
+        this.margin = 0;
+        this.backgroundX = 0;
+        this.backgroundY = 0;
+        this.backgroundW = 0;
+        this.backgroundH = 0;
+        this.backgroundR = 0;
+
+        // title
+        this.titleX = 0;
+        this.titleY = 0;
+        this.titleW = 0;
+        this.titleH = 0;
+
         // close button
+        this.closeButtonX = 0;
+        this.closeButtonY = 0;
+        this.closeButtonW = 0;
+        this.closeButtonH = 0;
         this.closeButton = new Button("X", 0, 0, 0, 0);
         this.closeButton.setOnClickAction(() => {
             window.closeEnvironmentPage();
@@ -45,16 +64,15 @@ export class EnvironmentPage {
     draw() {
         push();
         // background
+        push();
         fill(...this.backgroundColour);
-        noStroke();
-
+        stroke(0);
+        strokeWeight(3);
         rect(this.backgroundX, this.backgroundY, this.backgroundW, this.backgroundH, this.backgroundR);
+        pop();
 
         // title
-        fill(...this.textColour);
-        textAlign(LEFT, CENTER);
-        textSize(this.titleSize);
-        text("ENVIRONMENT PAGE", this.titleX, this.titleY);
+        image(window.environmentHeaderImage, this.titleX, this.titleY, this.titleW, this.titleH);
 
         // close button
         this.closeButton.draw();
@@ -71,7 +89,8 @@ export class EnvironmentPage {
     }
 
     recalculateLayout() {
-        this.backgroundColour = [200, 200];
+        // background
+        this.backgroundColour = [85, 107, 47, 200];
         this.margin = max(windowWidth, windowHeight) / 50;
         this.backgroundX = this.margin;
         this.backgroundY = this.margin;
@@ -79,30 +98,35 @@ export class EnvironmentPage {
         this.backgroundH = windowHeight - 2 * this.margin;
         this.backgroundR = this.margin / 2;
 
-        this.titleSize = min(windowWidth, windowHeight) / 20;
+        // title
         this.titleX = this.backgroundX + this.margin;
-        this.titleY = this.backgroundY + this.margin * 3/2;
+        this.titleY = this.backgroundY + this.margin / 2;
+        this.titleW = this.backgroundW / 3;
+        this.titleH = this.backgroundH / 10;
 
-        this.closeButtonSize = min(windowWidth, windowHeight) / 15;
-        this.closeButtonX = this.backgroundX + this.backgroundW - this.closeButtonSize - this.margin / 2;
-        this.closeButtonY = this.titleY - this.closeButtonSize / 2;
-        this.closeButton.setPosition(this.closeButtonX, this.closeButtonY, this.closeButtonSize, this.closeButtonSize);
-        this.closeButton.setStrokeColour([0, 0]);
-        this.closeButton.setFillColour([0, 0]);
-        this.closeButton.setTextColour(this.textColour);
+        // close button
+        this.closeButtonW = min(windowWidth, windowHeight) / 10;
+        this.closeButtonH = min(windowWidth, windowHeight) / 15;
+        this.closeButtonX = this.backgroundX + this.backgroundW - this.closeButtonW - this.margin / 2;
+        this.closeButtonY = this.titleY;
+        this.closeButton.setPosition(this.closeButtonX, this.closeButtonY, this.closeButtonW, this.closeButtonH);
+        this.closeButton.setImage(window.closeButtonImage);
 
+        // settingsList
         this.settingsListW = this.backgroundW * 3/4;
         this.settingsListH = this.backgroundH / 5;
         this.settingsListX = this.backgroundX + (this.backgroundW - this.settingsListW) / 2;
-        this.settingsListY = this.titleY + this.margin * 3/2;
+        this.settingsListY = this.titleY + this.titleH + this.margin * 3/2;
         this.settingsList.setPosition(this.settingsListX, this.settingsListY, this.settingsListW, this.settingsListH);
 
+        // toolbar
         this.toolbarW = this.backgroundW * 4/5;
         this.toolbarH = this.backgroundH * 2/25;
         this.toolbarX = this.backgroundX + (this.backgroundW - this.toolbarW) / 2;
         this.toolbarY = this.settingsListY + this.settingsListH + this.margin * 3/2;
         this.toolbar.setPosition(this.toolbarX, this.toolbarY, this.toolbarW, this.toolbarH);
 
+        // gridEnvironment
         this.gridSize = this.backgroundH * 0.45;
         this.gridSize = min(this.gridSize, this.backgroundW * 0.6);
         this.gridX = this.backgroundX + (this.backgroundW - this.gridSize) / 2;

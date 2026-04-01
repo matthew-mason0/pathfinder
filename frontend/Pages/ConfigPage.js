@@ -17,12 +17,14 @@ export class ConfigPage {
         // title
         this.titleX = 0
         this.titleY = 0;
-        this.titleSize = 0;
+        this.titleW = 0;
+        this.titleH = 0;
 
         // close button
         this.closeButtonX = 0;
         this.closeButtonY = 0;
-        this.closeButtonSize = 0;
+        this.closeButtonW = 0;
+        this.closeButtonH = 0;
         this.closeButton = new Button("X", 0, 0, 0, 0);
         this.closeButton.setOnClickAction(() => {
             this.settingsList.hideDOMs();
@@ -62,16 +64,15 @@ export class ConfigPage {
     draw() {
         push();
         // background
+        push();
         fill(...this.backgroundColour);
-        noStroke();
-
+        stroke(0);
+        strokeWeight(3);
         rect(this.backgroundX, this.backgroundY, this.backgroundW, this.backgroundH, this.backgroundR);
+        pop();
 
         // title
-        fill(...this.textColour);
-        textAlign(LEFT, CENTER);
-        textSize(this.titleSize);
-        text("CONFIG PAGE", this.titleX, this.titleY);
+        image(window.algorithmHeaderImage, this.titleX, this.titleY, this.titleW, this.titleH);
         
         // close button
         this.closeButton.draw();
@@ -83,7 +84,7 @@ export class ConfigPage {
 
     recalculateLayout() {
         // background
-        this.backgroundColour = [200, 200];
+        this.backgroundColour = [85, 107, 47, 200];
         this.margin = max(windowWidth, windowHeight) / 50;
         this.backgroundX = this.margin;
         this.backgroundY = this.margin;
@@ -92,25 +93,24 @@ export class ConfigPage {
         this.backgroundR = this.margin / 2;
 
         // title
-        this.titleSize = min(windowWidth, windowHeight) / 20;
         this.titleX = this.backgroundX + this.margin;
-        this.titleY = this.backgroundY + this.margin * 3/2;
+        this.titleY = this.backgroundY + this.margin / 2;
+        this.titleW = this.backgroundW / 3;
+        this.titleH = this.backgroundH / 10;
 
         // close button
-        this.closeButtonSize = min(windowWidth, windowHeight) / 15;
-        this.closeButtonX = this.backgroundX + this.backgroundW - this.closeButtonSize - this.margin / 2;
-        this.closeButtonY = this.titleY - this.closeButtonSize / 2;
-        this.closeButton.setPosition(this.closeButtonX, this.closeButtonY, this.closeButtonSize, this.closeButtonSize);
-
-        this.closeButton.setStrokeColour([0, 0]);
-        this.closeButton.setFillColour([0, 0]);
-        this.closeButton.setTextColour(this.textColour);
+        this.closeButtonW = min(windowWidth, windowHeight) / 10;
+        this.closeButtonH = min(windowWidth, windowHeight) / 15;
+        this.closeButtonX = this.backgroundX + this.backgroundW - this.closeButtonW - this.margin / 2;
+        this.closeButtonY = this.titleY;
+        this.closeButton.setPosition(this.closeButtonX, this.closeButtonY, this.closeButtonW, this.closeButtonH);
+        this.closeButton.setImage(window.closeButtonImage);
 
         // settings list
         this.settingsListW = this.backgroundW * 3/4;
         this.settingsListH = this.backgroundH / 2;
         this.settingsListX = this.backgroundX + (this.backgroundW - this.settingsListW) / 2;
-        this.settingsListY = this.titleY + this.margin * 3/2;
+        this.settingsListY = this.titleY + this.titleH + this.margin * 3/2;
         this.settingsList.setPosition(this.settingsListX, this.settingsListY, this.settingsListW, this.settingsListH);
     }
 }

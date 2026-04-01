@@ -1,20 +1,22 @@
-import { Logo } from "../PageElements/Logo.js";
 import { Button } from "../PageElements/Button.js";
 
 export class LandingPage {
     constructor() {
         // instantiate buttons
         this.environmentButton = new Button("ENVIRONMENT", 0, 0, 0, 0);
+        this.environmentButton.setImage(window.environmentButtonImage);
         this.environmentButton.setOnClickAction(() => {
             window.openEnvironmentPage();
         });
 
         this.configButton = new Button("CONFIG", 0, 0, 0, 0);
+        this.configButton.setImage(window.algorithmButtonImage);
         this.configButton.setOnClickAction(() => {
             window.openConfigPage();
         });
 
         this.runButton = new Button("RUN", 0, 0, 0, 0);
+        this.runButton.setImage(window.playgroundButtonImage);
         this.runButton.setOnClickAction(() => {
             window.openRunPage();
         });

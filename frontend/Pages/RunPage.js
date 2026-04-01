@@ -33,6 +33,16 @@ export class RunPage {
         cumulativeHeight += this.gridEnvironment.h + gridMarginY;
 
     }
+    
+    updateGrid(type, row, column) {
+        // take step from controller and update grid environment
+        this.gridEnvironment.updateNode(type, row, column);
+    }
+
+    clearGrid() {
+        let newGrid = this.gridEnvironment.createResize(this.gridRows, this.gridColumns);
+        this.gridEnvironment = newGrid;
+    }
 
     loadConfig() {
         this.gridRows = window.settingState.rows;
@@ -58,17 +68,12 @@ export class RunPage {
 
     draw() {
         background(100);
+        image(window.runPageImage, 0, 0, windowWidth, windowHeight);
         this.runbar.draw();
         this.gridEnvironment.draw();
     }
 
-    updateGrid(type, row, column) {
-        // take step from controller and update grid environment
-        this.gridEnvironment.updateNode(type, row, column);
-    }
+    recalculateLayout() {
 
-    clearGrid() {
-        let newGrid = this.gridEnvironment.createResize(this.gridRows, this.gridColumns);
-        this.gridEnvironment = newGrid;
     }
 }

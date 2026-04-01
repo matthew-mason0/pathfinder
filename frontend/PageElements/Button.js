@@ -1,5 +1,6 @@
 export class Button {
     constructor(text, x, y, w, h) {
+        this.image = null;
         this.text = text;
         this.x = x;
         this.y = y;
@@ -35,8 +36,17 @@ export class Button {
         this.textSize = this.calculateTextSize(this.text, this.w*0.8, this.h*0.8, 100);
     }
 
+    setImage(image) {
+        this.image = image;
+    }
+
     draw() {
         push();
+        if (this.image != null) {
+            image(this.image, this.x, this.y, this.w, this.h);
+            return;
+        }
+
         // button
         fill(...this.fillColour);
         stroke(...this.strokeColour);

@@ -31,7 +31,7 @@ export class Setting {
                 this.input = createCheckbox();
                 break;
             case "SUBMIT":
-                this.input = createButton("Submit");
+                this.input = createButton("Resize");
                 this.input.mousePressed(() => {
                     this.container.handleSubmit();
                 });
