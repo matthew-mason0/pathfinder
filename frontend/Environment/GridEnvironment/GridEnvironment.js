@@ -83,4 +83,19 @@ export class GridEnvironment {
         }
         pop();
     }
+
+    setPosition(x, y, w, h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+
+        let nodeW = this.w / this.columns;
+        let nodeH = this.h / this.rows;
+        for (let row = 0; row < this.rows; row++) {
+            for (let column = 0; column < this.columns; column++) {
+                this.nodes[row][column].setPosition(this.x + column * nodeW, this.y + row * nodeH, nodeW, nodeH);
+            }
+        }
+    }
 }

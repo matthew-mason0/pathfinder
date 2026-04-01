@@ -42,6 +42,27 @@ export class Toolbar {
         }
     }
 
+    setPosition(x, y, w, h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.updateIconPostions();
+    }
+
+    updateIconPostions() {
+        this.iconMargin = this.h / 4;
+        this.iconW = this.h - this.iconMargin;
+        let icon;
+        let x,y;
+        for (let iconNumber = 0; iconNumber < this.icons.length; iconNumber++) {
+            icon = this.icons[iconNumber];
+            x = this.x + (iconNumber+1) * this.iconMargin/2 + iconNumber * this.iconW;
+            y = this.y + this.iconMargin/2;
+            icon.setPosition(x, y, this.iconW, this.iconW);
+        }
+    }
+
     draw() {
         push();
         fill(100);

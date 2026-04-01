@@ -16,6 +16,14 @@ export class SettingsList {
         return setting;
     }
 
+    setPosition(x, y, w, h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.updatePositions();
+    }
+
     draw() {
         push();
         noFill();

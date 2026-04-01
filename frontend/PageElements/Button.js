@@ -11,7 +11,7 @@ export class Button {
         this.strokeColour = [0]; // as array
         this.textColour = [0]; // as array
         this.r = min(windowWidth, windowHeight) / 30;
-        this.textSize = this.calculateTextSize(this.text, this.w*0.8, this.h*0.8, 100); 
+        this.textSize = this.calculateTextSize(this.text, this.w*0.8, this.h*0.8, 100);
         this.onClickAction = null;
     }
 
@@ -27,13 +27,23 @@ export class Button {
         if (this.onClick) this.onClickAction();
     }
 
+    setPosition(x, y, w, h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.textSize = this.calculateTextSize(this.text, this.w*0.8, this.h*0.8, 100);
+    }
+
     draw() {
         push();
+        // button
         fill(...this.fillColour);
         stroke(...this.strokeColour);
         strokeWeight(1);
         rect(this.x, this.y, this.w, this.h, this.r);
 
+        //label
         textAlign(CENTER, CENTER);
         textSize(this.textSize);
         noStroke();
