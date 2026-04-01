@@ -7,17 +7,11 @@ export class EnvironmentPage {
     constructor() {
         this.textColour = [0];
 
-        // background
-        this.backgroundColour = [200, 200];
-        this.margin = 0;
-        this.backgroundX = 0;
-        this.backgroundY = 0;
-        this.backgroundW = 0;
-        this.backgroundH = 0;
-        this.backgroundR = 0;
-
         // close button
         this.closeButton = new Button("X", 0, 0, 0, 0);
+        this.closeButton.setOnClickAction(() => {
+            window.closeEnvironmentPage();
+        });
 
         // settings list
         this.settingsList = new SettingsList(this, 0, 0, 0, 0);
@@ -38,10 +32,6 @@ export class EnvironmentPage {
 
         // grid environment
         this.gridEnvironment = new GridEnvironment(this, this.toolbar, 10, 10, 0, 0, 0, 0);
-
-        this.closeButton.setOnClickAction(() => {
-            window.closeEnvironmentPage();
-        });
 
         this.recalculateLayout();
     }
@@ -90,8 +80,8 @@ export class EnvironmentPage {
     }
 
     recalculateLayout() {
+        this.backgroundColour = [200, 200];
         this.margin = max(windowWidth, windowHeight) / 50;
-
         this.backgroundX = this.margin;
         this.backgroundY = this.margin;
         this.backgroundW = windowWidth - 2 * this.margin;

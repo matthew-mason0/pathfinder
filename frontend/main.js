@@ -59,6 +59,7 @@ window.touchStarted = function (e) {
 }
 window.windowResized = function () {
   	resizeCanvas(windowWidth, windowHeight);
+	environmentPage.recalculateLayout();
 }
 
 window.handleClick = function (mX, mY) {
