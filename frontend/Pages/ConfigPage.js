@@ -13,6 +13,7 @@ export class ConfigPage {
         this.backgroundW = 0;
         this.backgroundH = 0;
         this.backgroundR = 0;
+        this.backgroundImage = window.menuBackgroundImage;
 
         // title
         this.titleX = 0
@@ -65,7 +66,9 @@ export class ConfigPage {
         push();
         // background
         push();
-        fill(...this.backgroundColour);
+        tint(255, 220);
+        image(this.backgroundImage, this.backgroundX, this.backgroundY, this.backgroundW, this.backgroundH);
+        noFill();
         stroke(0);
         strokeWeight(3);
         rect(this.backgroundX, this.backgroundY, this.backgroundW, this.backgroundH, this.backgroundR);
@@ -82,6 +85,33 @@ export class ConfigPage {
         pop();
     }
 
+    getRoundedImage(img, w, h, r) {
+        let mask = createGraphics(w, h);
+        mask.noStroke();
+        mask.fill(255);
+        mask.rect(0, 0, w, h, r);
+
+        let sourceAspect = img.width / img.height;
+        let aspect = w / h;
+        let sx, sy, sw, sh;
+        if (sourceAspect > aspect) {
+            sh = img.height;
+            sw = sh * aspect;
+            sx = (img.width - sw) / 2;
+            sy = 0;
+        } else {
+            sw = img.width;
+            sh = sw / aspect;
+            sx = 0;
+            sy = (img.height - sh) / 2;
+        }
+
+        let buffer = createImage(int(w), int(h));
+        buffer.copy(img, sx, sy, sw, sh, 0, 0, w, h);
+        buffer.mask(mask);
+        return buffer;
+    }
+
     recalculateLayout() {
         // background
         this.backgroundColour = [85, 107, 47, 200];
@@ -91,6 +121,7 @@ export class ConfigPage {
         this.backgroundW = windowWidth - 2 * this.margin;
         this.backgroundH = windowHeight - 2 * this.margin;
         this.backgroundR = this.margin / 2;
+        this.backgroundImage = this.getRoundedImage(window.menuBackgroundImage, this.backgroundW, this.backgroundH, this.backgroundR);
 
         // title
         this.titleX = this.backgroundX + this.margin;

@@ -24,6 +24,7 @@ window.preload = function () {
 	window.algorithmButtonImage = loadImage('Assets/algorithmButton.png');
 
 	window.closeButtonImage = loadImage('Assets/closeButton.png');
+	window.menuBackgroundImage = loadImage('Assets/gradient.png');
 }
 
 window.setup = function () {
