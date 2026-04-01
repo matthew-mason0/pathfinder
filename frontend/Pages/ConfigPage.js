@@ -3,28 +3,38 @@ import { SettingsList } from "../PageElements/SettingsList.js";
 
 export class ConfigPage {
     constructor() {
-        this.textColour = [255];
+        this.textColour = [0];
         
         // background
         this.backgroundColour = [0, 200];
-        this.backgroundMargin = max(windowWidth, windowHeight) / 50;
-        this.backgroundX = this.backgroundMargin;
-        this.backgroundY = this.backgroundMargin;
-        this.backgroundW = windowWidth - 2 * this.backgroundMargin;
-        this.backgroundH = windowHeight - 2 * this.backgroundMargin;
-        this.backgroundR = this.backgroundMargin * 2;
+        this.margin = 0;
+        this.backgroundX = 0;
+        this.backgroundY = 0;
+        this.backgroundW = 0;
+        this.backgroundH = 0;
+        this.backgroundR = 0;
+
+        // title
+        this.titleX = 0
+        this.titleY = 0;
+        this.titleSize = 0;
 
         // close button
-        this.closeButton = new Button("X", windowWidth * 5/6, windowHeight / 30, min(windowWidth, windowHeight) / 15, min(windowWidth, windowHeight) / 15);
-        this.closeButton.setR(min(windowWidth, windowHeight) / 40);
-        this.closeButton.setFillColour([0, 0]);
-        this.closeButton.setStrokeColour([255]);
-        this.closeButton.setTextColour([255]);
+        this.closeButtonX = 0;
+        this.closeButtonY = 0;
+        this.closeButtonSize = 0;
+        this.closeButton = new Button("X", 0, 0, 0, 0);
+        this.closeButton.setOnClickAction(() => {
+            this.settingsList.hideDOMs();
+            window.closeConfigPage();
+        });
 
         // settings list
-        const settingsListW = windowWidth * 3/4;
-        const settingsListH = windowHeight / 4;
-        this.settingsList = new SettingsList(this, windowWidth/2 - settingsListW/2, windowHeight/4 - settingsListH/2, settingsListW, settingsListH);
+        this.settingsListX = 0;
+        this.settingsListY = 0;
+        this.settingsListW = 0;
+        this.settingsListH = 0;
+        this.settingsList = new SettingsList(this, 0, 0, 0, 0);
 
         // settings
         this.algorithmSetting = this.settingsList.addSetting("Algorithm", "DROPDOWN", "algorithm");
@@ -40,14 +50,9 @@ export class ConfigPage {
         this.heuristicSetting.addDropdown("Zero");
 
         this.timerSetting = this.settingsList.addSetting("Timer", "CHECK", "timer");
-
         this.stepCount = this.settingsList.addSetting("StepCounter", "CHECK", "stepCounter");
 
-
-        this.closeButton.setOnClickAction(() => {
-            this.settingsList.hideDOMs();
-            window.closeConfigPage();
-        });
+        this.recalculateLayout()
     }
 
     mousePressed(mX, mY) {
@@ -65,11 +70,8 @@ export class ConfigPage {
         // title
         fill(...this.textColour);
         textAlign(LEFT, CENTER);
-        textSize(min(windowWidth, windowHeight) / 20);
-        const titleX = this.backgroundMargin*3;
-        const titleY = this.backgroundMargin*3;
-
-        text("CONFIG PAGE", titleX, titleY);
+        textSize(this.titleSize);
+        text("CONFIG PAGE", this.titleX, this.titleY);
         
         // close button
         this.closeButton.draw();
@@ -77,5 +79,38 @@ export class ConfigPage {
         // settings list
         this.settingsList.draw();
         pop();
+    }
+
+    recalculateLayout() {
+        // background
+        this.backgroundColour = [200, 200];
+        this.margin = max(windowWidth, windowHeight) / 50;
+        this.backgroundX = this.margin;
+        this.backgroundY = this.margin;
+        this.backgroundW = windowWidth - 2 * this.margin;
+        this.backgroundH = windowHeight - 2 * this.margin;
+        this.backgroundR = this.margin / 2;
+
+        // title
+        this.titleSize = min(windowWidth, windowHeight) / 20;
+        this.titleX = this.backgroundX + this.margin;
+        this.titleY = this.backgroundY + this.margin * 3/2;
+
+        // close button
+        this.closeButtonSize = min(windowWidth, windowHeight) / 15;
+        this.closeButtonX = this.backgroundX + this.backgroundW - this.closeButtonSize - this.margin / 2;
+        this.closeButtonY = this.titleY - this.closeButtonSize / 2;
+        this.closeButton.setPosition(this.closeButtonX, this.closeButtonY, this.closeButtonSize, this.closeButtonSize);
+
+        this.closeButton.setStrokeColour([0, 0]);
+        this.closeButton.setFillColour([0, 0]);
+        this.closeButton.setTextColour(this.textColour);
+
+        // settings list
+        this.settingsListW = this.backgroundW * 3/4;
+        this.settingsListH = this.backgroundH / 2;
+        this.settingsListX = this.backgroundX + (this.backgroundW - this.settingsListW) / 2;
+        this.settingsListY = this.titleY + this.margin * 3/2;
+        this.settingsList.setPosition(this.settingsListX, this.settingsListY, this.settingsListW, this.settingsListH);
     }
 }

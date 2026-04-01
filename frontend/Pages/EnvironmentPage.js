@@ -54,13 +54,8 @@ export class EnvironmentPage {
         fill(...this.textColour);
         textAlign(LEFT, CENTER);
         textSize(this.titleSize);
+        text("ENVIRONMENT PAGE", this.titleX, this.titleY);
 
-        try{
-            text("ENVIRONMENT PAGE", this.titleX, this.titleY);
-        } catch (e) {
-            text("ENVIRONMENT PAGE", this.backgroundMargin * 3, this.backgroundMargin * 3);
-        }
-        
         // close button
         this.closeButton.draw();
 
@@ -73,10 +68,6 @@ export class EnvironmentPage {
         // grid environment
         this.gridEnvironment.draw();
         pop();
-    }
-
-    reposition(object, x, y, w, h) {
-        object.setPosition(x, y, w, h);
     }
 
     recalculateLayout() {
@@ -123,7 +114,7 @@ export class EnvironmentPage {
         if (settings["Rows"] && settings["Columns"]) {
             let newGrid = this.gridEnvironment.createResize(settings["Rows"], settings["Columns"]);
             this.gridEnvironment = newGrid;
+            this.recalculateLayout();
         }
-        // TODO load existing wall pattern
     }
 }
