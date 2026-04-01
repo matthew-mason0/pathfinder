@@ -3,45 +3,25 @@ import { Button } from "../PageElements/Button.js";
 
 export class LandingPage {
     constructor() {
-        this.background = [50];
-
-        this.title = "PATHFINDER";
-
-        // logo
-        const logoW = min(windowWidth, windowHeight) / 8;
-        const logoX = windowWidth / 2 - logoW / 2;
-        const logoY = windowHeight / 3 - logoW / 2;
-
-        this.logo = new Logo(logoX, logoY, logoW);
-        
         // instantiate buttons
-        this.environmentButton = new Button("ENVIRONMENT", 0, 0, 100, 50);
-        this.configButton = new Button("CONFIG", 0, 0, 100, 50);
-        this.runButton = new Button("RUN", 0, 0, 100, 50);
-        this.buttons = [this.environmentButton, this.configButton, this.runButton];
-
-        // reposition
-        this.buttonWidth = windowWidth / 4;
-        this.buttonMargin = (windowWidth - this.buttons.length * this.buttonWidth ) / 4;
-        for (let i = 0; i < this.buttons.length; i++) {
-            let button = this.buttons[i];
-            button.x = this.buttonMargin + i * (this.buttonMargin + this.buttonWidth);
-            button.y = windowHeight * 4/5;
-            button.w = this.buttonWidth;
-            button.h = windowHeight / 15;
-            button.setR(min(windowWidth, windowHeight)/50);
-            button.textSize = button.calculateTextSize(button.text, button.w * 4/5, button.h * 4/5, 100);
-        }
-
-        this.configButton.setOnClickAction(() => {
-            window.openConfigPage();
-        });
+        this.environmentButton = new Button("ENVIRONMENT", 0, 0, 0, 0);
         this.environmentButton.setOnClickAction(() => {
             window.openEnvironmentPage();
         });
+
+        this.configButton = new Button("CONFIG", 0, 0, 0, 0);
+        this.configButton.setOnClickAction(() => {
+            window.openConfigPage();
+        });
+
+        this.runButton = new Button("RUN", 0, 0, 0, 0);
         this.runButton.setOnClickAction(() => {
             window.openRunPage();
         });
+        
+        this.buttons = [this.environmentButton, this.configButton, this.runButton];
+
+        this.recalculateLayout();
     }
 
     mousePressed(mX, mY) {
@@ -52,22 +32,8 @@ export class LandingPage {
 
     draw() {
         push();
-        background(...this.background);
 
-        // title
-        const titleX = windowWidth/2;
-        const titleY = windowHeight/10;
-        const titleTextSize = min(windowWidth, windowHeight) / 10;
-        
-        textAlign(CENTER, CENTER);
-        textSize(titleTextSize);
-        
-        text(this.title, titleX, titleY);
-
-        this.updatePositions();
-
-        // logo
-        this.logo.draw();
+        image(window.landingPageImage, 0, 0, windowWidth, windowHeight);
 
         // buttons
         for (let i = 0; i < this.buttons.length; i++) {
@@ -76,26 +42,18 @@ export class LandingPage {
         pop();
     }
 
-    updatePositions() {
-        // logo
-        const logoW = min(windowWidth, windowHeight) / 8;
-        const logoX = windowWidth / 2 - logoW / 2;
-        const logoY = windowHeight / 3 - logoW / 2;
-
-        this.logo.x = logoX;
-        this.logo.y = logoY;
-        this.logo.w = logoW;
-        
-
+    recalculateLayout() {
         // buttons
         this.buttonWidth = windowWidth / 4;
         this.buttonMargin = (windowWidth - this.buttons.length * this.buttonWidth ) / 4;
+        let x, y, w, h;
         for (let i = 0; i < this.buttons.length; i++) {
             let button = this.buttons[i];
-            button.x = this.buttonMargin + i * (this.buttonMargin + this.buttonWidth);
-            button.y = windowHeight * 4/5;
-            button.w = this.buttonWidth;
-            button.h = windowHeight / 15;
+            x = this.buttonMargin + i * (this.buttonMargin + this.buttonWidth);
+            y = windowHeight / 2;
+            w = this.buttonWidth;
+            h = windowHeight / 15;
+            button.setPosition(x, y, w, h);
             button.setR(min(windowWidth, windowHeight)/50);
             button.textSize = button.calculateTextSize(button.text, button.w * 4/5, button.h * 4/5, 100);
         }

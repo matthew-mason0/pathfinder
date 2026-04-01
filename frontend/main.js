@@ -11,6 +11,10 @@ let configPage;
 let environmentPage;
 let runPage;
 
+window.preload = function () {
+	window.landingPageImage = loadImage('Assets/landingpage.png');
+}
+
 window.setup = function () {
 	createCanvas(windowWidth, windowHeight);
 	window.settingState = new SettingState();
@@ -58,8 +62,10 @@ window.touchStarted = function (e) {
 	}
 }
 window.windowResized = function () {
-  	resizeCanvas(windowWidth, windowHeight);
+	resizeCanvas(windowWidth, windowHeight);
+	landingPage.recalculateLayout();
 	environmentPage.recalculateLayout();
+	configPage.recalculateLayout();
 }
 
 window.handleClick = function (mX, mY) {
