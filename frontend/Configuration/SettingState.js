@@ -17,9 +17,6 @@ export class SettingState {
 
         this.gridState[this.startNode.row][this.startNode.column] = "START";
         this.gridState[this.endNode.row][this.endNode.column] = "END";
-
-        this.updateEnd(8, 8);
-
         this.algorithm = "BFS";
         this.heuristic = "Manhattan";
         this.timer = false;

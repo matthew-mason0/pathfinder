@@ -19,6 +19,7 @@ export class Runbar {
         this.loadIcon = new RunbarIcon(this, iconMarginX, iconMarginY, iconW, iconH);
         this.loadIcon.setLabel("LOAD");
         this.loadIcon.setOnClick(() => {
+            this.controller.reset();
             this.controller.loadSteps();
             return;
         });
