@@ -78,9 +78,12 @@ public class SimulationController {
     private void runAlgorithm(WebSocket conn) {
         SocketStepListener listener = new SocketStepListener(msg -> conn.send(MessageSerialiser.toJson(msg)));
         Environment environment = EnvironmentLoader.createGridEnvironment(this.config.getGridState());
+        boolean timer = this.config.isTimer();
+
         SearchAlgorithm algorithm;
         if (this.config.getAlgorithm().equalsIgnoreCase("AStar")) algorithm = AlgorithmFactory.createAStar(this.config.getHeuristic(), listener);
         else algorithm = AlgorithmFactory.createAlgorithm(this.config.getAlgorithm(), listener);
-        algorithm.search(environment.getGraph(), environment.getStart(), environment.getEnd());
+        
+        algorithm.search(environment.getGraph(), environment.getStart(), environment.getEnd(), timer);
     }
 }

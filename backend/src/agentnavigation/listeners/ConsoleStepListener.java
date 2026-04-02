@@ -35,8 +35,8 @@ public class ConsoleStepListener implements StepListener {
     }
 
     @Override
-    public void onAlgorithmEnd() {
-        System.out.println("Algorithm finished.");
+    public void onAlgorithmEnd(double timeTaken) {
+        System.out.println("Algorithm finished in " + timeTaken + " ms.");
     }
     
 }

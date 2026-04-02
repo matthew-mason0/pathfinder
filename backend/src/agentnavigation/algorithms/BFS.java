@@ -27,13 +27,16 @@ public class BFS implements SearchAlgorithm {
 
     
     @Override
-    public List<Node> search(Graph graph, Node start, Node end) {
+    public List<Node> search(Graph graph, Node start, Node end, boolean timer) {
         Queue<Node> queue = new ArrayDeque<>();
         Set<Node> visited = new HashSet<>();
         List<Node> traversalList = new ArrayList<>();
         Map<Node, Node> predecessors = new HashMap<>();
+        long timeStart = 0;
+        long timeEnd = 0;
 
         listener.onAlgorithmStart(start);
+        if (timer) timeStart = System.nanoTime();
 
         visited.add(start);
         queue.add(start);
@@ -46,9 +49,10 @@ public class BFS implements SearchAlgorithm {
             traversalList.add(current);
 
             if (end != null && current.equals(end)) {
+                if (timer) timeEnd = System.nanoTime();
                 List<Node> path = buildPath(start, end, predecessors);
                 listener.onPathFound(path);
-                listener.onAlgorithmEnd();
+                listener.onAlgorithmEnd((timeEnd - timeStart) / 1_000_000.0);
                 return traversalList;
             }
             for (Node neighbour : graph.getNeighbours(current)) {
@@ -63,7 +67,9 @@ public class BFS implements SearchAlgorithm {
             }
             listener.onFrontierUpdate(queue);
         }
-        listener.onAlgorithmEnd();
+
+        if (timer) timeEnd = System.nanoTime();
+        listener.onAlgorithmEnd((timeEnd - timeStart) / 1_000_000.0);
         return traversalList;
     }
 

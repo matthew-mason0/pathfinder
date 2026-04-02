@@ -11,5 +11,5 @@ public interface StepListener {
     void onNodeExplored(Node node);
     void onFrontierUpdate(Collection<Node> frontier);
     void onPathFound(List<Node> path);
-    void onAlgorithmEnd();
+    void onAlgorithmEnd(double timeTaken);
 }
