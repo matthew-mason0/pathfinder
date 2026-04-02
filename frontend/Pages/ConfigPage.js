@@ -3,7 +3,7 @@ import { SettingsList } from "../PageElements/SettingsList.js";
 
 export class ConfigPage {
     constructor() {
-        this.textColour = [0];
+        this.textColour = [255];
         
         // background
         this.backgroundColour = [0, 200];
@@ -51,12 +51,24 @@ export class ConfigPage {
         this.heuristicSetting.addDropdown("Euclidean");
         this.heuristicSetting.addDropdown("Chebyshev");
         this.heuristicSetting.addDropdown("Zero");
+        this.heuristicSetting.hide();
 
         this.timerSetting = this.settingsList.addSetting("Timer", "CHECK", "timer");
         this.stepCount = this.settingsList.addSetting("StepCounter", "CHECK", "stepCounter");
 
         this.recalculateLayout()
     }
+
+    handleSettingChanged(attribute, value) {
+        if (attribute === "algorithm") {
+            if (value === "AStar") {
+                this.heuristicSetting.show();
+            } else {
+                this.heuristicSetting.hide();
+            }
+        }
+    }
+
 
     mousePressed(mX, mY) {
         if (this.closeButton.mouseOver(mX, mY)) this.closeButton.onClick();

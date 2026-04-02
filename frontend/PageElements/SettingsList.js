@@ -47,13 +47,15 @@ export class SettingsList {
         let segmentLength = this.h / segments;
         let marginH = segmentLength / 10;
 
+        let x, y, w, h;
         for (let i = 0; i < this.settingsList.length; i++) {
             let setting = this.settingsList[i];
-            setting.w = this.w - 2 * marginW;
-            setting.x = this.x + marginW;
+            w = this.w - 2 * marginW;
+            x = this.x + marginW;
 
-            setting.h = segmentLength - 2 * marginH;
-            setting.y = this.y + segmentLength * i + marginH;
+            h = segmentLength - 2 * marginH;
+            y = this.y + segmentLength * i + marginH;
+            setting.setPosition(x, y, w, h);
         }
     }
 
