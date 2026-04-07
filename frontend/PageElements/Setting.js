@@ -186,7 +186,7 @@ export class Setting {
         let size = startSize;
         textSize(size);
 
-        while (textWidth(str) > maxWidth || textAscent()+textDescent() > maxHeight) {
+        while (textWidth(str) > maxWidth || textAscent() + textDescent() > maxHeight) {
             size--;
             textSize(size);
             if (size <= 1) break;

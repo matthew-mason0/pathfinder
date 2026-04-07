@@ -12,6 +12,8 @@ let environmentPage;
 let runPage;
 
 window.preload = function () {
+	window.mainFont = loadFont("Assets/PressStart2P-Regular.ttf");
+
 	window.landingPageImage = loadImage('Assets/landingPage.png');
 	window.runPageImage = loadImage('Assets/runPage.png');
 
@@ -44,6 +46,7 @@ window.setup = function () {
 };
 
 window.draw = function () {
+	textFont(window.mainFont);
 	switch (currentPage) {
 		case "LANDING":
 			landingPage.draw();

@@ -12,7 +12,7 @@ export class Button {
         this.strokeColour = [0]; // as array
         this.textColour = [0]; // as array
         this.r = min(windowWidth, windowHeight) / 30;
-        this.textSize = this.calculateTextSize(this.text, this.w*0.8, this.h*0.8, 100);
+        this.textSize = 0;
         this.onClickAction = null;
     }
 
@@ -33,6 +33,7 @@ export class Button {
         this.y = y;
         this.w = w;
         this.h = h;
+        this.r = min(windowWidth, windowHeight) / 30;
         this.textSize = this.calculateTextSize(this.text, this.w*0.8, this.h*0.8, 100);
     }
 
@@ -83,7 +84,7 @@ export class Button {
         let size = startSize;
         textSize(size);
 
-        while (textWidth(str) > maxWidth || textAscent()+textDescent() > maxHeight) {
+        while (textWidth(str) > maxWidth || textAscent() + textDescent() > maxHeight) {
             size--;
             textSize(size);
             if (size <= 1) break;
