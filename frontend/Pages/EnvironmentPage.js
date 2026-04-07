@@ -178,7 +178,10 @@ export class EnvironmentPage {
 
     parseSettings(settings) {
         if (settings["Rows"] && settings["Columns"]) {
-            let newGrid = this.gridEnvironment.createResize(settings["Rows"], settings["Columns"]);
+            const rows = settings["Rows"];
+            const columns = settings["Columns"];
+            let newGrid = this.gridEnvironment.createResize(rows, columns);
+            window.settingState.updateDimensions(rows, columns);
             this.gridEnvironment = newGrid;
             this.recalculateLayout();
         }
