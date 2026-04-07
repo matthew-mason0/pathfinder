@@ -24,7 +24,6 @@ export class RunPage {
 
         // textbox
         this.textbox = new Textbox(this, 0, 0, 0, 0);
-        this.textbox.setText("Hello World!");
 
         this.recalculateLayout();
     }
