@@ -5,7 +5,6 @@ export class Controller {
     constructor(container) {
         this.container = container;
         this.stepQueue = new StepQueue();
-        console.log("The stepQueue is this: " + this.stepQueue);
         this.socket = new SocketClient("ws://localhost:1234", this);
         this.socket.connect();
 

@@ -12,8 +12,10 @@ export class Button {
         this.strokeColour = [0]; // as array
         this.textColour = [0]; // as array
         this.r = min(windowWidth, windowHeight) / 30;
-        this.textSize = 0;
         this.onClickAction = null;
+
+        this.textSize = 0;
+        this.font = window.mainFont;
     }
 
     mouseOver(mX, mY) {
@@ -34,7 +36,7 @@ export class Button {
         this.w = w;
         this.h = h;
         this.r = min(windowWidth, windowHeight) / 30;
-        this.textSize = this.calculateTextSize(this.text, this.w*0.8, this.h*0.8, 100);
+        if (this.text) this.textSize = this.calculateTextSize(this.text, this.w*0.8, this.h*0.8, 100);
     }
 
     setImage(image) {
@@ -82,9 +84,10 @@ export class Button {
     calculateTextSize(str, maxWidth, maxHeight, startSize) {
         // take starting size as upper bound
         let size = startSize;
+        textFont(this.font);
         textSize(size);
         while (true){
-            const bounds = window.mainFont.textBounds(str, 0, 0, size);
+            const bounds = this.font.textBounds(str, 0, 0, size);
             if (bounds.w <= maxWidth && bounds.h <= maxHeight) break;
 
             size--;

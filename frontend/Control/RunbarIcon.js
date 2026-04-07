@@ -8,6 +8,7 @@ export class RunbarIcon {
         this.onClickAction = null;
         this.label = "LOAD";
         this.textSize = 0;
+        this.font = window.mainFont;
     }
 
 
@@ -37,7 +38,7 @@ export class RunbarIcon {
         this.y = y;
         this.w = w;
         this.h = h;
-        this.textSize = this.calculateTextSize(this.label, this.w, this.h, 100);
+        if (this.label) this.textSize = this.calculateTextSize(this.label, this.w, this.h, 100);
     }
 
     draw() {
@@ -58,9 +59,10 @@ export class RunbarIcon {
     calculateTextSize(str, maxWidth, maxHeight, startSize) {
         // take starting size as upper bound
         let size = startSize;
+        textFont(this.font);
         textSize(size);
         while (true){
-            const bounds = window.mainFont.textBounds(str, 0, 0, size);
+            const bounds = this.font.textBounds(str, 0, 0, size);
             if (bounds.w <= maxWidth && bounds.h <= maxHeight) break;
 
             size--;

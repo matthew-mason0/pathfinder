@@ -5,9 +5,12 @@ export class Textbox {
         this.y = y;
         this.w = w;        
         this.h = h;
+
         this.margin = 0;
         this.text = null;
+
         this.textSize = 0;
+        this.font = window.mainFont
     }
 
     draw() {
@@ -16,7 +19,7 @@ export class Textbox {
         fill(255, 240);
         rect(this.x, this.y, this.w, this.h, 10);
 
-        fill(0);
+        fill(255, 0, 0);
         textSize(this.textSize);
         textAlign(LEFT, TOP);
         text(this.text, this.x + this.margin, this.y + this.margin, this.w - this.margin, this.h - this.margin);
@@ -40,9 +43,10 @@ export class Textbox {
     calculateTextSize(str, maxWidth, maxHeight, startSize) {
         // take starting size as upper bound
         let size = startSize;
+        textFont(this.font);
         textSize(size);
         while (true){
-            const bounds = window.mainFont.textBounds(str, 0, 0, size);
+            const bounds = this.font.textBounds(str, 0, 0, size);
             if (bounds.w <= maxWidth && bounds.h <= maxHeight) break;
 
             size--;

@@ -2,6 +2,7 @@ export class Setting {
     constructor(container, label, attribute, type = "SELECT", x, y, w, h) {
         this.container = container;
         this.label = label;
+        this.font = window.mainFont;
         this.textSize = 0;
 
         this.x = x;
@@ -99,6 +100,8 @@ export class Setting {
         noStroke();
         textSize(this.textSize);
         textAlign(LEFT, CENTER);
+        console.log("Label: " + this.label + ", size: " + this.textSize);
+        console.log("Current Font: " + textFont());
         text(this.label + ": ", this.x, this.y, this.w, this.h);
 
         if (this.disabled) {
@@ -127,6 +130,7 @@ export class Setting {
         if (!this.input) return;
         this.input.position(inputX, inputY);
         this.input.size(inputW, inputH);
+        if (this.label) this.textSize = this.calculateTextSize(this.label, this.w - inputW, inputH, 100);
     }
     positionDropdownSetting() {
         const inputW = this.w / 3;
@@ -136,6 +140,7 @@ export class Setting {
         if (!this.input) return;
         this.input.position(inputX, inputY);
         this.input.size(inputW, inputH);
+        if (this.label) this.textSize = this.calculateTextSize(this.label, this.w - inputW, inputH, 100);
     }
     positionCheckSetting() {
         const inputW = this.w / 3;
@@ -148,6 +153,7 @@ export class Setting {
         let scaleFactor = inputH / 13; 
         this.input.style('transform', `scale(${scaleFactor})`);
         this.input.style('transform-origin', 'left center');
+        if (this.label) this.textSize = this.calculateTextSize(this.label, this.w - inputW, inputH, 100);
     }
     positionSubmitSetting() {
         const inputW = this.w / 3;
@@ -157,10 +163,11 @@ export class Setting {
         if (!this.input) return;
         this.input.position(inputX, inputY);
         this.input.size(inputW, inputH);
+        if (this.label) this.textSize = this.calculateTextSize(this.label, this.w - inputW, inputH, 100);
     }
 
     positionInput() {
-        this.textSize = this.calculateTextSize(this.label, this.w, this.h, 100);
+        if (this.label) this.textSize = 16;
         if (this.disabled) return;
         switch (this.type) {
             case "NUMBER":
@@ -184,9 +191,10 @@ export class Setting {
     calculateTextSize(str, maxWidth, maxHeight, startSize) {
         // take starting size as upper bound
         let size = startSize;
+        textFont(this.font);
         textSize(size);
         while (true){
-            const bounds = window.mainFont.textBounds(str, 0, 0, size);
+            const bounds = this.font.textBounds(str, 0, 0, size);
             if (bounds.w <= maxWidth && bounds.h <= maxHeight) break;
 
             size--;
