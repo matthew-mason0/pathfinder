@@ -26,7 +26,7 @@ public class Dijkstra implements SearchAlgorithm {
     }
 
     @Override
-    public List<Node> search(Graph graph, Node start, Node end) {
+    public List<Node> search(Graph graph, Node start, Node end, boolean timer) {
         Set<Node> visited = new HashSet<>();
         List<Node> traversalList = new ArrayList<>();
         Map<Node, Node> predecessors = new HashMap<>();
@@ -34,9 +34,12 @@ public class Dijkstra implements SearchAlgorithm {
         PriorityQueue<Node> priorityQueue = new PriorityQueue<>(
             Comparator.comparingInt(distance::get)
         );
+        long timeStart = 0;
+        long timeEnd = 0;
 
         distance.put(start, 0);
         listener.onAlgorithmStart(start);
+        if (timer) timeStart = System.nanoTime();
 
         priorityQueue.add(start);
         listener.onNodeDiscovered(start);
@@ -50,9 +53,10 @@ public class Dijkstra implements SearchAlgorithm {
             traversalList.add(current);
 
             if (end != null && current.equals(end)) {
+                if (timer) timeEnd = System.nanoTime();
                 List<Node> path = buildPath(start, end, predecessors);
                 listener.onPathFound(path);
-                listener.onAlgorithmEnd();
+                listener.onAlgorithmEnd((timeEnd - timeStart) / 1_000_000.0);
                 return traversalList;
             }
             for (Node neighbour : graph.getNeighbours(current)) {
@@ -73,7 +77,9 @@ public class Dijkstra implements SearchAlgorithm {
             }
             listener.onFrontierUpdate(priorityQueue);
         }
-        listener.onAlgorithmEnd();
+
+        if (timer) timeEnd = System.nanoTime();
+        listener.onAlgorithmEnd((timeEnd - timeStart) / 1_000_000.0);
         return traversalList;
     }
 

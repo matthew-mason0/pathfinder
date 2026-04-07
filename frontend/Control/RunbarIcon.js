@@ -7,6 +7,8 @@ export class RunbarIcon {
         this.h = h;
         this.onClickAction = null;
         this.label = "LOAD";
+        this.textSize = 0;
+        this.font = window.mainFont;
     }
 
 
@@ -31,6 +33,14 @@ export class RunbarIcon {
         this.onClickAction();
     }
 
+    setPosition(x, y, w, h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        if (this.label) this.textSize = this.calculateTextSize(this.label, this.w, this.h, 100);
+    }
+
     draw() {
         push();
         rect(this.x, this.y, this.w, this.h);
@@ -39,9 +49,26 @@ export class RunbarIcon {
             return;
         }
         textAlign(CENTER, CENTER);
+        textSize(this.textSize);
         fill(0);
         noStroke();
         text(this.label, this.x, this.y, this.w, this.h);
         pop();
+    }
+
+    calculateTextSize(str, maxWidth, maxHeight, startSize) {
+        // take starting size as upper bound
+        let size = startSize;
+        textFont(this.font);
+        textSize(size);
+        while (true){
+            const bounds = this.font.textBounds(str, 0, 0, size);
+            if (bounds.w <= maxWidth && bounds.h <= maxHeight) break;
+
+            size--;
+            if (size <= 1) break;
+            textSize(size);
+        }
+        return size;
     }
 }

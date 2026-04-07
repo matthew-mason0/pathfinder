@@ -17,15 +17,23 @@ export class SettingState {
 
         this.gridState[this.startNode.row][this.startNode.column] = "START";
         this.gridState[this.endNode.row][this.endNode.column] = "END";
-
-        this.updateEnd(8, 8);
-
         this.algorithm = "BFS";
         this.heuristic = "Manhattan";
         this.timer = false;
         this.stepCounter = false;
     }
 
+    updateDimensions(rows, columns) {
+        this.rows = rows;
+        this.columns = columns;
+        this.gridState = [];
+        for (let row = 0; row < this.rows; row++) {
+            this.gridState[row] = [];
+            for (let column = 0; column < this.columns; column++) {
+                this.gridState[row][column] = "EMPTY";
+            }
+        }
+    }
     updateStart(row, column) {
         this.gridState[this.startNode.row][this.startNode.column] = "EMPTY";
         this.startNode.row = row;

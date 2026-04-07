@@ -91,14 +91,14 @@ public class SocketStepListener implements StepListener{
     }   
 
     @Override
-    public void onAlgorithmEnd() {
+    public void onAlgorithmEnd(double timeTaken) {
         Message message = new Message(
             MessageType.ALGORITHM_END,
             null,
             null,
             null,
             null,
-            null
+            String.valueOf(timeTaken)
         );
 
         sender.accept(message);

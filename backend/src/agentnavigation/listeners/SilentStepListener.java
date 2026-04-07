@@ -26,5 +26,5 @@ public final class SilentStepListener implements StepListener {
     public void onPathFound(List<Node> path) {}
 
     @Override
-    public void onAlgorithmEnd() {}
+    public void onAlgorithmEnd(double timeTaken) {}
 }

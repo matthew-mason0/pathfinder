@@ -11,6 +11,24 @@ let configPage;
 let environmentPage;
 let runPage;
 
+window.preload = function () {
+	window.mainFont = loadFont("Assets/PressStart2P-Regular.ttf");
+
+	window.landingPageImage = loadImage('Assets/landingPage.png');
+	window.runPageImage = loadImage('Assets/runPage.png');
+
+	window.playgroundHeaderImage = loadImage('Assets/playgroundHeader.png');
+	window.environmentHeaderImage = loadImage('Assets/environmentHeader.png');
+	window.algorithmHeaderImage = loadImage('Assets/algorithmHeader.png');
+
+	window.playgroundButtonImage = loadImage('Assets/playgroundButton.png');
+	window.environmentButtonImage = loadImage('Assets/environmentButton.png');
+	window.algorithmButtonImage = loadImage('Assets/algorithmButton.png');
+
+	window.closeButtonImage = loadImage('Assets/closeButton.png');
+	window.menuBackgroundImage = loadImage('Assets/gradient.png');
+}
+
 window.setup = function () {
 	createCanvas(windowWidth, windowHeight);
 	window.settingState = new SettingState();
@@ -28,6 +46,7 @@ window.setup = function () {
 };
 
 window.draw = function () {
+	textFont(window.mainFont);
 	switch (currentPage) {
 		case "LANDING":
 			landingPage.draw();
@@ -58,7 +77,10 @@ window.touchStarted = function (e) {
 	}
 }
 window.windowResized = function () {
-  	resizeCanvas(windowWidth, windowHeight);
+	resizeCanvas(windowWidth, windowHeight);
+	landingPage.recalculateLayout();
+	environmentPage.recalculateLayout();
+	configPage.recalculateLayout();
 }
 
 window.handleClick = function (mX, mY) {

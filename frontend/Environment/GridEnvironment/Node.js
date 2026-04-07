@@ -57,6 +57,13 @@ export class Node {
         pop();
     }
 
+    setPosition(x, y, w, h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+    }
+
     inverseColour(colour) {
         return colour.map(c => 255 - c);
     }

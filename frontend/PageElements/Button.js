@@ -1,5 +1,6 @@
 export class Button {
     constructor(text, x, y, w, h) {
+        this.image = null;
         this.text = text;
         this.x = x;
         this.y = y;
@@ -11,8 +12,10 @@ export class Button {
         this.strokeColour = [0]; // as array
         this.textColour = [0]; // as array
         this.r = min(windowWidth, windowHeight) / 30;
-        this.textSize = this.calculateTextSize(this.text, this.w*0.8, this.h*0.8, 100); 
         this.onClickAction = null;
+
+        this.textSize = 0;
+        this.font = window.mainFont;
     }
 
     mouseOver(mX, mY) {
@@ -27,13 +30,33 @@ export class Button {
         if (this.onClick) this.onClickAction();
     }
 
+    setPosition(x, y, w, h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.r = min(windowWidth, windowHeight) / 30;
+        if (this.text) this.textSize = this.calculateTextSize(this.text, this.w*0.8, this.h*0.8, 100);
+    }
+
+    setImage(image) {
+        this.image = image;
+    }
+
     draw() {
         push();
+        if (this.image != null) {
+            image(this.image, this.x, this.y, this.w, this.h);
+            return;
+        }
+
+        // button
         fill(...this.fillColour);
         stroke(...this.strokeColour);
         strokeWeight(1);
         rect(this.x, this.y, this.w, this.h, this.r);
 
+        //label
         textAlign(CENTER, CENTER);
         textSize(this.textSize);
         noStroke();
@@ -61,12 +84,15 @@ export class Button {
     calculateTextSize(str, maxWidth, maxHeight, startSize) {
         // take starting size as upper bound
         let size = startSize;
+        textFont(this.font);
         textSize(size);
+        while (true){
+            const bounds = this.font.textBounds(str, 0, 0, size);
+            if (bounds.w <= maxWidth && bounds.h <= maxHeight) break;
 
-        while (textWidth(str) > maxWidth || textAscent()+textDescent() > maxHeight) {
             size--;
-            textSize(size);
             if (size <= 1) break;
+            textSize(size);
         }
         return size;
     }

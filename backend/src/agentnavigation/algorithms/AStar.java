@@ -31,7 +31,7 @@ public class AStar implements SearchAlgorithm {
     }
 
     @Override
-    public List<Node> search(Graph graph, Node start, Node end) {
+    public List<Node> search(Graph graph, Node start, Node end, boolean timer) {
         Set<Node> visited = new HashSet<>();
         List<Node> traversalList = new ArrayList<>();
         Map<Node, Node> predecessors = new HashMap<>();
@@ -39,6 +39,10 @@ public class AStar implements SearchAlgorithm {
         PriorityQueue<Node> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(
             node -> distance.getOrDefault(node, Integer.MAX_VALUE) + heuristic.estimate((GridNode) node, (GridNode) end)
         ));
+        long timeStart = 0;
+        long timeEnd = 0;
+
+        if (timer) timeStart = System.nanoTime();
 
         distance.put(start, 0);
         listener.onAlgorithmStart(start);
@@ -55,9 +59,10 @@ public class AStar implements SearchAlgorithm {
             traversalList.add(current);
 
             if (end != null && current.equals(end)) {
+                if (timer) timeEnd = System.nanoTime();
                 List<Node> path = buildPath(start, end, predecessors);
                 listener.onPathFound(path);
-                listener.onAlgorithmEnd();
+                listener.onAlgorithmEnd((timeEnd - timeStart) / 1_000_000.0);
                 return traversalList;
             }
             for (Node neighbour : graph.getNeighbours(current)) {
@@ -76,7 +81,8 @@ public class AStar implements SearchAlgorithm {
             listener.onFrontierUpdate(priorityQueue);
         }
 
-        listener.onAlgorithmEnd();
+        if (timer) timeEnd = System.nanoTime();
+        listener.onAlgorithmEnd((timeEnd - timeStart) / 1_000_000.0);
         return traversalList;
     }
 

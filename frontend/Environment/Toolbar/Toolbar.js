@@ -9,20 +9,14 @@ export class Toolbar {
         this.h = h;
 
         this.icons = [];
-        this.iconMargin = this.h/4;
-        this.iconW = this.h - this.iconMargin;
-        this.iconPosition = 0;
-        // TODO: fix positioning
 
         this.selectedOperation = "START";
     }
 
     addIcon(operation) {
-        const x = this.x + (this.iconPosition+1) * this.iconMargin/2 + this.iconPosition * this.iconW;
-        const y = this.y + this.iconMargin/2;
-        const newIcon = new Icon(this, operation, x, y, this.iconW, this.iconW);
+        const newIcon = new Icon(this, operation, 0, 0, 0, 0);
         this.icons.push(newIcon);
-        this.iconPosition++;
+        this.updateIconPostions();
     }
 
     mouseOver(mX, mY) {
@@ -42,11 +36,39 @@ export class Toolbar {
         }
     }
 
+    setPosition(x, y, w, h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.updateIconPostions();
+    }
+
+    updateIconPostions() {
+
+        const slotH = this.h / this.icons.length;
+        const iconH = slotH / 2;
+        const iconW = iconH;
+
+        const labelSpace = slotH / 6;
+        for (let i = 0; i < this.icons.length; i++) {
+            const icon = this.icons[i];
+            const slotY = this.y + i * slotH;
+            const iconY = slotY + (slotH - (iconH + labelSpace)) / 2;
+            const iconX = this.x + (this.w - iconW) / 2;
+            icon.setPosition(iconX, iconY, iconW, iconH);
+
+            icon.labelX = this.x + this.w / 2;
+            icon.labelY = iconY + iconH + labelSpace;
+            icon.labelSize = labelSpace * 3 / 5;
+        }
+    }
+
     draw() {
         push();
-        fill(100);
+        fill(100, 100);
         stroke(0);
-        rect(this.x, this.y, this.w, this.h);
+        rect(this.x, this.y, this.w, this.h, this.w / 10);
         
         for (let i = 0; i < this.icons.length; i++) {
             this.icons[i].draw();
