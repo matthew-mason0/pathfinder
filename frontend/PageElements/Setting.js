@@ -185,11 +185,13 @@ export class Setting {
         // take starting size as upper bound
         let size = startSize;
         textSize(size);
+        while (true){
+            const bounds = window.mainFont.textBounds(str, 0, 0, size);
+            if (bounds.w <= maxWidth && bounds.h <= maxHeight) break;
 
-        while (textWidth(str) > maxWidth || textAscent() + textDescent() > maxHeight) {
             size--;
-            textSize(size);
             if (size <= 1) break;
+            textSize(size);
         }
         return size;
     }
