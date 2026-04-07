@@ -103,4 +103,27 @@ export class RunPage {
 
         this.gridEnvironment.setPosition(gridX, gridY, gridW, gridH);
     }
+
+    displayTextbox() {
+        let text = "Algorithm: " + window.settingState.algorithm + "\n";
+        if (window.settingState.algorithm === "AStar") text += "Heuristic: " + window.settingState.heuristic + "\n";
+        switch (window.settingState.algorithm) {
+            case "BFS":
+                text += "\nBFS explores a graph level by level, guaranteeing the shortest path in terms of number of edges.";
+                break;
+            case "DFS":
+                text += "\n- DFS dives as deep as possible along one branch before backtracking to explore alternatives.";
+                break;
+            case "Dijkstra":
+                text += "\n- Dijkstra’s algorithm finds the shortest‑weighted path from a start node to all others by progressively relaxing edge costs.";
+                break;
+            case "AStar":
+                text += "\nA* searches for the lowest‑cost path using both actual cost so far and a heuristic estimate of the remaining distance.";
+                break;
+            default:
+                break;
+        }
+        
+        this.textbox.setText(text);
+    }
 }

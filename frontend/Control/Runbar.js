@@ -38,6 +38,7 @@ export class Runbar {
         this.runIcon.setLabel("RUN");
         this.runIcon.setOnClick(() => {
             this.controller.runAllSteps();
+            this.container.displayTextbox();
             return;
         });
 

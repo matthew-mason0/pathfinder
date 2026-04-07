@@ -28,7 +28,9 @@ export class Textbox {
 
     setText(text) {
         this.text = text;
+        this.textSize = this.calculateTextSize(this.text, this.w, this.h, 100);
     }
+
     setMargin(margin) {
         this.margin = margin;
     }
@@ -53,7 +55,7 @@ export class Textbox {
             if (size <= 1) break;
             textSize(size);
         }
-        return size;
+        return 16; // hard code
     }
 
 }
