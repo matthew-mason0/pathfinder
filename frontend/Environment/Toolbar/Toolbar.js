@@ -45,23 +45,30 @@ export class Toolbar {
     }
 
     updateIconPostions() {
-        let iconMargin = this.w / 4;
-        let iconW = this.w - iconMargin;
-        let icon;
-        let x,y;
-        for (let iconNumber = 0; iconNumber < this.icons.length; iconNumber++) {
-            icon = this.icons[iconNumber];
-            x = this.x + (this.w - iconW) / 2;
-            y = this.y + iconMargin / 2 + iconNumber * (iconW + iconMargin / 2);
-            icon.setPosition(x, y, iconW, iconW);
+
+        const slotH = this.h / this.icons.length;
+        const iconH = slotH / 2;
+        const iconW = iconH;
+
+        const labelSpace = slotH / 6;
+        for (let i = 0; i < this.icons.length; i++) {
+            const icon = this.icons[i];
+            const slotY = this.y + i * slotH;
+            const iconY = slotY + (slotH - (iconH + labelSpace)) / 2;
+            const iconX = this.x + (this.w - iconW) / 2;
+            icon.setPosition(iconX, iconY, iconW, iconH);
+
+            icon.labelX = this.x + this.w / 2;
+            icon.labelY = iconY + iconH + labelSpace;
+            icon.labelSize = labelSpace * 3 / 5;
         }
     }
 
     draw() {
         push();
-        fill(100);
+        fill(100, 100);
         stroke(0);
-        rect(this.x, this.y, this.w, this.h);
+        rect(this.x, this.y, this.w, this.h, this.w / 10);
         
         for (let i = 0; i < this.icons.length; i++) {
             this.icons[i].draw();

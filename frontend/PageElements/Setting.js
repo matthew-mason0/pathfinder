@@ -100,8 +100,6 @@ export class Setting {
         noStroke();
         textSize(this.textSize);
         textAlign(LEFT, CENTER);
-        console.log("Label: " + this.label + ", size: " + this.textSize);
-        console.log("Current Font: " + textFont());
         text(this.label + ": ", this.x, this.y, this.w, this.h);
 
         if (this.disabled) {
